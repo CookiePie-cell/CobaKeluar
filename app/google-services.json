@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "993158593287",
+    "project_id": "try-out-apps",
+    "storage_bucket": "try-out-apps.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:993158593287:android:dc8fdab36f066e9244e3a2",
+        "android_client_info": {
+          "package_name": "com.salugan.cobakeluar"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "993158593287-gbs48n3u93asevupoet8kpt85bj34u4g.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDkjqCsx0ttW-CQ7nQWxEDeHSRFTxvEpPk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "993158593287-gbs48n3u93asevupoet8kpt85bj34u4g.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
