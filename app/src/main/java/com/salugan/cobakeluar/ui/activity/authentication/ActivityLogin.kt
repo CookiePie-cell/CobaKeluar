@@ -139,9 +139,8 @@ class ActivityLogin: AppCompatActivity() {
      * @see https://firebase.google.com/docs/auth/android/google-signin?hl=id
      * */
     private fun forgotPassword() {
+        val dialogView = layoutInflater.inflate(R.layout.dialog_forgot_password, null)
         val builder = AlertDialog.Builder(this)
-        val inflater = layoutInflater
-        val dialogView = inflater.inflate(R.layout.dialog_forgot_password, null)
         builder.setView(dialogView)
         forgotPassword = builder.create()
         forgotPassword?.show()
@@ -154,9 +153,8 @@ class ActivityLogin: AppCompatActivity() {
      * @since Sept 2023.
      * */
     private fun loading() {
+        val dialogView = layoutInflater.inflate(R.layout.dialog_loading, null)
         val builder = AlertDialog.Builder(this)
-        val inflater = layoutInflater
-        val dialogView = inflater.inflate(R.layout.dialog_loading, null)
         builder.setView(dialogView)
         loadingDialog = builder.create()
         loadingDialog?.show()
@@ -168,9 +166,8 @@ class ActivityLogin: AppCompatActivity() {
      * @since Sept 2023.
      * */
     private fun error() {
+        val dialogView = layoutInflater.inflate(R.layout.dialog_error, null)
         val builder = AlertDialog.Builder(this)
-        val inflater = layoutInflater
-        val dialogView = inflater.inflate(R.layout.dialog_error, null)
         builder.setView(dialogView)
         errorDialog = builder.create()
         errorDialog?.show()
