@@ -14,6 +14,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "993158593287-4mda98dg7qaeg29ldghpjli6t5onu3o6.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.salugan.cobakeluar",
+            "certificate_hash": "9f10d31772c0268516252e31565a3118a5483861"
+          }
+        },
+        {
           "client_id": "993158593287-gbs48n3u93asevupoet8kpt85bj34u4g.apps.googleusercontent.com",
           "client_type": 3
         }
