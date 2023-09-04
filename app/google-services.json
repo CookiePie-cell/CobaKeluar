@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "993158593287",
+    "project_id": "try-out-apps",
+    "storage_bucket": "try-out-apps.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:993158593287:android:dc8fdab36f066e9244e3a2",
+        "android_client_info": {
+          "package_name": "com.salugan.cobakeluar"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "993158593287-4mda98dg7qaeg29ldghpjli6t5onu3o6.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.salugan.cobakeluar",
+            "certificate_hash": "9f10d31772c0268516252e31565a3118a5483861"
+          }
+        },
+        {
+          "client_id": "993158593287-gbs48n3u93asevupoet8kpt85bj34u4g.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDkjqCsx0ttW-CQ7nQWxEDeHSRFTxvEpPk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "993158593287-gbs48n3u93asevupoet8kpt85bj34u4g.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
