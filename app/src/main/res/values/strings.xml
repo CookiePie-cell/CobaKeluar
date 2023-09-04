@@ -1,3 +1,10 @@
 <resources>
     <string name="app_name">CobaKeluar</string>
+    <string name="try_out">TRY OUT</string>
+    <string name="selesai">SELESAI</string>
+    <string name="numerasi">NUMERASI,</string>
+    <string name="besok">BESOK</string>
+    <string name="numerasi_without_coma">NUMERASI</string>
+    <string name="geometri_pengukuran">Geometri pengukuran</string>
+    <string name="history">HISTORY</string>
 </resources>
