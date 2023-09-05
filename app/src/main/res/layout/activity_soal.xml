@@ -75,13 +75,13 @@
         app:tabPaddingStart="4dp"
         app:tabPaddingEnd="4dp"
         app:tabMinWidth="56dp"
-        android:layout_marginHorizontal="40dp"/>
+        android:layout_marginHorizontal="16dp"/>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="150dp"
         android:layout_marginTop="32dp"
-        android:layout_marginHorizontal="40dp"
+        android:layout_marginHorizontal="16dp"
         android:background="@drawable/shape_bg_white_rectangle_radius">
 
         <TextView

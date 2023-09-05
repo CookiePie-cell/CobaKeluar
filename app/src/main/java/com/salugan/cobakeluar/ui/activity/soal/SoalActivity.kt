@@ -17,6 +17,7 @@ import com.salugan.cobakeluar.R
 import com.salugan.cobakeluar.adapter.TabPagerSoalAdapter
 import com.salugan.cobakeluar.data.Result
 import com.salugan.cobakeluar.databinding.ActivitySoalBinding
+import com.salugan.cobakeluar.model.QuestionModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -40,7 +41,8 @@ class SoalActivity : AppCompatActivity() {
                 is Result.Loading -> ""
                 is Result.Success -> {
                     Log.d("wkwkwk", it.data.toString())
-                    val tabPagerSoalAdapter = TabPagerSoalAdapter(this, it.data.size)
+                    val data: ArrayList<QuestionModel> = ArrayList(it.data)
+                    val tabPagerSoalAdapter = TabPagerSoalAdapter(this, data)
                     val viewPager: ViewPager2 = binding.viewPager
                     viewPager.adapter = tabPagerSoalAdapter
                     val tabs: TabLayout = binding.tabs

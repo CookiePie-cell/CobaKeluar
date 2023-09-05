@@ -1,6 +1,10 @@
 package com.salugan.cobakeluar.data.remote.retrofit.response
 
+import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
+import kotlinx.parcelize.Parcelize
+
+@Parcelize
 
 data class DataItem(
 
@@ -12,4 +16,4 @@ data class DataItem(
 
     @field:SerializedName("id_subject")
     val idSubject: Int? = null
-)
+) : Parcelable
