@@ -1,5 +1,6 @@
 package com.salugan.cobakeluar.ui.activity.materi
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.Spannable
@@ -10,6 +11,7 @@ import androidx.core.content.ContextCompat
 import com.salugan.cobakeluar.R
 import com.salugan.cobakeluar.databinding.ActivityMainBinding
 import com.salugan.cobakeluar.databinding.ActivityMateriScreenBinding
+import com.salugan.cobakeluar.ui.activity.soal.SoalActivity
 
 class MateriScreenActivity : AppCompatActivity() {
 
@@ -29,6 +31,10 @@ class MateriScreenActivity : AppCompatActivity() {
         spannableText.setSpan(textSizeSpan, 24, spannableText.length, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
 
         binding.btnDataDanKetidakpastian.text = spannableText
+
+        binding.btnDataDanKetidakpastian.setOnClickListener {
+            startActivity(Intent(this@MateriScreenActivity, SoalActivity::class.java))
+        }
 
     }
 }

@@ -16,6 +16,9 @@
         android:theme="@style/Theme.CobaKeluar"
         tools:targetApi="31">
         <activity
+            android:name=".ui.activity.soal.SoalActivity"
+            android:exported="false" />
+        <activity
             android:name=".ui.activity.materi.MateriScreenActivity"
             android:exported="false" />
         <activity
