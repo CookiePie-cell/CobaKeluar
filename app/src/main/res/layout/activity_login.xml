@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:gravity="center"
+    android:background="@color/purple">
+    
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="300dp"
+        android:src="@drawable/logo_apps"
+        android:layout_gravity="center">
+    </ImageView>
+
+    <LinearLayout
+        android:id="@+id/btnLoginGoogle"
+        android:layout_width="260dp"
+        android:layout_height="50dp"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:background="@drawable/button_masuk"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Masuk"
+            android:textSize="20dp"
+            android:textAlignment="center"
+            android:textColor="@color/black"
+            android:backgroundTint="@color/white"
+            android:paddingStart="16dp"
+            android:layout_marginRight="10dp"
+            >
+        </TextView>
+        
+        <ImageView
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_gravity="center_vertical"
+            android:src="@drawable/logo_google"
+            ></ImageView>
+    </LinearLayout>
+
+    <TextView
+        android:layout_marginTop="10dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Lupa password?"
+        android:textColor="@color/white"
+        android:textSize="15dp"
+        android:layout_marginBottom="5dp">
+    </TextView>
+
+    <TextView
+        android:id="@+id/btnTextLupaPassword"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="kasian"
+        android:textSize="20dp"
+        android:textColor="@color/lightBlue"
+        >
+
+    </TextView>
+
+ 
+</LinearLayout>

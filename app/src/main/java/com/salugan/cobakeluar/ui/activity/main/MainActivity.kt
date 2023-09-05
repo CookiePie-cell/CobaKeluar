@@ -3,9 +3,9 @@ package com.salugan.cobakeluar.ui.activity.main
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import com.salugan.cobakeluar.R
+
 import com.salugan.cobakeluar.databinding.ActivityMainBinding
-import com.salugan.cobakeluar.ui.activity.materi.MateriScreenActivity
+import com.salugan.cobakeluar.ui.activity.authentication.ActivityLogin
 
 class MainActivity : AppCompatActivity() {
 
@@ -14,10 +14,13 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
-        setContentView(binding.root)
+        val view = binding.root
+        setContentView(view)
 
-        binding.button.setOnClickListener {
-            startActivity(Intent(this@MainActivity, MateriScreenActivity::class.java))
-        }
+        binding.splashScreen.postDelayed({
+            val intent = Intent(this, ActivityLogin::class.java)
+            startActivity(intent)
+            finish()
+        }, 3000)
     }
 }
