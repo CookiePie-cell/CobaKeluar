@@ -126,8 +126,7 @@ class ActivityLogin: AppCompatActivity() {
                         intent.putExtra("email", email)
                         intent.putExtra("phoneNumber", phoneNumber)
                         intent.putExtra("userPhoto", userPhoto)
-
-
+//                        startActivity(intent)
                     }else{
                     }
                 } else {

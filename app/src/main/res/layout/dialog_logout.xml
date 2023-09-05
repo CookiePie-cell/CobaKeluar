@@ -23,7 +23,7 @@
             android:gravity="left"
             android:textColor="@color/red"
             android:background="@drawable/dialog"
-            android:textSize="25dp" />
+            android:textSize="20dp" />
 
         <TextView
             android:layout_width="match_parent"
@@ -43,20 +43,22 @@
             android:layout_gravity="center">
 
             <TextView
+                android:id="@+id/btnTidak"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Tidak"
-                android:textSize="25dp"
+                android:textSize="20dp"
                 android:textStyle="bold"
                 android:textColor="@color/purple"
                 />
 
             <TextView
+                android:id="@+id/btnYa"
                 android:layout_marginLeft="100dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Ya"
-                android:textSize="25dp"
+                android:textSize="20dp"
                 android:textStyle="bold"
                 android:textColor="@color/purple"
                 />
