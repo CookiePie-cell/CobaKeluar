@@ -8,9 +8,9 @@
     tools:context=".ui.activity.main.MainActivity">
 
     <ImageView
-        android:id="@+id/ivProfile"
-        android:layout_width="48dp"
-        android:layout_height="48dp"
+        android:id="@+id/iconProfile"
+        android:layout_width="35dp"
+        android:layout_height="35dp"
         android:layout_marginTop="32dp"
         android:layout_marginEnd="32dp"
         android:scaleType="centerCrop"
@@ -18,55 +18,74 @@
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/img_user_home" />
 
-    <TextView
-        android:id="@+id/tvTryout"
-        style="@style/TextViewLarge"
-        android:layout_width="0dp"
+    <LinearLayout
+        android:id="@+id/textLayout"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="64dp"
-        android:layout_marginTop="32dp"
-        android:layout_marginEnd="72dp"
-        android:text="@string/try_out"
-        android:textColor="@color/white"
-        android:textStyle="bold"
+        android:layout_marginTop="156dp"
+        android:gravity="left"
+        android:orientation="vertical"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/ivProfile" />
+        app:layout_constraintTop_toTopOf="parent">
 
-    <TextView
-        android:id="@+id/textView"
-        style="@style/TextViewSmall"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:text="@string/numerasi"
-        android:textColor="@color/white"
-        app:layout_constraintStart_toStartOf="@+id/tvTryout"
-        app:layout_constraintTop_toBottomOf="@+id/tvTryout" />
+        <TextView
+            android:id="@+id/tvTryout"
+            style="@style/TextViewLarge"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/try_out"
+            android:textColor="@color/white"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/ivProfile" />
 
-    <TextView
-        android:id="@+id/textView2"
-        style="@style/TextViewLarge"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:text="@string/besok"
-        android:textColor="@color/white"
-        android:textStyle="bold"
-        app:layout_constraintBaseline_toBaselineOf="@+id/textView"
-        app:layout_constraintStart_toEndOf="@+id/textView" />
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="horizontal">
 
-    <TextView
-        android:id="@+id/textView3"
-        style="@style/TextViewLarge"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="4dp"
-        android:text="@string/selesai"
-        android:textColor="@color/lightBlue"
-        android:textStyle="bold"
-        app:layout_constraintBaseline_toBaselineOf="@+id/textView2"
-        app:layout_constraintStart_toEndOf="@+id/textView2" />
+            <TextView
+                android:id="@+id/textView"
+                style="@style/TextViewSmall"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/numerasi"
+                android:textColor="@color/white"
+                app:layout_constraintStart_toStartOf="@+id/tvTryout"
+                app:layout_constraintTop_toBottomOf="@+id/tvTryout" />
+
+            <TextView
+                android:id="@+id/textView2"
+                style="@style/TextViewLarge"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:text="@string/besok"
+                android:textColor="@color/white"
+                android:textStyle="bold"
+                app:layout_constraintBaseline_toBaselineOf="@+id/textView"
+                app:layout_constraintStart_toEndOf="@+id/textView" />
+
+            <TextView
+                android:id="@+id/textView3"
+                style="@style/TextViewLarge"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="4dp"
+                android:text="@string/selesai"
+                android:textColor="@color/lightBlue"
+                android:textStyle="bold"
+                app:layout_constraintBaseline_toBaselineOf="@+id/textView2"
+                app:layout_constraintStart_toEndOf="@+id/textView2" />
+
+
+        </LinearLayout>
+
+
+    </LinearLayout>
 
     <ImageView
         android:id="@+id/imageView2"
@@ -74,8 +93,9 @@
         android:layout_height="240dp"
         android:scaleType="centerCrop"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.532"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView2"
+        app:layout_constraintTop_toBottomOf="@+id/textLayout"
         app:srcCompat="@drawable/logo_apps" />
 
     <androidx.appcompat.widget.AppCompatButton
@@ -83,11 +103,13 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="74dp"
+        android:layout_marginTop="4dp"
         android:background="@drawable/rounded_button_white"
         android:text="@string/numerasi_without_coma"
         android:textSize="20sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.578"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imageView2" />
 

@@ -13,6 +13,7 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.GoogleAuthProvider
 import com.salugan.cobakeluar.R
 import com.salugan.cobakeluar.databinding.ActivityLoginBinding
+import com.salugan.cobakeluar.ui.activity.home.HomeActivity
 import com.salugan.cobakeluar.ui.activity.profile.ActivityProfile
 
 class ActivityLogin: AppCompatActivity() {
@@ -121,12 +122,13 @@ class ActivityLogin: AppCompatActivity() {
                         var phoneNumber = user.phoneNumber
                         var userPhoto = user.photoUrl
 
-                        val intent = Intent(this, ActivityProfile::class.java)
+                        val intent = Intent(this, HomeActivity::class.java)
                         intent.putExtra("nama", nama)
                         intent.putExtra("email", email)
                         intent.putExtra("phoneNumber", phoneNumber)
                         intent.putExtra("userPhoto", userPhoto)
-//                        startActivity(intent)
+                        finish()
+                        startActivity(intent)
                     }else{
                     }
                 } else {
