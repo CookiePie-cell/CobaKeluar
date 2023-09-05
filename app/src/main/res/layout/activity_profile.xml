@@ -8,8 +8,8 @@
 
 
     <ImageView
-        android:id="@+id/imageView"
-        android:layout_width="50dp"
+        android:id="@+id/btnBack"
+        android:layout_width="30dp"
         android:layout_height="50dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -31,12 +31,13 @@
         android:gravity="center">
 
         <ImageView
-            android:id="@+id/imageView2"
+            android:id="@+id/userPhoto"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:srcCompat="@drawable/img_user_profile" />
 
         <TextView
+            android:id="@+id/nama"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Nama Lengkap"
@@ -45,6 +46,15 @@
             />
 
         <TextView
+            android:id="@+id/email"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="email@gmail.com"
+            android:textSize="15dp"
+            android:layout_marginBottom="20dp"/>
+
+        <TextView
+            android:id="@+id/phoneNumber"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="email@gmail.com"
@@ -52,7 +62,7 @@
             android:layout_marginBottom="20dp"/>
 
         <ImageView
-            android:id="@+id/imageView3"
+            android:id="@+id/btnLogout"
             android:layout_width="60dp"
             android:layout_height="60dp"
             app:srcCompat="@drawable/icon_logout" />

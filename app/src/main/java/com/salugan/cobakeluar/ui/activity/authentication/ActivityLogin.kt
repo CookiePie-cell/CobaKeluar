@@ -13,6 +13,7 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.GoogleAuthProvider
 import com.salugan.cobakeluar.R
 import com.salugan.cobakeluar.databinding.ActivityLoginBinding
+import com.salugan.cobakeluar.ui.activity.profile.ActivityProfile
 
 class ActivityLogin: AppCompatActivity() {
     private lateinit var binding: ActivityLoginBinding
@@ -114,13 +115,19 @@ class ActivityLogin: AppCompatActivity() {
                     loadingDialog?.dismiss()
                     val user = mAuth.currentUser
                     Toast.makeText(this, "Login berhasil", Toast.LENGTH_SHORT).show()
-
-//                    val intent = Intent(this, HomeActivty::class.java)
-//                    startActivity(intent)
-
                     if(user != null){
                         var nama = user.displayName
                         var email = user.email
+                        var phoneNumber = user.phoneNumber
+                        var userPhoto = user.photoUrl
+
+                        val intent = Intent(this, ActivityProfile::class.java)
+                        intent.putExtra("nama", nama)
+                        intent.putExtra("email", email)
+                        intent.putExtra("phoneNumber", phoneNumber)
+                        intent.putExtra("userPhoto", userPhoto)
+
+
                     }else{
                     }
                 } else {
