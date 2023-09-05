@@ -16,6 +16,9 @@
         android:theme="@style/Theme.CobaKeluar"
         tools:targetApi="31">
         <activity
+            android:name=".ui.activity.home.HomeActivity"
+            android:exported="false" />
+        <activity
             android:name=".ui.activity.soal.SoalActivity"
             android:exported="false" />
         <activity
@@ -30,11 +33,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
-        <activity android:name=".ui.activity.authentication.ActivityLogin"
-            android:label="login">
-
-        </activity>
+        <activity
+            android:name=".ui.activity.authentication.ActivityLogin"
+            android:label="login"></activity>
     </application>
 
 </manifest>
