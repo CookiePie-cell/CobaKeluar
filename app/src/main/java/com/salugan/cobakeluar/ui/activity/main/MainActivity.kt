@@ -3,6 +3,7 @@ package com.salugan.cobakeluar.ui.activity.main
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+
 import com.salugan.cobakeluar.databinding.ActivityMainBinding
 import com.salugan.cobakeluar.ui.activity.authentication.ActivityLogin
 
