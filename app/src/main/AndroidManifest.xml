@@ -33,9 +33,16 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity
-            android:name=".ui.activity.authentication.ActivityLogin"
-            android:label="login"></activity>
+
+        <activity android:name=".ui.activity.authentication.ActivityLogin"
+            android:label="login">
+
+        </activity>
+
+        <activity android:name=".ui.activity.profile.ActivityProfile"
+            android:label="profile">
+
+        </activity>
     </application>
 
 </manifest>
