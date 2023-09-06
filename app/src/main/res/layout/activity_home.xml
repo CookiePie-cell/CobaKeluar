@@ -1,117 +1,48 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/purple"
+    android:background="@color/darkBlue"
+    android:orientation="vertical"
     tools:context=".ui.activity.main.MainActivity">
 
-    <ImageView
-        android:id="@+id/iconProfile"
-        android:layout_width="35dp"
-        android:layout_height="35dp"
-        android:layout_marginTop="32dp"
-        android:layout_marginEnd="32dp"
-        android:scaleType="centerCrop"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/img_user_home" />
-
     <LinearLayout
-        android:id="@+id/textLayout"
-        android:layout_width="wrap_content"
+        android:layout_marginTop="50dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="156dp"
-        android:gravity="left"
-        android:orientation="vertical"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        android:gravity="center"
+        android:orientation="horizontal"
+       >
+
+        <ImageView
+            android:id="@+id/iconProfile"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:scaleType="centerCrop"
+            app:srcCompat="@drawable/img_user_home"
+            android:layout_marginRight="50dp"/>
 
         <TextView
             android:id="@+id/nama"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Nama Pengguna"
-            android:textSize="20dp"
             android:textColor="@color/white"
-            android:textStyle="bold"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/ivProfile" />
-
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:orientation="horizontal">
-
-            <TextView
-                android:id="@+id/textView"
-                style="@style/TextViewSmall"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="try out,"
-                android:textColor="@color/white"
-                app:layout_constraintStart_toStartOf="@+id/tvTryout"
-                app:layout_constraintTop_toBottomOf="@+id/tvTryout" />
-
-            <TextView
-                android:id="@+id/textView2"
-                style="@style/TextViewLarge"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:text="@string/besok"
-                android:textColor="@color/white"
-                android:textStyle="bold"
-                app:layout_constraintBaseline_toBaselineOf="@+id/textView"
-                app:layout_constraintStart_toEndOf="@+id/textView" />
-
-            <TextView
-                android:id="@+id/textView3"
-                style="@style/TextViewLarge"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="4dp"
-                android:text="AJA "
-                android:textColor="@color/lightBlue"
-                android:textStyle="bold"
-                app:layout_constraintBaseline_toBaselineOf="@+id/textView2"
-                app:layout_constraintStart_toEndOf="@+id/textView2" />
-
-
-        </LinearLayout>
-
-
+            android:textSize="20dp"
+            android:textStyle="bold" />
     </LinearLayout>
 
 
-    <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/button"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginHorizontal="74dp"
-        android:layout_marginTop="28dp"
-        android:background="@drawable/rounded_button_white"
-        android:text="@string/numerasi_without_coma"
-        android:textSize="20sp"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.496"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textLayout" />
-
     <LinearLayout
-        android:layout_marginBottom="40dp"
-        android:layout_width="250dp"
-        android:layout_height="300dp"
+        android:id="@+id/linearLayout"
+        android:layout_width="300dp"
+        android:layout_height="150dp"
+        android:layout_marginTop="50dp"
         android:orientation="vertical"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button">
+        android:layout_gravity="center"
+   >
 
         <androidx.viewpager2.widget.ViewPager2
             android:id="@+id/viewPager"
@@ -126,4 +57,96 @@
             android:layout_marginTop="16dp" />
     </LinearLayout>
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+
+    <LinearLayout
+        android:layout_marginTop="20dp"
+        android:id="@+id/textLayout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="left"
+        android:orientation="vertical"
+        android:layout_gravity="center"
+      >
+
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/textView"
+                style="@style/TextViewSmall"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="try out,"
+                android:textColor="@color/white"
+              />
+
+            <TextView
+                android:id="@+id/textView2"
+                style="@style/TextViewLarge"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:text="@string/besok"
+                android:textColor="@color/white"
+                android:textStyle="bold"
+               />
+
+            <TextView
+                android:id="@+id/textView3"
+                style="@style/TextViewLarge"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="4dp"
+                android:text="AJA "
+                android:textColor="@color/yellow"
+                android:textStyle="bold"
+                />
+
+
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Besok juga selesai, jadi besok-besok aja!"
+            android:textColor="@color/white"
+            android:textSize="10dp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/ivProfile" />
+
+
+    </LinearLayout>
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/button"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:background="@drawable/rounded_button_white"
+        android:text="@string/numerasi_without_coma"
+        android:textColor="@color/darkBlue"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:layout_gravity="center"
+        />
+
+    <ImageView
+        android:layout_marginTop="25dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:src="@drawable/logo"
+        android:scaleType="centerCrop"
+        android:layout_marginBottom="25dp">
+
+
+    </ImageView>
+
+
+
+</LinearLayout>

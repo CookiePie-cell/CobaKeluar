@@ -4,12 +4,13 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:gravity="center"
-    android:background="@color/purple">
-    
+    android:background="@color/darkBlue">
+
     <ImageView
-        android:layout_width="match_parent"
-        android:layout_height="300dp"
-        android:src="@drawable/logo_apps"
+        android:layout_width="400dp"
+        android:layout_height="250dp"
+        android:src="@drawable/logo"
+        android:scaleType="centerCrop"
         android:layout_gravity="center">
     </ImageView>
 
@@ -59,7 +60,7 @@
         android:layout_height="wrap_content"
         android:text="kasian"
         android:textSize="20dp"
-        android:textColor="@color/lightBlue"
+        android:textColor="@color/yellow"
         >
 
     </TextView>
