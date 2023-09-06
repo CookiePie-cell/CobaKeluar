@@ -14,7 +14,6 @@ import com.google.firebase.auth.GoogleAuthProvider
 import com.salugan.cobakeluar.R
 import com.salugan.cobakeluar.databinding.ActivityLoginBinding
 import com.salugan.cobakeluar.ui.activity.home.HomeActivity
-import com.salugan.cobakeluar.ui.activity.profile.ActivityProfile
 
 class ActivityLogin: AppCompatActivity() {
     private lateinit var binding: ActivityLoginBinding
