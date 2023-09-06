@@ -4,84 +4,119 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/purple"
+    android:background="@color/darkBlue"
     tools:context=".ui.activity.main.MainActivity">
 
-    <TextView
-        android:id="@+id/tvTryout"
-        style="@style/TextViewLarge"
-        android:layout_width="wrap_content"
+
+    <LinearLayout
+        android:id="@+id/textLayout"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="54dp"
-        android:layout_marginTop="128dp"
-        android:text="@string/try_out"
-        android:textColor="@color/white"
-        android:textStyle="bold"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.132">
 
-    <TextView
-        android:id="@+id/textView"
-        style="@style/TextViewSmall"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:text="@string/numerasi"
-        android:textColor="@color/white"
-        app:layout_constraintStart_toStartOf="@+id/tvTryout"
-        app:layout_constraintTop_toBottomOf="@+id/tvTryout" />
 
-    <TextView
-        android:id="@+id/textView2"
-        style="@style/TextViewLarge"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:text="@string/besok"
-        android:textColor="@color/white"
-        android:textStyle="bold"
-        app:layout_constraintBaseline_toBaselineOf="@+id/textView"
-        app:layout_constraintStart_toEndOf="@+id/textView" />
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="horizontal">
 
-    <TextView
-        android:id="@+id/textView3"
-        style="@style/TextViewLarge"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:text="@string/selesai"
-        android:textColor="@color/lightBlue"
-        android:textStyle="bold"
-        app:layout_constraintBaseline_toBaselineOf="@+id/textView2"
-        app:layout_constraintStart_toEndOf="@+id/textView2" />
+            <TextView
+                android:id="@+id/textView"
+                style="@style/TextViewSmall"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="try out,"
+                android:textColor="@color/white" />
+
+            <TextView
+                android:id="@+id/textView2"
+                style="@style/TextViewLarge"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/besok"
+                android:layout_marginStart="5dp"
+                android:textColor="@color/white"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/textView3"
+                style="@style/TextViewLarge"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="4dp"
+                android:text="AJA "
+                android:textColor="@color/yellow"
+                android:textStyle="bold" />
+
+
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Besok juga selesai, jadi besok-besok aja!"
+            android:textColor="@color/white"
+            android:textSize="15dp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/ivProfile" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:background="@color/white"
+        android:id="@+id/line"
+        android:layout_width="match_parent"
+        android:layout_height="10dp"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/textLayout"
+        app:layout_constraintVertical_bias="0.062"></LinearLayout>
+
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/btnDataDanKetidakpastian"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="64dp"
-        android:layout_marginTop="48dp"
-        android:background="@drawable/rounded_button_white"
-        android:textStyle="bold"
-        android:textSize="16sp"
+        android:background="@drawable/rounded_button_yellow"
         android:paddingVertical="16dp"
+        android:text="DATA DAN KETIDAKPASTIAN"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView2" />
+        app:layout_constraintTop_toBottomOf="@+id/line"
+        app:layout_constraintVertical_bias="0.084" />
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/btnGeometriPengukuran"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="64dp"
-        android:layout_marginTop="16dp"
-        android:background="@drawable/rounded_button_white"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/rounded_button_yellow"
         android:text="@string/geometri_pengukuran"
-        android:textStyle="bold"
         android:textSize="16sp"
+        android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/btnDataDanKetidakpastian" />
+
 
 
     <androidx.appcompat.widget.AppCompatButton
@@ -89,14 +124,23 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="64dp"
-        android:layout_marginTop="16dp"
-        android:background="@drawable/rounded_button_dark_blue"
+        android:layout_marginTop="30dp"
+        android:background="@drawable/rounded_button_white"
         android:text="@string/history"
-        android:textColor="@color/white"
-        android:textStyle="bold"
+        android:textColor="@color/darkBlue"
         android:textSize="20sp"
+        android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/btnGeometriPengukuran" />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:scaleType="centerCrop"
+        android:src="@drawable/logo"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
