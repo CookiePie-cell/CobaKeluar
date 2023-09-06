@@ -5,7 +5,6 @@ import com.google.gson.annotations.SerializedName
 import kotlinx.parcelize.Parcelize
 
 @Parcelize
-
 data class TryoutItem(
 
     @field:SerializedName("subject_id")

@@ -20,6 +20,9 @@ data class QuestionItem(
     @field:SerializedName("essay_answer")
     val essayAnswer: String? = null,
 
+    @field:SerializedName("question_text")
+    val questionText: String? = null,
+
     @field:SerializedName("short_answer")
     val shortAnswer: List<ShortAnswerItem?>? = null,
 

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -8,26 +8,126 @@
     xmlns:auto="http://schemas.android.com/apk/res-auto"
     tools:context=".ui.fragment.SoalFragment">
 
+
     <LinearLayout
+        android:id="@+id/llQuestion"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:layout_marginBottom="16dp"
+        android:layout_marginTop="8dp"
+        android:orientation="vertical"
+        android:background="@drawable/shape_bg_white_rectangle_radius"
+        android:layout_marginHorizontal="16dp">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
+        <io.github.kexanie.library.MathView
+            android:id="@+id/formulaOne"
             android:layout_width="match_parent"
-            android:layout_height="150dp"
-            android:layout_marginBottom="16dp"
-            android:layout_marginTop="8dp"
-            android:background="@drawable/shape_bg_white_rectangle_radius"
-            android:layout_marginHorizontal="16dp">
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp"
+            auto:engine="MathJax" />
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_margin="8dp"
-                android:text="Soal"/>
-        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <ImageView
+            android:id="@+id/imgView"
+            android:layout_width="200dp"
+            android:layout_height="200dp"
+            android:layout_gravity="center_horizontal"
+            tools:src="@drawable/ic_launcher_background" />
 
     </LinearLayout>
 
-</ScrollView>
+    <RadioGroup
+        android:id="@+id/radioGroup"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="16dp"
+        android:orientation="vertical">
+        <com.salugan.cobakeluar.ui.customview.RadioLinearLayout
+            android:id="@+id/llOption1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingVertical="16dp"
+            android:background="@drawable/radio_selector"
+            android:layout_marginBottom="8dp"
+            android:elevation="4dp">
+            <io.github.kexanie.library.MathView
+                android:id="@+id/mvOption1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginHorizontal="16dp"
+                auto:engine="MathJax"/>
+        </com.salugan.cobakeluar.ui.customview.RadioLinearLayout>
+
+        <com.salugan.cobakeluar.ui.customview.RadioLinearLayout
+            android:id="@+id/llOption2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingVertical="16dp"
+            android:background="@drawable/radio_selector"
+            android:layout_marginBottom="8dp"
+            android:elevation="4dp">
+            <io.github.kexanie.library.MathView
+                android:id="@+id/mvOption2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginHorizontal="16dp"
+                auto:engine="MathJax"/>
+        </com.salugan.cobakeluar.ui.customview.RadioLinearLayout>
+
+
+        <com.salugan.cobakeluar.ui.customview.RadioLinearLayout
+            android:id="@+id/llOption3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingVertical="16dp"
+            android:background="@drawable/radio_selector"
+            android:layout_marginBottom="8dp"
+            android:elevation="4dp">
+            <io.github.kexanie.library.MathView
+                android:id="@+id/mvOption3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginHorizontal="16dp"
+                auto:engine="MathJax"/>
+        </com.salugan.cobakeluar.ui.customview.RadioLinearLayout>
+
+        <com.salugan.cobakeluar.ui.customview.RadioLinearLayout
+            android:id="@+id/llOption4"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingVertical="16dp"
+            android:background="@drawable/radio_selector"
+            android:layout_marginBottom="8dp"
+            android:elevation="4dp">
+            <io.github.kexanie.library.MathView
+                android:id="@+id/mvOption4"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginHorizontal="16dp"
+                auto:engine="MathJax"/>
+        </com.salugan.cobakeluar.ui.customview.RadioLinearLayout>
+
+        <com.salugan.cobakeluar.ui.customview.RadioLinearLayout
+            android:id="@+id/llOption5"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingVertical="16dp"
+            android:background="@drawable/radio_selector"
+            android:layout_marginBottom="8dp"
+            android:elevation="4dp">
+            <io.github.kexanie.library.MathView
+                android:id="@+id/mvOption5"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginHorizontal="16dp"
+                auto:engine="MathJax"/>
+        </com.salugan.cobakeluar.ui.customview.RadioLinearLayout>
+    </RadioGroup>
+</LinearLayout>

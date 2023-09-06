@@ -14,6 +14,7 @@ data class QuestionModel(
     val questionId: Int?,
     val qtId: Int?,
     val essayAnswer: String?,
+    val questionText: String?,
     val selections: List<SelectionModel>?,
     val selectionAnswer: List<SelectionAnswerItem?>?,
     val keyword: List<String?>?,

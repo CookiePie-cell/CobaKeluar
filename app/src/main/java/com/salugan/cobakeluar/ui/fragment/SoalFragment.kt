@@ -9,10 +9,14 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.bumptech.glide.Glide
+import com.salugan.cobakeluar.R
 import com.salugan.cobakeluar.databinding.FragmentSoalBinding
 import com.salugan.cobakeluar.model.QuestionModel
+import com.salugan.cobakeluar.ui.customview.RadioLinearLayout
 import io.github.kexanie.library.MathView
 import org.jsoup.Jsoup
+import java.net.URL
 
 class SoalFragment : Fragment() {
 
@@ -22,7 +26,6 @@ class SoalFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        // Inflate the layout for this fragment
         _binding = FragmentSoalBinding.inflate(inflater)
         return binding.root
     }
@@ -36,13 +39,85 @@ class SoalFragment : Fragment() {
             @Suppress("DEPRECATION")
             arguments?.getParcelable(QUESTIONS)
         }
-//        val mathView: MathView = binding.formulaOne
-//        if (question != null) {
-//            mathView.text =  Html.fromHtml(question.discussion?.get(0)?.discussionText, Html.FROM_HTML_MODE_LEGACY).toString()
-//            Log.d("tyutyu", Html.fromHtml(question.discussion?.get(0)?.discussionText, Html.FROM_HTML_MODE_LEGACY).toString())
-//        }
+        val mathView: MathView = binding.formulaOne
+
+        val flags = Html.FROM_HTML_MODE_COMPACT or Html.FROM_HTML_MODE_LEGACY
+
+        if (question != null) {
+            Log.d("poipoi", question.selections?.size.toString())
+            mathView.text = Html.fromHtml(question.questionText, flags, { source ->
+                Glide.with(requireActivity())
+                    .load(source.replace("""\"""", ""))
+                    .into(binding.imgView)
+
+                null
+            }, null).toString()
+
+            val llOption1 = binding.llOption1
+            val llOption2 = binding.llOption2
+            val llOption3 = binding.llOption3
+            val llOption4 = binding.llOption4
+            val llOption5 = binding.llOption5
+
+            val mvOption1 = llOption1.findViewById<MathView>(R.id.mvOption1)
+            val mvOption2 = llOption2.findViewById<MathView>(R.id.mvOption2)
+            val mvOption3 = llOption3.findViewById<MathView>(R.id.mvOption3)
+            val mvOption4 = llOption4.findViewById<MathView>(R.id.mvOption4)
+            val mvOption5 = llOption5.findViewById<MathView>(R.id.mvOption5)
+
+//            mvOption1.text = question.selections?.get(0)?.text
+//            mvOption2.text = question.selections?.get(1)?.text
+//            mvOption3.text = question.selections?.get(2)?.text
+//            mvOption4.text = question.selections?.get(3)?.text
+//            mvOption5.text = question.selections?.get(4)?.text
+
+            llOption1.setOnClickListener {
+                llOption1.toggle()
+                setSelectionBackground(llOption1)
+            }
+
+            llOption2.setOnClickListener {
+                llOption2.toggle()
+                setSelectionBackground(llOption2)
+            }
+
+            llOption3.setOnClickListener {
+                llOption3.toggle()
+                setSelectionBackground(llOption3)
+            }
+
+            llOption4.setOnClickListener {
+                llOption4.toggle()
+                setSelectionBackground(llOption4)
+            }
+
+            llOption5.setOnClickListener {
+                llOption5.toggle()
+                setSelectionBackground(llOption5)
+            }
+        }
+
 
     }
+
+    private fun setSelectionBackground(selectedView: RadioLinearLayout) {
+        val radioLinearLayouts = listOf<RadioLinearLayout>(
+            binding.llOption1,
+            binding.llOption2,
+            binding.llOption3,
+            binding.llOption4,
+            binding.llOption5
+        )
+
+        for (view in radioLinearLayouts) {
+            if (view == selectedView) {
+                view.setBackgroundResource(R.drawable.radio_selected)
+            } else {
+                view.setBackgroundResource(R.drawable.radio_not_selected)
+            }
+        }
+    }
+
     companion object {
         const val QUESTIONS = "extra_question"
     }
