@@ -53,6 +53,12 @@ class ActivityProfile: AppCompatActivity() {
 
     }
 
+    /**
+     * this method to logout account.
+     * @author Faiz Ivan Tama
+     * @since Sept 2023.
+     * @see https://medium.com/swlh/google-login-and-logout-in-android-with-firebase-kotlin-implementation-73cf6a5a989e
+     * */
     fun dialogLogout(){
         val dialogView = layoutInflater.inflate(R.layout.dialog_logout, null)
         val builder = AlertDialog.Builder(this)
