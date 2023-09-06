@@ -44,6 +44,7 @@ class SoalActivity : AppCompatActivity() {
                     val data: ArrayList<QuestionModel> = ArrayList(it.data)
                     val tabPagerSoalAdapter = TabPagerSoalAdapter(this, data)
                     val viewPager: ViewPager2 = binding.viewPager
+                    viewPager.isUserInputEnabled = false
                     viewPager.adapter = tabPagerSoalAdapter
                     val tabs: TabLayout = binding.tabs
                     TabLayoutMediator(tabs, viewPager) { tab, position ->
@@ -58,10 +59,5 @@ class SoalActivity : AppCompatActivity() {
                 is Result.Error -> ""
             }
         }
-
-
-
     }
-
-
 }

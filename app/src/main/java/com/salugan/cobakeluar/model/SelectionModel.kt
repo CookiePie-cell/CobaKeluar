@@ -9,5 +9,5 @@ data class SelectionModel(
     val questionId: Int?,
     val text: String?,
     val image: String?,
-    val isSelected: Boolean
+    var isSelected: Boolean,
 ) : Parcelable

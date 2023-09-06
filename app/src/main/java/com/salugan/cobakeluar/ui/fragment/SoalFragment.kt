@@ -4,15 +4,21 @@ import android.os.Build
 import android.os.Bundle
 import android.text.Html
 import android.util.Log
+import android.view.Gravity
 
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
+import android.widget.LinearLayout
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.salugan.cobakeluar.R
+import com.salugan.cobakeluar.adapter.AnswerAdapter
 import com.salugan.cobakeluar.databinding.FragmentSoalBinding
 import com.salugan.cobakeluar.model.QuestionModel
+import com.salugan.cobakeluar.model.SelectionModel
 import com.salugan.cobakeluar.ui.customview.RadioLinearLayout
 import io.github.kexanie.library.MathView
 import org.jsoup.Jsoup
@@ -44,78 +50,50 @@ class SoalFragment : Fragment() {
         val flags = Html.FROM_HTML_MODE_COMPACT or Html.FROM_HTML_MODE_LEGACY
 
         if (question != null) {
-            Log.d("poipoi", question.selections?.size.toString())
+            val images = mutableListOf<String>()
             mathView.text = Html.fromHtml(question.questionText, flags, { source ->
-                Glide.with(requireActivity())
-                    .load(source.replace("""\"""", ""))
-                    .into(binding.imgView)
-
+                Log.d("mbmb", source)
+                images.add(source.replace("""\"""", ""))
                 null
             }, null).toString()
 
-            val llOption1 = binding.llOption1
-            val llOption2 = binding.llOption2
-            val llOption3 = binding.llOption3
-            val llOption4 = binding.llOption4
-            val llOption5 = binding.llOption5
 
-            val mvOption1 = llOption1.findViewById<MathView>(R.id.mvOption1)
-            val mvOption2 = llOption2.findViewById<MathView>(R.id.mvOption2)
-            val mvOption3 = llOption3.findViewById<MathView>(R.id.mvOption3)
-            val mvOption4 = llOption4.findViewById<MathView>(R.id.mvOption4)
-            val mvOption5 = llOption5.findViewById<MathView>(R.id.mvOption5)
+            for(i in 0 until images.size) {
+                val imageView = ImageView(requireActivity())
 
-//            mvOption1.text = question.selections?.get(0)?.text
-//            mvOption2.text = question.selections?.get(1)?.text
-//            mvOption3.text = question.selections?.get(2)?.text
-//            mvOption4.text = question.selections?.get(3)?.text
-//            mvOption5.text = question.selections?.get(4)?.text
+                Glide.with(requireActivity())
+                    .load(images[i])
+                    .into(imageView)
 
-            llOption1.setOnClickListener {
-                llOption1.toggle()
-                setSelectionBackground(llOption1)
+                val desiredWidthInPixels = 720 // Replace with your desired width in pixels
+                val desiredHeightInPixels = 480 // Replace with your desired height in pixels
+
+                val layoutParams = LinearLayout.LayoutParams(
+                    desiredWidthInPixels,
+                    desiredHeightInPixels
+                )
+
+                layoutParams.gravity = Gravity.CENTER_HORIZONTAL
+
+                imageView.layoutParams = layoutParams
+
+                binding.llQuestion.addView(imageView)
             }
 
-            llOption2.setOnClickListener {
-                llOption2.toggle()
-                setSelectionBackground(llOption2)
-            }
+            val layoutManager = LinearLayoutManager(requireActivity())
+            binding.rvAnswer.layoutManager = layoutManager
 
-            llOption3.setOnClickListener {
-                llOption3.toggle()
-                setSelectionBackground(llOption3)
-            }
-
-            llOption4.setOnClickListener {
-                llOption4.toggle()
-                setSelectionBackground(llOption4)
-            }
-
-            llOption5.setOnClickListener {
-                llOption5.toggle()
-                setSelectionBackground(llOption5)
-            }
+            setAdapter(question.selections!!)
         }
-
-
     }
 
-    private fun setSelectionBackground(selectedView: RadioLinearLayout) {
-        val radioLinearLayouts = listOf<RadioLinearLayout>(
-            binding.llOption1,
-            binding.llOption2,
-            binding.llOption3,
-            binding.llOption4,
-            binding.llOption5
-        )
-
-        for (view in radioLinearLayouts) {
-            if (view == selectedView) {
-                view.setBackgroundResource(R.drawable.radio_selected)
-            } else {
-                view.setBackgroundResource(R.drawable.radio_not_selected)
-            }
+    private fun setAdapter(selections: List<SelectionModel>) {
+        val selectionsArrayList = ArrayList<SelectionModel>()
+        selections.forEach {
+            selectionsArrayList.add(it)
         }
+        val adapter = AnswerAdapter(selectionsArrayList)
+        binding.rvAnswer.adapter = adapter
     }
 
     companion object {
