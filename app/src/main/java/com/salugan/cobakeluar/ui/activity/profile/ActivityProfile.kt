@@ -40,10 +40,6 @@ class ActivityProfile: AppCompatActivity() {
                 .into(binding.userPhoto)
         }
 
-        binding.btnBack.setOnClickListener(){
-            onBackPressed()
-        }
-
         binding.btnLogout.setOnClickListener(){
             dialogLogout()
 
