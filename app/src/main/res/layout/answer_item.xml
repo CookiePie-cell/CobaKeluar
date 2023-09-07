@@ -6,8 +6,10 @@
     android:paddingVertical="16dp"
     android:layout_marginBottom="8dp"
     android:clickable="true"
+    android:orientation="vertical"
     android:background="@drawable/radio_not_selected"
-    xmlns:tools="http://schemas.android.com/tools">
+    xmlns:tools="http://schemas.android.com/tools"
+    android:focusable="true">
 
 
     <io.github.kexanie.library.MathView
@@ -15,7 +17,15 @@
         android:clickable="true"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginHorizontal="8dp"
-        auto:engine="MathJax"/>
+        android:layout_marginHorizontal="12dp"
+        auto:engine="MathJax"
+        android:focusable="true" />
+
+    <ImageView
+        android:id="@+id/ivSelection"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:layout_marginHorizontal="12dp"
+        android:visibility="gone"/>
 
 </LinearLayout>

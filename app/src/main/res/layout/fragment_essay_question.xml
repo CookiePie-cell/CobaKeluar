@@ -1,12 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
     xmlns:auto="http://schemas.android.com/apk/res-auto"
-    tools:context=".ui.fragment.soal.MultipleChoiceQuestion">
+    tools:context=".ui.fragment.soal.EssayQuestion">
 
     <LinearLayout
         android:id="@+id/llQuestion"
@@ -29,13 +28,14 @@
 
     </LinearLayout>
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rvAnswer"
+
+    <EditText
+        style="@style/Widget.AppCompat.EditText"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:nestedScrollingEnabled="false"
-        android:layout_marginHorizontal="16dp"
-        tools:listitem="@layout/answer_item"/>
-
-
+        android:layout_height="150dp"
+        android:padding="16dp"
+        android:hint="Ketik jawabanmu"
+        android:background="@drawable/shape_bg_white_rectangle_radius"    android:gravity="top|start"
+        android:inputType="textMultiLine|textNoSuggestions"
+        android:layout_marginHorizontal="16dp" />
 </LinearLayout>

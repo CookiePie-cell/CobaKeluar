@@ -14,4 +14,8 @@ class SoalViewModel @Inject constructor(private val tryoutRepository: TryoutRepo
     fun getDataDanKetidakPastianQuestion(): LiveData<Result<List<QuestionModel>>> {
         return tryoutRepository.getDataDanKetidakPastianQuestions()
     }
+
+    fun getGeometriDanPengukuranQuestion(): LiveData<Result<List<QuestionModel>>> {
+        return tryoutRepository.getGeometriDanPengukuranQuestion()
+    }
 }
