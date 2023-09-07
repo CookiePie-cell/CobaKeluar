@@ -111,7 +111,6 @@ class ActivityLogin: AppCompatActivity() {
             .addOnCompleteListener(this) { task ->
                 if (task.isSuccessful) {
                     val user = mAuth.currentUser
-                    var id = user?.uid.toString()
                     val isNewUser = task.result?.additionalUserInfo?.isNewUser
                     if (isNewUser == true) {
                         mAuth.currentUser?.delete()?.addOnCompleteListener { deleteTask ->

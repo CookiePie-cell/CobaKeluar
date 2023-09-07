@@ -39,9 +39,7 @@ class ActivityProfile: AppCompatActivity() {
 
         viewModel = ViewModelProvider(this).get(ProfileViewModel::class.java)
 
-        viewModel.dataProfile(id!!)
-
-            viewModel.resultDataProfile.observe(this, { result ->
+            viewModel.dataProfile(id!!).observe(this, { result ->
                 when (result) {
                     is Result.Success -> {
                         loadingDialog?.dismiss()
