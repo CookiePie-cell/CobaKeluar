@@ -11,6 +11,7 @@ import androidx.core.content.ContextCompat
 import com.salugan.cobakeluar.R
 import com.salugan.cobakeluar.databinding.ActivityMainBinding
 import com.salugan.cobakeluar.databinding.ActivityMateriScreenBinding
+import com.salugan.cobakeluar.ui.activity.history.ActivityHistory
 import com.salugan.cobakeluar.ui.activity.soal.SoalActivity
 
 class MateriScreenActivity : AppCompatActivity() {
@@ -43,6 +44,11 @@ class MateriScreenActivity : AppCompatActivity() {
             intent.putExtra(SoalActivity.KATEGORI, GEOMETRI_DAN_PENGUKURAN)
             startActivity(intent)
         }
+
+        binding.btnHistory.setOnClickListener({
+            startActivity(Intent(this@MateriScreenActivity, ActivityHistory::class.java))
+
+        })
 
     }
 
