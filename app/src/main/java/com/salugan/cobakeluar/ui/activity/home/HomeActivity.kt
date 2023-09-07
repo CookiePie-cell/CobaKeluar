@@ -6,9 +6,11 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
 import androidx.viewpager2.widget.ViewPager2
+import com.google.firebase.auth.FirebaseAuth
 import com.salugan.cobakeluar.R
 import com.salugan.cobakeluar.adapter.BannerAdapter
 import com.salugan.cobakeluar.databinding.ActivityHomeBinding
+import com.salugan.cobakeluar.ui.activity.authentication.ActivityLogin
 import com.salugan.cobakeluar.ui.activity.materi.MateriScreenActivity
 import com.salugan.cobakeluar.ui.activity.profile.ActivityProfile
 import com.tbuonomo.viewpagerdotsindicator.WormDotsIndicator
@@ -67,6 +69,15 @@ class HomeActivity : AppCompatActivity() {
             }
         }
         autoSlideHandler.postDelayed(runnable, delayMillis)
+    }
+
+    override fun onBackPressed() {
+        val mAuth = FirebaseAuth.getInstance()
+        mAuth.signOut()
+
+        val intent = Intent(this, ActivityLogin::class.java) // Replace with the appropriate activity
+        startActivity(intent)
+        finish()
     }
 
 }
