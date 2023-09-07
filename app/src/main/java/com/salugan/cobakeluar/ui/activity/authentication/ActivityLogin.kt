@@ -21,8 +21,6 @@ class ActivityLogin: AppCompatActivity() {
 
     private lateinit var mAuth: FirebaseAuth
     var loadingDialog: AlertDialog? = null
-    var errorDialog: AlertDialog? = null
-
     // Request code for Google Sign-In
     private val requestCode = 123
 
@@ -31,7 +29,6 @@ class ActivityLogin: AppCompatActivity() {
         binding = ActivityLoginBinding.inflate(layoutInflater)
         val view = binding.root
         setContentView(view)
-
 
         mAuth = FirebaseAuth.getInstance()
 
@@ -70,6 +67,7 @@ class ActivityLogin: AppCompatActivity() {
                     val intent = Intent(this, HomeActivity::class.java)
                     startActivity(intent)
                     Toast.makeText(this, "Login berhasil", Toast.LENGTH_SHORT).show()
+
                 } else {
                     loadingDialog?.dismiss()
                     Toast.makeText(this, "Email atau password salah", Toast.LENGTH_SHORT).show()
@@ -98,7 +96,6 @@ class ActivityLogin: AppCompatActivity() {
 
                 firebaseAuthWithGoogle(account)
             } catch (e: ApiException) {
-                error()
                 Toast.makeText(this, "gagal: ${e.message}", Toast.LENGTH_SHORT)
                     .show()
             }
@@ -113,9 +110,10 @@ class ActivityLogin: AppCompatActivity() {
         mAuth.signInWithCredential(credential)
             .addOnCompleteListener(this) { task ->
                 if (task.isSuccessful) {
+                    val user = mAuth.currentUser
+                    var id = user?.uid.toString()
                     val isNewUser = task.result?.additionalUserInfo?.isNewUser
                     if (isNewUser == true) {
-                        val user = mAuth.currentUser
                         mAuth.currentUser?.delete()?.addOnCompleteListener { deleteTask ->
                             if (deleteTask.isSuccessful) {
                                 var nama = user?.displayName
@@ -139,7 +137,6 @@ class ActivityLogin: AppCompatActivity() {
                                 }
                             } else {
                                 loadingDialog?.dismiss()
-                                error()
                                 Toast.makeText(this, "Gagal membuat akun baru", Toast.LENGTH_SHORT)
                                     .show()
                             }
@@ -153,7 +150,6 @@ class ActivityLogin: AppCompatActivity() {
                     }
                 } else {
                     loadingDialog?.dismiss()
-                    error()
                     Toast.makeText(this, "Authentication failed.", Toast.LENGTH_SHORT).show()
                 }
             }
@@ -171,14 +167,6 @@ class ActivityLogin: AppCompatActivity() {
         builder.setView(dialogView)
         loadingDialog = builder.create()
         loadingDialog?.show()
-    }
-
-    private fun error() {
-        val dialogView = layoutInflater.inflate(R.layout.dialog_error, null)
-        val builder = AlertDialog.Builder(this)
-        builder.setView(dialogView)
-        errorDialog = builder.create()
-        errorDialog?.show()
     }
 
 }

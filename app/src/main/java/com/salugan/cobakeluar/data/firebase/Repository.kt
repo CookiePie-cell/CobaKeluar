@@ -10,12 +10,12 @@ import com.google.firebase.database.ValueEventListener
 import com.salugan.cobakeluar.model.UserModel
 import javax.inject.Inject
 import com.salugan.cobakeluar.data.Result
-import okhttp3.internal.http.hasBody
 
 class Repository @Inject constructor(
     private val db: FirebaseDatabase
 ){
     val resultAddData = MutableLiveData<Result<String>>()
+    val resultDataProfile = MutableLiveData<Result<UserModel>>()
 
     fun userData(addData: UserModel): LiveData<Result<String>> {
         val database = db.getReference("users").push()
@@ -40,4 +40,36 @@ class Repository @Inject constructor(
 
         return resultAddData
     }
+
+    fun dataProfile(id: String): LiveData<Result<UserModel>> {
+        val resultDataProfile = MutableLiveData<Result<UserModel>>()
+
+        val database =db.getReference("users")
+        val query = database.orderByChild("id").equalTo(id)
+
+        query.addValueEventListener(object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                val foundUser = mutableListOf<UserModel>()
+
+                for (dataSnapshot in snapshot.children) {
+                    val user = dataSnapshot.getValue(UserModel::class.java)
+                    user?.let { foundUser.add(it) }
+                }
+
+                if (foundUser.isNotEmpty()) {
+                    resultDataProfile.value = Result.Success(foundUser[0])
+                } else {
+                    resultDataProfile.value = Result.Error("User not found")
+                }
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                resultDataProfile.value = Result.Error(error.message)
+            }
+        })
+
+        return resultDataProfile
+    }
+
+
 }

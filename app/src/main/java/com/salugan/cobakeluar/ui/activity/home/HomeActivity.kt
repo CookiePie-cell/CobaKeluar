@@ -26,10 +26,6 @@ class HomeActivity : AppCompatActivity() {
         binding = ActivityHomeBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        var nama = intent.getStringExtra("nama") ?: ""
-        var email = intent.getStringExtra("email") ?: ""
-        var phoneNumber = intent.getStringExtra("phoneNumber") ?: ""
-        var userPhoto = intent.getStringExtra("userPhoto")
 
         viewPager = findViewById(R.id.viewPager)
         val dotsIndicator: WormDotsIndicator = findViewById(R.id.dotsIndicator)
@@ -51,10 +47,6 @@ class HomeActivity : AppCompatActivity() {
 
         binding.iconProfile.setOnClickListener() {
             val intent = Intent(this, ActivityProfile::class.java)
-            intent.putExtra("nama", nama)
-            intent.putExtra("email", email)
-            intent.putExtra("phoneNumber", phoneNumber)
-            intent.putExtra("userPhoto", userPhoto)
             startActivity(intent)
         }
 
