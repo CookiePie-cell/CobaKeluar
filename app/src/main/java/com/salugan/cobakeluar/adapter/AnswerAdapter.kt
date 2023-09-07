@@ -26,8 +26,10 @@ class AnswerAdapter(private val selections: ArrayList<SelectionModel>, private v
             Log.d("vbnvbn", selection.toString())
             if (this.question.isMultipleChoice) {
                 selections.forEach { it.isSelected = false }
+                selection.isSelected = true
+            }else {
+                selection.isSelected = !selection.isSelected
             }
-            selection.isSelected = true
             notifyDataSetChanged()
         }
     }
