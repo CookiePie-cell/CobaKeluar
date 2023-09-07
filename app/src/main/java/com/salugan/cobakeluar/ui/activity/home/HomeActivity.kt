@@ -31,8 +31,6 @@ class HomeActivity : AppCompatActivity() {
         var phoneNumber = intent.getStringExtra("phoneNumber") ?: ""
         var userPhoto = intent.getStringExtra("userPhoto")
 
-        binding.nama.text = nama
-
         viewPager = findViewById(R.id.viewPager)
         val dotsIndicator: WormDotsIndicator = findViewById(R.id.dotsIndicator)
 

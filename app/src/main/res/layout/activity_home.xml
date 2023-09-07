@@ -12,7 +12,7 @@
         android:layout_marginTop="50dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="center"
+        android:gravity="right"
         android:orientation="horizontal"
        >
 
@@ -24,14 +24,7 @@
             app:srcCompat="@drawable/img_user_home"
             android:layout_marginRight="50dp"/>
 
-        <TextView
-            android:id="@+id/nama"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Nama Pengguna"
-            android:textColor="@color/white"
-            android:textSize="20dp"
-            android:textStyle="bold" />
+
     </LinearLayout>
 
 
