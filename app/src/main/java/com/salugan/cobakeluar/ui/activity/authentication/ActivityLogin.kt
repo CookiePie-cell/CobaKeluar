@@ -22,8 +22,6 @@ class ActivityLogin: AppCompatActivity() {
     private lateinit var mAuth: FirebaseAuth
     var loadingDialog: AlertDialog? = null
     var errorDialog: AlertDialog? = null
-    var forgotPassword: AlertDialog? = null
-
 
     // Request code for Google Sign-In
     private val requestCode = 123
@@ -163,11 +161,8 @@ class ActivityLogin: AppCompatActivity() {
 
 
     private fun forgotPassword() {
-        val dialogView = layoutInflater.inflate(R.layout.dialog_forgot_password, null)
-        val builder = AlertDialog.Builder(this)
-        builder.setView(dialogView)
-        forgotPassword = builder.create()
-        forgotPassword?.show()
+        val intent = Intent(this, ActivityForgotPassword::class.java)
+        startActivity(intent)
     }
 
     private fun loading() {
