@@ -3,21 +3,29 @@ package com.salugan.cobakeluar.ui.activity.profile
 import android.content.Intent
 import android.os.Bundle
 import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
-import com.bumptech.glide.Glide
+import androidx.lifecycle.ViewModelProvider
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.firebase.auth.FirebaseAuth
 import com.salugan.cobakeluar.R
 import com.salugan.cobakeluar.databinding.ActivityProfileBinding
+import com.salugan.cobakeluar.model.UserModel
 import com.salugan.cobakeluar.ui.activity.authentication.ActivityLogin
+import com.salugan.cobakeluar.data.Result
+import dagger.hilt.android.AndroidEntryPoint
 
+
+@AndroidEntryPoint
 class ActivityProfile: AppCompatActivity() {
     private lateinit var binding: ActivityProfileBinding
 
     var dialogLogout: AlertDialog? = null
     var loadingDialog: AlertDialog? = null
+
+    private lateinit var viewModel: ProfileViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -25,36 +33,41 @@ class ActivityProfile: AppCompatActivity() {
         val view = binding.root
         setContentView(view)
 
-        var nama = intent.getStringExtra("nama")?:""
-        var email = intent.getStringExtra("email")?: ""
-        var phoneNumber = intent.getStringExtra("phoneNumber")?: ""
-        var userPhoto = intent.getStringExtra("userPhoto")
+        val mAuth = FirebaseAuth.getInstance()
+        val currentUser = mAuth.currentUser
+        val id = currentUser?.uid
 
-        binding.nama.text = nama
-        binding.email.text = email
-        binding.phoneNumber.text = phoneNumber
+        viewModel = ViewModelProvider(this).get(ProfileViewModel::class.java)
 
-        if (userPhoto != null){
-            Glide.with(binding.root)
-                .load(userPhoto)
-                .into(binding.userPhoto)
-        }
+        viewModel.dataProfile(id!!)
+
+            viewModel.resultDataProfile.observe(this, { result ->
+                when (result) {
+                    is Result.Success -> {
+                        loadingDialog?.dismiss()
+                        binding.nama.text = result.data.nama
+                        binding.email.text = result.data.email
+                        binding.phoneNumber.text = result.data.noHp
+                    }
+                    is Result.Error -> {
+                        loadingDialog?.dismiss()
+                        Toast.makeText(this, "Data gagal diambil", Toast.LENGTH_SHORT).show()
+
+                    }
+                    is Result.Loading -> {
+                        loading()
+                    }
+                }
+            })
+
 
         binding.btnLogout.setOnClickListener(){
             dialogLogout()
-
-
         }
 
 
     }
 
-    /**
-     * this method to logout account.
-     * @author Faiz Ivan Tama
-     * @since Sept 2023.
-     * @see https://medium.com/swlh/google-login-and-logout-in-android-with-firebase-kotlin-implementation-73cf6a5a989e
-     * */
     fun dialogLogout(){
         val dialogView = layoutInflater.inflate(R.layout.dialog_logout, null)
         val builder = AlertDialog.Builder(this)
@@ -87,11 +100,6 @@ class ActivityProfile: AppCompatActivity() {
         }
     }
 
-    /**
-     * this method to handle loading for  action waiting to signin.
-     * @author Faiz Ivan Tama
-     * @since Sept 2023.
-     * */
     private fun loading() {
         val dialogView = layoutInflater.inflate(R.layout.dialog_loading, null)
         val builder = AlertDialog.Builder(this)
@@ -99,6 +107,5 @@ class ActivityProfile: AppCompatActivity() {
         loadingDialog = builder.create()
         loadingDialog?.show()
     }
-
 
 }
