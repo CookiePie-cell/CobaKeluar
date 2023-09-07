@@ -17,55 +17,55 @@
 
         <EditText
             android:id="@+id/nama"
-            android:layout_width="250dp"
-            android:layout_height="60dp"
-            android:background="@color/white"
+            android:layout_width="260dp"
+            android:layout_height="40dp"
+            android:background="@color/lightGrey"
             android:hint="Nama"
             android:padding="10dp"></EditText>
 
         <EditText
             android:id="@+id/email"
-            android:layout_marginTop="20dp"
-            android:layout_width="250dp"
-            android:layout_height="60dp"
-            android:background="@color/white"
+            android:layout_marginTop="10dp"
+            android:layout_width="260dp"
+            android:layout_height="40dp"
+            android:background="@color/lightGrey"
             android:hint="Email"
             android:padding="10dp"></EditText>
 
         <EditText
             android:id="@+id/noHp"
-            android:layout_marginTop="20dp"
-            android:layout_width="250dp"
-            android:layout_height="60dp"
-            android:background="@color/white"
+            android:layout_marginTop="10dp"
+            android:layout_width="260dp"
+            android:layout_height="40dp"
+            android:background="@color/lightGrey"
             android:hint="No. HP"
             android:inputType="number"
             android:padding="10dp"></EditText>
 
         <EditText
             android:id="@+id/Password"
-            android:layout_marginTop="20dp"
-            android:layout_width="250dp"
-            android:layout_height="60dp"
-            android:background="@color/white"
+            android:layout_marginTop="10dp"
+            android:layout_width="260dp"
+            android:layout_height="40dp"
+            android:background="@color/lightGrey"
             android:hint="Password"
             android:inputType="textPassword"
             android:padding="10dp"></EditText>
 
         <EditText
             android:id="@+id/konfirmPassword"
-            android:layout_marginTop="20dp"
-            android:layout_width="250dp"
-            android:layout_height="60dp"
-            android:background="@color/white"
+            android:layout_marginTop="10dp"
+            android:layout_width="260dp"
+            android:layout_height="40dp"
+            android:background="@color/lightGrey"
             android:inputType="textPassword"
             android:hint="Konfirmasi Password"
             android:padding="10dp"></EditText>
 
         <LinearLayout
-            android:layout_marginTop="20dp"
-            android:layout_width="250dp"
-            android:layout_height="50dp"
+            android:layout_marginTop="10dp"
+            android:layout_width="260dp"
+            android:layout_height="40dp"
             android:id="@+id/btnDaftar"
             >
             <TextView
