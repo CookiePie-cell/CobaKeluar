@@ -37,6 +37,17 @@ class ActivityLogin: AppCompatActivity() {
 
         mAuth = FirebaseAuth.getInstance()
 
+        binding.btnMasuk.setOnClickListener({
+            val email = binding.txtEmail.text.toString()
+            val password = binding.txtPassword.text.toString()
+
+            if (email.isNotEmpty() && password.isNotEmpty()) {
+                loginUser(email, password)
+            } else {
+                Toast.makeText(this, "Email dan password harus di isi", Toast.LENGTH_SHORT).show()
+            }
+        })
+
         binding.btnDaftar.setOnClickListener({
             val intent = Intent(this, ActivitySignUp::class.java)
             startActivity(intent)
@@ -50,6 +61,22 @@ class ActivityLogin: AppCompatActivity() {
             forgotPassword()
         })
 
+    }
+
+    private fun loginUser(email: String, password: String) {
+        loading()
+        mAuth.signInWithEmailAndPassword(email, password)
+            .addOnCompleteListener(this) { task ->
+                if (task.isSuccessful) {
+                    loadingDialog?.dismiss()
+                    val intent = Intent(this, HomeActivity::class.java)
+                    startActivity(intent)
+                    Toast.makeText(this, "Login berhasil", Toast.LENGTH_SHORT).show()
+                } else {
+                    loadingDialog?.dismiss()
+                    Toast.makeText(this, "Email atau password salah", Toast.LENGTH_SHORT).show()
+                }
+            }
     }
 
 
@@ -135,13 +162,6 @@ class ActivityLogin: AppCompatActivity() {
     }
 
 
-
-    /**
-     * this method to handle forgot password.
-     * @author Faiz Ivan Tama
-     * @since Sept 2023.
-     * @see https://firebase.google.com/docs/auth/android/google-signin?hl=id
-     * */
     private fun forgotPassword() {
         val dialogView = layoutInflater.inflate(R.layout.dialog_forgot_password, null)
         val builder = AlertDialog.Builder(this)
@@ -150,12 +170,6 @@ class ActivityLogin: AppCompatActivity() {
         forgotPassword?.show()
     }
 
-
-    /**
-     * this method to handle loading for  action waiting to signin.
-     * @author Faiz Ivan Tama
-     * @since Sept 2023.
-     * */
     private fun loading() {
         val dialogView = layoutInflater.inflate(R.layout.dialog_loading, null)
         val builder = AlertDialog.Builder(this)
@@ -164,11 +178,6 @@ class ActivityLogin: AppCompatActivity() {
         loadingDialog?.show()
     }
 
-    /**
-     * this method to handle erro signin.
-     * @author Faiz Ivan Tama
-     * @since Sept 2023.
-     * */
     private fun error() {
         val dialogView = layoutInflater.inflate(R.layout.dialog_error, null)
         val builder = AlertDialog.Builder(this)
