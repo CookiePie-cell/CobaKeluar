@@ -7,18 +7,6 @@
     android:background="@color/darkBlue">
 
 
-    <ImageView
-        android:id="@+id/btnBack"
-        android:layout_width="30dp"
-        android:layout_height="50dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.068"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.035"
-        app:srcCompat="@drawable/icon_arrow_back" />
-
     <LinearLayout
         android:background="@drawable/dialog"
         android:layout_width="300dp"

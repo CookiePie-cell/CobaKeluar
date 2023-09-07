@@ -43,6 +43,15 @@
             android:label="profile">
 
         </activity>
+
+        <activity android:name=".ui.activity.history.ActivityHistory"
+            android:label="history">
+
+        </activity>
+
+        <activity android:name=".ui.activity.authentication.signup.ActivitySignUp"
+            android:label="signup">
+        </activity>
     </application>
 
 </manifest>

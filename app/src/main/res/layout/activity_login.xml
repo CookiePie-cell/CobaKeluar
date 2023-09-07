@@ -35,14 +35,36 @@
             android:layout_marginRight="10dp"
             >
         </TextView>
-        
+
         <ImageView
-            android:layout_width="30dp"
+            android:layout_width="24dp"
             android:layout_height="30dp"
             android:layout_gravity="center_vertical"
-            android:src="@drawable/logo_google"
-            ></ImageView>
+            android:src="@drawable/logo_google"></ImageView>
     </LinearLayout>
+
+    <LinearLayout
+        android:layout_marginTop="10dp"
+        android:layout_width="260dp"
+        android:layout_height="50dp"
+        android:id="@+id/btnDaftar"
+        android:orientation="horizontal"
+        android:background="@drawable/rounded_button_yellow"
+        android:gravity="center"
+
+        >
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="Daftar"
+            android:gravity="center"
+            android:textStyle="bold"
+            android:textSize="20dp"
+            android:textColor="@color/darkBlue"
+            ></TextView>
+
+    </LinearLayout>
+
 
     <TextView
         android:layout_marginTop="10dp"
@@ -65,5 +87,4 @@
 
     </TextView>
 
- 
 </LinearLayout>
