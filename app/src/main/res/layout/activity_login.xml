@@ -101,24 +101,16 @@
 
 
     <TextView
+        android:id="@+id/btnTextLupaPassword"
         android:layout_marginTop="10dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Lupa password?"
+        android:textStyle="italic"
         android:textColor="@color/white"
         android:textSize="15dp"
         android:layout_marginBottom="5dp">
     </TextView>
 
-    <TextView
-        android:id="@+id/btnTextLupaPassword"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="kasian"
-        android:textSize="20dp"
-        android:textColor="@color/yellow"
-        >
-
-    </TextView>
 
 </LinearLayout>
