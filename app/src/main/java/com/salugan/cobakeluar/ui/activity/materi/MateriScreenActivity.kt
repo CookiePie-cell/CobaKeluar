@@ -11,6 +11,7 @@ import androidx.core.content.ContextCompat
 import com.salugan.cobakeluar.R
 import com.salugan.cobakeluar.databinding.ActivityMainBinding
 import com.salugan.cobakeluar.databinding.ActivityMateriScreenBinding
+import com.salugan.cobakeluar.ui.activity.history.ActivityHistory
 import com.salugan.cobakeluar.ui.activity.soal.SoalActivity
 
 class MateriScreenActivity : AppCompatActivity() {
@@ -35,6 +36,11 @@ class MateriScreenActivity : AppCompatActivity() {
         binding.btnDataDanKetidakpastian.setOnClickListener {
             startActivity(Intent(this@MateriScreenActivity, SoalActivity::class.java))
         }
+
+        binding.btnHistory.setOnClickListener({
+            startActivity(Intent(this@MateriScreenActivity, ActivityHistory::class.java))
+
+        })
 
     }
 }

@@ -13,6 +13,7 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.GoogleAuthProvider
 import com.salugan.cobakeluar.R
 import com.salugan.cobakeluar.databinding.ActivityLoginBinding
+import com.salugan.cobakeluar.ui.activity.authentication.signup.ActivitySignUp
 import com.salugan.cobakeluar.ui.activity.home.HomeActivity
 
 class ActivityLogin: AppCompatActivity() {
@@ -20,10 +21,6 @@ class ActivityLogin: AppCompatActivity() {
 
     private lateinit var mAuth: FirebaseAuth
     var loadingDialog: AlertDialog? = null
-    var errorDialog: AlertDialog? = null
-    var forgotPassword: AlertDialog? = null
-
-
     // Request code for Google Sign-In
     private val requestCode = 123
 
@@ -33,8 +30,23 @@ class ActivityLogin: AppCompatActivity() {
         val view = binding.root
         setContentView(view)
 
-
         mAuth = FirebaseAuth.getInstance()
+
+        binding.btnMasuk.setOnClickListener({
+            val email = binding.txtEmail.text.toString()
+            val password = binding.txtPassword.text.toString()
+
+            if (email.isNotEmpty() && password.isNotEmpty()) {
+                loginUser(email, password)
+            } else {
+                Toast.makeText(this, "Email dan password harus di isi", Toast.LENGTH_SHORT).show()
+            }
+        })
+
+        binding.btnDaftar.setOnClickListener({
+            val intent = Intent(this, ActivitySignUp::class.java)
+            startActivity(intent)
+        })
 
         binding.btnLoginGoogle.setOnClickListener({
             signIn()
@@ -46,13 +58,24 @@ class ActivityLogin: AppCompatActivity() {
 
     }
 
+    private fun loginUser(email: String, password: String) {
+        loading()
+        mAuth.signInWithEmailAndPassword(email, password)
+            .addOnCompleteListener(this) { task ->
+                if (task.isSuccessful) {
+                    loadingDialog?.dismiss()
+                    val intent = Intent(this, HomeActivity::class.java)
+                    startActivity(intent)
+                    Toast.makeText(this, "Login berhasil", Toast.LENGTH_SHORT).show()
 
-    /**
-     * this method to signIn.
-     * @author Faiz Ivan Tama
-     * @since Sept 2023.
-     * @see https://firebase.google.com/docs/auth/android/google-signin?hl=id
-     * */
+                } else {
+                    loadingDialog?.dismiss()
+                    Toast.makeText(this, "Email atau password salah", Toast.LENGTH_SHORT).show()
+                }
+            }
+    }
+
+
     private fun signIn() {
         val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
             .requestIdToken(getString(R.string.default_web_client_id))
@@ -64,20 +87,6 @@ class ActivityLogin: AppCompatActivity() {
 
     }
 
-    /**
-     * This method handles the result of the Google Sign-In process.
-     * It retrieves the signed-in Google account information from the intent data,
-     * authenticates the user with Firebase if successful, and displays an error.
-     * message if the sign-in fails.
-     *
-     * @param requestCode The request code for the Sign-In activity.
-     * @param resultCode The result code indicating the outcome of the Sign-In.
-     * @param data The intent data containing the Sign-In result.
-     *
-     * @author Faiz Ivan Tama.
-     * @since Sept 2023.
-     * @see https://medium.com/swlh/google-login-and-logout-in-android-with-firebase-kotlin-implementation-73cf6a5a989e
-     */
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == requestCode && resultCode == RESULT_OK) {
@@ -87,24 +96,13 @@ class ActivityLogin: AppCompatActivity() {
 
                 firebaseAuthWithGoogle(account)
             } catch (e: ApiException) {
-                error()
-                Toast.makeText(this, "Google Sign-In gagal: ${e.message}", Toast.LENGTH_SHORT)
+                Toast.makeText(this, "gagal: ${e.message}", Toast.LENGTH_SHORT)
                     .show()
             }
         }
     }
 
 
-    /**
-     * This function handles Firebase authentication using a Google account.
-     * It performs the authentication, displays loading feedback, and provides success or failure messages.
-     * It also allows access to user information upon successful authentication.
-     * This also works for switching to activity home.
-     * @param account for get id from account.
-     * @author Faiz Ivan Tama.
-     * @since Sept 2023.
-     * @see https://medium.com/swlh/google-login-and-logout-in-android-with-firebase-kotlin-implementation-73cf6a5a989e
-     * */
     private fun firebaseAuthWithGoogle(account: GoogleSignInAccount?) {
         loading()
 
@@ -112,72 +110,63 @@ class ActivityLogin: AppCompatActivity() {
         mAuth.signInWithCredential(credential)
             .addOnCompleteListener(this) { task ->
                 if (task.isSuccessful) {
-                    loadingDialog?.dismiss()
                     val user = mAuth.currentUser
-                    Toast.makeText(this, "Login berhasil", Toast.LENGTH_SHORT).show()
-                    if(user != null){
-                        var nama = user.displayName
-                        var email = user.email
-                        var phoneNumber = user.phoneNumber
-                        var userPhoto = user.photoUrl
+                    var id = user?.uid.toString()
+                    val isNewUser = task.result?.additionalUserInfo?.isNewUser
+                    if (isNewUser == true) {
+                        mAuth.currentUser?.delete()?.addOnCompleteListener { deleteTask ->
+                            if (deleteTask.isSuccessful) {
+                                var nama = user?.displayName
+                                var email = user?.email
 
+                                loadingDialog?.dismiss()
+
+                                val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                                    .build()
+                                val googleSignInClient = GoogleSignIn.getClient(this, gso)
+                                googleSignInClient.signOut().addOnCompleteListener(this) {
+                                    FirebaseAuth.getInstance().signOut()
+
+                                    val intent = Intent(this, ActivitySignUp::class.java)
+                                    intent.putExtra("nama", nama)
+                                    intent.putExtra("email", email)
+                                    startActivity(intent)
+
+                                    Toast.makeText(this, "Anda belum memiliki akun", Toast.LENGTH_SHORT)
+                                        .show()
+                                }
+                            } else {
+                                loadingDialog?.dismiss()
+                                Toast.makeText(this, "Gagal membuat akun baru", Toast.LENGTH_SHORT)
+                                    .show()
+                            }
+                        }
+
+                    } else {
+                        loadingDialog?.dismiss()
                         val intent = Intent(this, HomeActivity::class.java)
-                        intent.putExtra("nama", nama)
-                        intent.putExtra("email", email)
-                        intent.putExtra("phoneNumber", phoneNumber)
-                        intent.putExtra("userPhoto", userPhoto)
-                        finish()
                         startActivity(intent)
-                    }else{
+                        Toast.makeText(this, "Login berhasil", Toast.LENGTH_SHORT).show()
                     }
                 } else {
                     loadingDialog?.dismiss()
-                    error()
                     Toast.makeText(this, "Authentication failed.", Toast.LENGTH_SHORT).show()
                 }
             }
     }
 
 
-    /**
-     * this method to handle forgot password.
-     * @author Faiz Ivan Tama
-     * @since Sept 2023.
-     * @see https://firebase.google.com/docs/auth/android/google-signin?hl=id
-     * */
     private fun forgotPassword() {
-        val dialogView = layoutInflater.inflate(R.layout.dialog_forgot_password, null)
-        val builder = AlertDialog.Builder(this)
-        builder.setView(dialogView)
-        forgotPassword = builder.create()
-        forgotPassword?.show()
+        val intent = Intent(this, ActivityForgotPassword::class.java)
+        startActivity(intent)
     }
 
-
-    /**
-     * this method to handle loading for  action waiting to signin.
-     * @author Faiz Ivan Tama
-     * @since Sept 2023.
-     * */
     private fun loading() {
         val dialogView = layoutInflater.inflate(R.layout.dialog_loading, null)
         val builder = AlertDialog.Builder(this)
         builder.setView(dialogView)
         loadingDialog = builder.create()
         loadingDialog?.show()
-    }
-
-    /**
-     * this method to handle erro signin.
-     * @author Faiz Ivan Tama
-     * @since Sept 2023.
-     * */
-    private fun error() {
-        val dialogView = layoutInflater.inflate(R.layout.dialog_error, null)
-        val builder = AlertDialog.Builder(this)
-        builder.setView(dialogView)
-        errorDialog = builder.create()
-        errorDialog?.show()
     }
 
 }
