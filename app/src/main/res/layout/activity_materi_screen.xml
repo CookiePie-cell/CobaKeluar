@@ -77,7 +77,7 @@
         android:background="@color/white"
         android:id="@+id/line"
         android:layout_width="match_parent"
-        android:layout_height="10dp"
+        android:layout_height="2dp"
         android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -87,35 +87,53 @@
         app:layout_constraintVertical_bias="0.062"></LinearLayout>
 
 
-    <androidx.appcompat.widget.AppCompatButton
+    <LinearLayout
         android:id="@+id/btnDataDanKetidakpastian"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_height="50dp"
         android:layout_marginHorizontal="64dp"
         android:background="@drawable/rounded_button_yellow"
         android:paddingVertical="16dp"
-        android:text="DATA DAN KETIDAKPASTIAN"
-        android:textSize="16sp"
-        android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/line"
-        app:layout_constraintVertical_bias="0.084" />
+        android:gravity="center"
+        app:layout_constraintVertical_bias="0.084">
 
-    <androidx.appcompat.widget.AppCompatButton
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Data dan Ketidakpastioan"
+            android:textSize="16dp"
+            android:textStyle="bold"
+            android:textColor="@color/darkBlue"
+            ></TextView>
+    </LinearLayout>
+
+    <LinearLayout
         android:id="@+id/btnGeometriPengukuran"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_height="50dp"
         android:layout_marginHorizontal="64dp"
         android:layout_marginTop="10dp"
         android:background="@drawable/rounded_button_yellow"
-        android:text="@string/geometri_pengukuran"
-        android:textSize="16sp"
-        android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btnDataDanKetidakpastian" />
+        android:gravity="center"
+        app:layout_constraintTop_toBottomOf="@+id/btnDataDanKetidakpastian"
+        >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/geometri_pengukuran"
+            android:textSize="16dp"
+            android:textColor="@color/darkBlue"
+            android:textStyle="bold">
+
+        </TextView>
+    </LinearLayout>
 
 
 
