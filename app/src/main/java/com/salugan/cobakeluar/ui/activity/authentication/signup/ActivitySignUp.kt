@@ -5,9 +5,13 @@ import android.os.Bundle
 import android.text.Editable
 import android.util.Log
 import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
+import com.google.android.gms.auth.api.signin.GoogleSignIn
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.firebase.auth.FirebaseAuth
+import com.salugan.cobakeluar.R
 import com.salugan.cobakeluar.databinding.ActivitySignUpBinding
 import com.salugan.cobakeluar.model.UserModel
 import com.salugan.cobakeluar.ui.activity.home.HomeActivity
@@ -18,7 +22,7 @@ import dagger.hilt.android.AndroidEntryPoint
 class ActivitySignUp: AppCompatActivity() {
     private lateinit var binding: ActivitySignUpBinding
     private lateinit var viewModel: SignupViewModel
-
+    var loadingDialog: AlertDialog? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivitySignUpBinding.inflate(layoutInflater)
@@ -45,6 +49,7 @@ class ActivitySignUp: AppCompatActivity() {
             }else if (nama.isEmpty() || email.isEmpty() || noHp.isEmpty() || password.isEmpty() || konfirmPassword.isEmpty() ){
                 Toast.makeText(this, "Data harus terisi semua", Toast.LENGTH_SHORT).show()
             }else{
+                loading()
                 FirebaseAuth.getInstance().createUserWithEmailAndPassword(email, password)
                     .addOnCompleteListener(this) { task ->
                         if (task.isSuccessful) {
@@ -63,15 +68,22 @@ class ActivitySignUp: AppCompatActivity() {
                             viewModel.resultAddData.observe(this) {
                                 when (it) {
                                     is Result.Loading -> {
-                                        // Handle loading state if needed
+                                        loading()
                                     }
 
                                     is Result.Success -> {
+                                        loadingDialog?.dismiss()
                                         val intent = Intent(this, HomeActivity::class.java)
                                         startActivity(intent)
                                     }
 
                                     is Result.Error -> {
+                                        val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                                            .build()
+                                        val googleSignInClient = GoogleSignIn.getClient(this, gso)
+                                        googleSignInClient.signOut().addOnCompleteListener(this) {
+                                            FirebaseAuth.getInstance().signOut()}
+                                        loadingDialog?.dismiss()
                                         Toast.makeText(this, it.error, Toast.LENGTH_SHORT).show()
                                     }
 
@@ -83,5 +95,13 @@ class ActivitySignUp: AppCompatActivity() {
                         }
             }
         })
+
+       }
+    private fun loading() {
+        val dialogView = layoutInflater.inflate(R.layout.dialog_loading, null)
+        val builder = AlertDialog.Builder(this)
+        builder.setView(dialogView)
+        loadingDialog = builder.create()
+        loadingDialog?.show()
     }
 }
