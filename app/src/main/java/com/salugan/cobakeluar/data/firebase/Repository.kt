@@ -42,8 +42,6 @@ class Repository @Inject constructor(
     }
 
     fun dataProfile(id: String): LiveData<Result<UserModel>> {
-        val resultDataProfile = MutableLiveData<Result<UserModel>>()
-
         val database =db.getReference("users")
         val query = database.orderByChild("id").equalTo(id)
 
