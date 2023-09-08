@@ -2,6 +2,7 @@ package com.salugan.cobakeluar.ui.activity.home
 
 
 import android.content.Intent
+import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
@@ -51,6 +52,16 @@ class HomeActivity : AppCompatActivity() {
             val intent = Intent(this, ActivityProfile::class.java)
             startActivity(intent)
         }
+
+        binding.iconFAQ.setOnClickListener({
+            val intent = Intent(Intent.ACTION_VIEW, Uri.parse("https://www.eurekaedutech.com/contact"))
+            startActivity(intent)
+        })
+
+        binding.btnAbout.setOnClickListener({
+            val intent = Intent(Intent.ACTION_VIEW, Uri.parse("https://www.eurekaedutech.com/about"))
+            startActivity(intent)
+        })
 
         binding.button.setOnClickListener {
             startActivity(Intent(this@HomeActivity, MateriScreenActivity::class.java))
