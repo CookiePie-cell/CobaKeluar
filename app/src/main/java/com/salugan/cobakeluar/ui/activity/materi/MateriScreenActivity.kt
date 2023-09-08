@@ -7,6 +7,7 @@ import android.text.Spannable
 import android.text.SpannableString
 import android.text.style.AbsoluteSizeSpan
 import android.text.style.ForegroundColorSpan
+import android.widget.Toast
 import androidx.core.content.ContextCompat
 import com.salugan.cobakeluar.R
 import com.salugan.cobakeluar.databinding.ActivityMainBinding
@@ -31,6 +32,10 @@ class MateriScreenActivity : AppCompatActivity() {
         binding.btnHistory.setOnClickListener({
             startActivity(Intent(this@MateriScreenActivity, ActivityHistory::class.java))
 
+        })
+
+        binding.btnTataCara.setOnClickListener({
+            Toast.makeText(this, "DIKERJAIN!!", Toast.LENGTH_LONG).show()
         })
 
     }

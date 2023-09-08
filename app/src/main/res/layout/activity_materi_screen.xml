@@ -119,7 +119,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:padding="10dp"
-            android:src="@drawable/img_books"></ImageView>
+            android:src="@drawable/img_data_tidak_pasti"></ImageView>
 
     </LinearLayout>
 
@@ -168,7 +168,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:padding="10dp"
-            android:src="@drawable/img_books"></ImageView>
+            android:src="@drawable/img_pengukuran"></ImageView>
 
     </LinearLayout>
 
@@ -176,9 +176,21 @@
         android:id="@+id/btnHistory"
         android:layout_width="300dp"
         android:layout_height="40dp"
-        android:layout_marginTop="30dp"
+        android:layout_marginTop="50dp"
         android:background="@drawable/rounded_button_white"
         android:text="@string/history"
+        android:textColor="@color/darkBlue"
+        android:textSize="20sp"
+        android:layout_gravity="center"
+        android:textStyle="bold" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btnTataCara"
+        android:layout_width="300dp"
+        android:layout_height="40dp"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/rounded_button_white"
+        android:text="CARA PENGERJAAN"
         android:textColor="@color/darkBlue"
         android:textSize="20sp"
         android:layout_gravity="center"
