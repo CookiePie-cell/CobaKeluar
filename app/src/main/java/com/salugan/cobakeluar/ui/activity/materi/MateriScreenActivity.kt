@@ -23,15 +23,6 @@ class MateriScreenActivity : AppCompatActivity() {
         binding = ActivityMateriScreenBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        val spannableText = SpannableString("Data dan ketidakpastian\nyang pasti-pasti aja gk sieee!!")
-
-        val colorSpan2 = ForegroundColorSpan(ContextCompat.getColor(this, R.color.lightBlue))
-        spannableText.setSpan(colorSpan2, 24, spannableText.length, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
-
-        val textSizeSpan = AbsoluteSizeSpan(10, true)
-        spannableText.setSpan(textSizeSpan, 24, spannableText.length, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
-
-        binding.btnDataDanKetidakpastian.text = spannableText
 
         binding.btnDataDanKetidakpastian.setOnClickListener {
             startActivity(Intent(this@MateriScreenActivity, SoalActivity::class.java))
