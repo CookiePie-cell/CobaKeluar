@@ -31,8 +31,8 @@ class ActivitySignUp: AppCompatActivity() {
 
         viewModel = ViewModelProvider(this).get(SignupViewModel::class.java)
 
-        var nama = intent.getStringExtra("nama")?:""
-        var email = intent.getStringExtra("email")?: ""
+        val nama = intent.getStringExtra("nama")?:""
+        val email = intent.getStringExtra("email")?: ""
 
         binding.nama.text = Editable.Factory.getInstance().newEditable(nama)
         binding.email.text = Editable.Factory.getInstance().newEditable(email)
