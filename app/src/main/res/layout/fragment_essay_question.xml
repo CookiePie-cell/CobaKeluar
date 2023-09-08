@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    xmlns:auto="http://schemas.android.com/apk/res-auto"
+    tools:context=".ui.fragment.soal.EssayQuestion">
+
+    <LinearLayout
+        android:id="@+id/llQuestion"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        android:layout_marginTop="8dp"
+        android:orientation="vertical"
+        android:background="@drawable/shape_bg_white_rectangle_radius"
+        android:layout_marginHorizontal="16dp">
+
+        <io.github.kexanie.library.MathView
+            android:id="@+id/formulaOne"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp"
+            auto:engine="MathJax" />
+
+    </LinearLayout>
+
+
+    <EditText
+        style="@style/Widget.AppCompat.EditText"
+        android:layout_width="match_parent"
+        android:layout_height="150dp"
+        android:padding="16dp"
+        android:hint="Ketik jawabanmu"
+        android:background="@drawable/shape_bg_white_rectangle_radius"    android:gravity="top|start"
+        android:inputType="textMultiLine|textNoSuggestions"
+        android:layout_marginHorizontal="16dp" />
+
+    <LinearLayout
+        android:id="@+id/linearLayout3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="16dp"
+        android:layout_marginBottom="8dp"
+        android:layout_marginTop="8dp"
+        android:gravity="bottom"
+        android:orientation="horizontal"
+        app:layout_constraintTop_toBottomOf="@id/viewPager"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnPrev"
+            android:layout_width="56dp"
+            android:layout_height="56dp"
+            android:background="@drawable/button_radius_bg_yellow"
+            android:textColor="@color/black"
+            app:backgroundTint="@null"
+            app:icon="@drawable/arrow_back_24_black"
+            app:iconGravity="textStart"
+            app:iconTint="@color/black"
+            app:iconPadding="0dp" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnJawab"
+            android:layout_width="0dp"
+            android:layout_height="56dp"
+            android:layout_marginHorizontal="16dp"
+            android:layout_weight="2"
+            android:textColor="@color/black"
+            android:background="@drawable/button_radius_bg_yellow"
+            android:text="@string/jawab"
+            android:textSize="18sp"
+            app:backgroundTint="@null" />
+
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnNext"
+            android:layout_width="56dp"
+            android:layout_height="56dp"
+            android:background="@drawable/button_radius_bg_yellow"
+            android:textColor="@color/black"
+            app:iconTint="@color/black"
+            app:backgroundTint="@null"
+            app:icon="@drawable/arrow_forward_24_black"
+            app:iconGravity="textStart"
+            app:iconPadding="0dp" />
+
+    </LinearLayout>
+</LinearLayout>

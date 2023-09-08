@@ -26,7 +26,15 @@ class MateriScreenActivity : AppCompatActivity() {
 
 
         binding.btnDataDanKetidakpastian.setOnClickListener {
-            startActivity(Intent(this@MateriScreenActivity, SoalActivity::class.java))
+            val intent = Intent(this@MateriScreenActivity, SoalActivity::class.java)
+            intent.putExtra(SoalActivity.KATEGORI, DATA_DAN_KETIDAKPASTIAN)
+            startActivity(intent)
+        }
+
+        binding.btnGeometriPengukuran.setOnClickListener {
+            val intent = Intent(this@MateriScreenActivity, SoalActivity::class.java)
+            intent.putExtra(SoalActivity.KATEGORI, GEOMETRI_DAN_PENGUKURAN)
+            startActivity(intent)
         }
 
         binding.btnHistory.setOnClickListener({
@@ -38,5 +46,10 @@ class MateriScreenActivity : AppCompatActivity() {
             Toast.makeText(this, "DIKERJAIN!!", Toast.LENGTH_LONG).show()
         })
 
+    }
+
+    companion object {
+        const val DATA_DAN_KETIDAKPASTIAN = 0
+        const val GEOMETRI_DAN_PENGUKURAN = 1
     }
 }

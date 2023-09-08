@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- res/layout/radio_button_mathview.xml -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:auto="http://schemas.android.com/apk/res-auto"
+    android:orientation="horizontal">
+
+    <io.github.kexanie.library.MathView
+        android:id="@+id/mathViewRadioButton"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:text="When \\(a \\ne 0\\), there are two solutions to \\(ax^2 + bx + c = 0\\)
+        and they are $$x = {-b \\pm \\sqrt{b^2-4ac} \\over 2a}.$$"
+        auto:engine="MathJax"
+        />
+
+</LinearLayout>
