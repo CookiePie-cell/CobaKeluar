@@ -90,7 +90,7 @@
     <LinearLayout
         android:id="@+id/btnDataDanKetidakpastian"
         android:layout_width="0dp"
-        android:layout_height="50dp"
+        android:layout_height="wrap_content"
         android:layout_marginHorizontal="64dp"
         android:background="@drawable/rounded_button_yellow"
         android:paddingVertical="16dp"

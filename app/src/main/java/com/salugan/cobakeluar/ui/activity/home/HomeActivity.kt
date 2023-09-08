@@ -6,6 +6,7 @@ import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
+import android.widget.Toast
 import androidx.viewpager2.widget.ViewPager2
 import com.google.firebase.auth.FirebaseAuth
 import com.salugan.cobakeluar.R
@@ -63,9 +64,13 @@ class HomeActivity : AppCompatActivity() {
             startActivity(intent)
         })
 
-        binding.button.setOnClickListener {
+        binding.button.setOnClickListener ({
             startActivity(Intent(this@HomeActivity, MateriScreenActivity::class.java))
-        }
+        })
+
+        binding.btnLiterasi.setOnClickListener({
+            Toast.makeText(this, "Try out tidak tersedia", Toast.LENGTH_SHORT).show()
+        })
     }
 
     private fun startAutoSlider() {
