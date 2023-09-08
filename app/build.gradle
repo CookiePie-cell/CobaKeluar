@@ -59,6 +59,9 @@ dependencies {
     implementation "androidx.activity:activity-ktx:1.7.2"
     implementation "androidx.fragment:fragment-ktx:1.6.1"
 
+    implementation  'com.github.Kennyc1012:MultiStateView:2.2.0'
+    implementation 'com.facebook.shimmer:shimmer:0.5.0'
+
 
     //glide
     implementation ("com.github.bumptech.glide:glide:4.12.0")

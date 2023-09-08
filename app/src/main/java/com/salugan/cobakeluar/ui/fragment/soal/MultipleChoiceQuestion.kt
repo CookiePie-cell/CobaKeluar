@@ -1,5 +1,6 @@
 package com.salugan.cobakeluar.ui.fragment.soal
 
+import android.opengl.Visibility
 import android.os.Build
 import android.os.Bundle
 import android.text.Html
@@ -64,8 +65,18 @@ class MultipleChoiceQuestion : Fragment() {
 
         binding.btnNext.setOnClickListener {
             // Navigate to the next tab (fragment)
+            val totalItems = viewPager.adapter?.itemCount ?: 0
+
+            // Get the current item
             val currentItem = viewPager.currentItem
-            viewPager.setCurrentItem(currentItem + 1, true)
+
+            // Check if it's not the last item
+            if (currentItem < totalItems - 1) {
+                viewPager.setCurrentItem(currentItem + 1, true)
+            } else {
+                Toast.makeText(requireContext(), "Skormu ${(requireActivity() as SoalActivity).score}", Toast.LENGTH_SHORT).show()
+
+            }
         }
 
 
@@ -114,8 +125,10 @@ class MultipleChoiceQuestion : Fragment() {
                 if (answer != null) {
                     if (answer?.id == question.selectionAnswer?.get(0)?.selectionId) {
                         Toast.makeText(requireActivity(), "Jawaban benar", Toast.LENGTH_SHORT).show()
+                        (requireActivity() as SoalActivity).score += 1
                     } else {
                         Toast.makeText(requireActivity(), "Jawaban salah", Toast.LENGTH_SHORT).show()
+                        (requireActivity() as SoalActivity).score -= 1
                     }
                     question.hasSelected = true
                     binding.btnJawab.visibility = View.GONE
