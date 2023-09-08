@@ -10,4 +10,7 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="waktu">Waktu:</string>
+    <string name="jawab">JAWAB</string>
+    <string name="pembahasan">Pembahasan</string>
+    <string name="cek_pembahasan">Cek pembahasan</string>
 </resources>

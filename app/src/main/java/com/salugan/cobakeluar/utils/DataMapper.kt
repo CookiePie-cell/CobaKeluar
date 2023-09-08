@@ -14,7 +14,8 @@ object DataMapper {
                 questionId = it.questionId,
                 qtId = it.qtId,
                 essayAnswer = it.essayAnswer,
-                selections = mapSelectionItemToModel(it.selection) ,
+                questionText= it.questionText,
+                selections = mapSelectionItemToModel(it.selection),
                 selectionAnswer =  it.selectionAnswer,
                 keyword = it.keyword,
                 shortAnswer = it.shortAnswer,
@@ -22,7 +23,8 @@ object DataMapper {
                 statementQuestion = it.statementQuestion,
                 isEssay = !it.shortAnswer.isNullOrEmpty(),
                 isMultipleChoice = it.selectionAnswer?.size == 1,
-                isMultipleCorrectChoice = it.selectionAnswer?.size!! > 1
+                isMultipleCorrectChoice = it.selectionAnswer?.size!! > 1,
+                hasSelected = false,
             )
         }
         return questionList

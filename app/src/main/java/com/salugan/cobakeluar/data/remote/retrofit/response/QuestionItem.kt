@@ -1,11 +1,15 @@
 package com.salugan.cobakeluar.data.remote.retrofit.response
 
+import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
+import kotlinx.parcelize.Parcelize
+
+@Parcelize
 
 data class QuestionItem(
 
     @field:SerializedName("statement_question")
-    val statementQuestion: List<Any?>? = null,
+    val statementQuestion: List<String?>? = null,
 
     @field:SerializedName("selection")
     val selection: List<SelectionItem?>? = null,
@@ -14,7 +18,10 @@ data class QuestionItem(
     val selectionAnswer: List<SelectionAnswerItem?>? = null,
 
     @field:SerializedName("essay_answer")
-    val essayAnswer: Any? = null,
+    val essayAnswer: String? = null,
+
+    @field:SerializedName("question_text")
+    val questionText: String? = null,
 
     @field:SerializedName("short_answer")
     val shortAnswer: List<ShortAnswerItem?>? = null,
@@ -32,8 +39,8 @@ data class QuestionItem(
     val tryoutId: Int? = null,
 
     @field:SerializedName("keyword")
-    val keyword: List<Any?>? = null,
+    val keyword: List<String?>? = null,
 
     @field:SerializedName("question_id")
     val questionId: Int? = null
-)
+) : Parcelable

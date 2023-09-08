@@ -125,6 +125,13 @@ class ActivityHistory : AppCompatActivity() {
         val stream = ByteArrayOutputStream()
         bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream)
         return stream.toByteArray()
+        val score = intent.getIntExtra(SCORE, 0)
+
+        binding.nilaiData.text = score.toString()
+    }
+
+    companion object {
+        const val SCORE = "extra_score"
     }
 
 }

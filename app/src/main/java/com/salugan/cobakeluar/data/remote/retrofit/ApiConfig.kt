@@ -13,11 +13,8 @@ class ApiConfig {
         private const val BASE_URL = BuildConfig.BASE_URL
 
         private fun provideOkHttpClient(): OkHttpClient {
-            val loggingInterceptor = if(BuildConfig.DEBUG) {
-                HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY)
-            } else {
-                HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.NONE)
-            }
+            val loggingInterceptor = HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY)
+
 
             return OkHttpClient.Builder()
                 .addInterceptor(loggingInterceptor)

@@ -1,18 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/purple"
+    android:background="@color/darkBlue"
     android:orientation="vertical"
     tools:context=".ui.activity.soal.SoalActivity">
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="match_parent"
+        android:id="@+id/constraintLayout"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
-        android:layout_marginBottom="16dp">
+        android:layout_marginTop="16dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
         <TextView
             android:id="@+id/tvTryout"
@@ -68,72 +71,42 @@
         android:id="@+id/tabs"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:layout_marginHorizontal="16dp"
+        android:layout_marginBottom="8dp"
         android:background="@android:color/transparent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/constraintLayout"
+        app:layout_constraintBottom_toTopOf="@id/msvQuestion"
         app:tabGravity="center"
         app:tabIndicatorHeight="0dp"
-        app:tabMode="scrollable"
-        app:tabPaddingStart="4dp"
-        app:tabPaddingEnd="4dp"
         app:tabMinWidth="56dp"
-        android:layout_marginHorizontal="40dp"/>
+        app:tabMode="scrollable"
+        app:tabPaddingEnd="4dp"
+        app:tabPaddingStart="4dp" />
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <com.kennyc.view.MultiStateView
+        android:id="@+id/msvQuestion"
         android:layout_width="match_parent"
-        android:layout_height="150dp"
-        android:layout_marginTop="32dp"
-        android:layout_marginHorizontal="40dp"
-        android:background="@drawable/shape_bg_white_rectangle_radius">
+        android:layout_height="0dp"
+        app:msv_errorView="@layout/layout_error"
+        app:msv_emptyView="@layout/layout_empty"
+        app:msv_loadingView="@layout/layout_loading"
+        app:msv_viewState="content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tabs">
 
-        <TextView
-            android:id="@+id/textView4"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="32dp"
-            android:textStyle="bold"
-            android:textSize="24sp"
-            android:text="Data dan ketidakpastian"
+        <androidx.viewpager2.widget.ViewPager2
+            android:id="@+id/viewPager"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:text="Data dan ketidakpastian" />
+            app:layout_constraintTop_toBottomOf="@+id/tabs" />
+    </com.kennyc.view.MultiStateView>
 
-        <TextView
-            android:id="@+id/textView5"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="18dp"
-            android:text="@string/waktu"
-            app:layout_constraintStart_toStartOf="@+id/textView4"
-            app:layout_constraintTop_toBottomOf="@+id/textView4" />
-
-        <TextView
-            android:id="@+id/textView6"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:textSize="24sp"
-            android:textStyle="bold"
-            android:text="30 Detik"
-            android:textColor="@color/purple"
-            app:layout_constraintBottom_toBottomOf="@+id/textView5"
-            app:layout_constraintStart_toEndOf="@+id/textView5"
-            app:layout_constraintTop_toTopOf="@+id/textView5"
-            tools:text="30 Detik"/>
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Pilih jawaban yang tepat"
-        android:layout_marginTop="32dp"
-        android:textColor="@color/yellow"
-        android:textStyle="bold"
-        android:textAlignment="center"
-        android:textSize="20sp" />
-
-    <androidx.viewpager2.widget.ViewPager2
-        android:id="@+id/viewPager"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
-</LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
