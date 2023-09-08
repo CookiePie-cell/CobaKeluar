@@ -20,7 +20,7 @@ class HomeActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityHomeBinding
     private val autoSlideHandler = Handler()
-    private val delayMillis: Long = 3000 // Interval perpindahan otomatis (3 detik)
+    private val delayMillis: Long = 2000
     private var currentPage = 0
     private lateinit var viewPager: ViewPager2
 
