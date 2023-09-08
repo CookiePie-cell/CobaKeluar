@@ -13,7 +13,6 @@ import android.widget.ImageView
 import android.widget.LinearLayout
 import com.bumptech.glide.Glide
 import com.salugan.cobakeluar.databinding.FragmentEssayQuestionBinding
-import com.salugan.cobakeluar.databinding.FragmentSoalBinding
 import com.salugan.cobakeluar.model.QuestionModel
 import com.salugan.cobakeluar.utils.QUESTION
 import io.github.kexanie.library.MathView

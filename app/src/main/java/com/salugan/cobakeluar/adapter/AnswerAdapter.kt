@@ -11,8 +11,15 @@ import com.salugan.cobakeluar.databinding.AnswerItemBinding
 import com.salugan.cobakeluar.model.QuestionModel
 import com.salugan.cobakeluar.model.SelectionModel
 
-class AnswerAdapter(private val selections: ArrayList<SelectionModel>, private val question: QuestionModel)
-    : RecyclerView.Adapter<AnswerAdapter.ViewHolder>(){
+class AnswerAdapter(
+    private val selections: ArrayList<SelectionModel>, private val question: QuestionModel,
+    private val onClick: (SelectionModel) -> Unit,
+) : RecyclerView.Adapter<AnswerAdapter.ViewHolder>(){
+
+    private var isSelected = false
+    fun setSelected(value: Boolean) {
+        isSelected = value
+    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AnswerAdapter.ViewHolder {
         val binding = AnswerItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
@@ -22,15 +29,20 @@ class AnswerAdapter(private val selections: ArrayList<SelectionModel>, private v
     override fun onBindViewHolder(holder: AnswerAdapter.ViewHolder, position: Int) {
         val selection = selections[position]
         holder.bind(selection)
-        holder.itemView.setOnClickListener {
-            Log.d("vbnvbn", selection.toString())
-            if (this.question.isMultipleChoice) {
-                selections.forEach { it.isSelected = false }
-                selection.isSelected = true
-            }else {
-                selection.isSelected = !selection.isSelected
+        if (!isSelected) {
+            holder.itemView.setOnClickListener {
+                if (question.isMultipleChoice) {
+                    selections.forEach { it.isSelected = false }
+                    selection.isSelected = true
+                } else {
+                    selection.isSelected = !selection.isSelected
+                }
+                onClick(selection)
+
+                notifyDataSetChanged()
             }
-            notifyDataSetChanged()
+        } else {
+            holder.itemView.isClickable = false
         }
     }
 
@@ -53,6 +65,7 @@ class AnswerAdapter(private val selections: ArrayList<SelectionModel>, private v
             } else {
                 itemView.setBackgroundResource(R.drawable.radio_not_selected)
             }
+
         }
     }
 }

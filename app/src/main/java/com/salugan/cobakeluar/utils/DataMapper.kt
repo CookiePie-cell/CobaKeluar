@@ -23,7 +23,8 @@ object DataMapper {
                 statementQuestion = it.statementQuestion,
                 isEssay = !it.shortAnswer.isNullOrEmpty(),
                 isMultipleChoice = it.selectionAnswer?.size == 1,
-                isMultipleCorrectChoice = it.selectionAnswer?.size!! > 1
+                isMultipleCorrectChoice = it.selectionAnswer?.size!! > 1,
+                hasSelected = false,
             )
         }
         return questionList

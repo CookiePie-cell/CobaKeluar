@@ -23,5 +23,6 @@ data class QuestionModel(
     val statementQuestion: List<String?>?,
     val isEssay: Boolean,
     val isMultipleChoice: Boolean,
-    val isMultipleCorrectChoice: Boolean
+    val isMultipleCorrectChoice: Boolean,
+    var hasSelected: Boolean,
 ) : Parcelable

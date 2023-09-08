@@ -12,24 +12,38 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.LinearLayout
+import android.widget.Toast
+import androidx.cardview.widget.CardView
+import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.viewpager2.widget.ViewPager2
 import com.bumptech.glide.Glide
+import com.google.android.material.bottomsheet.BottomSheetDialog
+import com.salugan.cobakeluar.R
 import com.salugan.cobakeluar.adapter.AnswerAdapter
-import com.salugan.cobakeluar.databinding.FragmentSoalBinding
+import com.salugan.cobakeluar.databinding.FragmentMultipleChoiceQuestionBinding
 import com.salugan.cobakeluar.model.QuestionModel
 import com.salugan.cobakeluar.model.SelectionModel
+import com.salugan.cobakeluar.ui.activity.soal.SoalActivity
 import com.salugan.cobakeluar.utils.QUESTION
 import io.github.kexanie.library.MathView
 
 class MultipleChoiceQuestion : Fragment() {
 
-    private var _binding: FragmentSoalBinding? = null
+    private var _binding: FragmentMultipleChoiceQuestionBinding? = null
     private val binding get() = _binding!!
+
+    private lateinit var viewPager: ViewPager2
+
+    private var answer: SelectionModel? = null
+
+    private lateinit var bottomSheetDialog: BottomSheetDialog
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _binding = FragmentSoalBinding.inflate(inflater)
+        _binding = FragmentMultipleChoiceQuestionBinding.inflate(inflater)
         return binding.root
     }
 
@@ -46,10 +60,24 @@ class MultipleChoiceQuestion : Fragment() {
 
         val flags = Html.FROM_HTML_MODE_COMPACT or Html.FROM_HTML_MODE_LEGACY
 
+        viewPager = requireActivity().findViewById(R.id.viewPager)
+
+        binding.btnNext.setOnClickListener {
+            // Navigate to the next tab (fragment)
+            val currentItem = viewPager.currentItem
+            viewPager.setCurrentItem(currentItem + 1, true)
+        }
+
+
+        binding.btnPrev.setOnClickListener {
+            // Navigate to the previous tab (fragment)
+            val currentItem = viewPager.currentItem
+            viewPager.setCurrentItem(currentItem - 1, true)
+        }
+
         if (question != null) {
             val images = mutableListOf<String>()
             mathView.text = Html.fromHtml(question.questionText, flags, { source ->
-                Log.d("mbmb", source)
                 images.add(source.replace("""\"""", ""))
                 null
             }, null).toString()
@@ -81,7 +109,43 @@ class MultipleChoiceQuestion : Fragment() {
             binding.rvAnswer.layoutManager = layoutManager
 
             setAdapter(question.selections!!, question)
+
+            binding.btnJawab.setOnClickListener {
+                if (answer != null) {
+                    if (answer?.id == question.selectionAnswer?.get(0)?.selectionId) {
+                        Toast.makeText(requireActivity(), "Jawaban benar", Toast.LENGTH_SHORT).show()
+                    } else {
+                        Toast.makeText(requireActivity(), "Jawaban salah", Toast.LENGTH_SHORT).show()
+                    }
+                    question.hasSelected = true
+                    binding.btnJawab.visibility = View.GONE
+                    binding.btnCekPembahasan.visibility = View.VISIBLE
+                    showBottomSheet(question.discussion?.get(0)?.discussionText)
+                }
+            }
+
+            binding.btnCekPembahasan.setOnClickListener {
+                showBottomSheet(question.discussion?.get(0)?.discussionText)
+            }
+
+            if (question.hasSelected) {
+                binding.btnJawab.visibility = View.GONE
+                binding.btnCekPembahasan.visibility = View.VISIBLE
+            } else {
+                binding.btnJawab.visibility = View.VISIBLE
+                binding.btnCekPembahasan.visibility = View.GONE
+            }
         }
+    }
+
+    private fun showBottomSheet(discussion: String?) {
+        val bottomSheetView = layoutInflater.inflate(R.layout.bottom_sheet, null)
+        bottomSheetDialog = BottomSheetDialog(requireActivity(), R.style.BottomSheetDialogTheme)
+        bottomSheetDialog.setContentView(bottomSheetView)
+        bottomSheetDialog.show()
+
+        val mathView = bottomSheetView.findViewById<MathView>(R.id.mvDiscussion)
+        mathView.text = discussion
     }
 
     private fun setAdapter(selections: List<SelectionModel>, questionType: QuestionModel) {
@@ -89,7 +153,9 @@ class MultipleChoiceQuestion : Fragment() {
         selections.forEach {
             selectionsArrayList.add(it)
         }
-        val adapter = AnswerAdapter(selectionsArrayList, questionType)
+        val adapter = AnswerAdapter(selectionsArrayList, questionType) { selection ->
+            answer = selection
+        }
         binding.rvAnswer.adapter = adapter
     }
 }
