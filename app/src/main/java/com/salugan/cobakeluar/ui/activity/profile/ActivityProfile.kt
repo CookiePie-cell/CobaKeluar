@@ -19,7 +19,7 @@ import dagger.hilt.android.AndroidEntryPoint
 
 
 @AndroidEntryPoint
-class ActivityProfile: AppCompatActivity() {
+class ActivityProfile : AppCompatActivity() {
     private lateinit var binding: ActivityProfileBinding
 
     var dialogLogout: AlertDialog? = null
@@ -41,34 +41,36 @@ class ActivityProfile: AppCompatActivity() {
 
         viewModel.dataProfile(id!!)
 
-            viewModel.resultDataProfile.observe(this, { result ->
-                when (result) {
-                    is Result.Success -> {
-                        loadingDialog?.dismiss()
-                        binding.nama.text = result.data.nama
-                        binding.email.text = result.data.email
-                        binding.phoneNumber.text = result.data.noHp
-                    }
-                    is Result.Error -> {
-                        loadingDialog?.dismiss()
-                        Toast.makeText(this, "Data gagal diambil", Toast.LENGTH_SHORT).show()
-
-                    }
-                    is Result.Loading -> {
-                        loading()
-                    }
+        viewModel.resultDataProfile.observe(this, { result ->
+            when (result) {
+                is Result.Success -> {
+                    loadingDialog?.dismiss()
+                    binding.nama.text = result.data.nama
+                    binding.email.text = result.data.email
+                    binding.phoneNumber.text = result.data.noHp
                 }
-            })
+
+                is Result.Error -> {
+                    loadingDialog?.dismiss()
+                    Toast.makeText(this, "Data gagal diambil", Toast.LENGTH_SHORT).show()
+
+                }
+
+                is Result.Loading -> {
+                    loading()
+                }
+            }
+        })
 
 
-        binding.btnLogout.setOnClickListener(){
+        binding.btnLogout.setOnClickListener() {
             dialogLogout()
         }
 
 
     }
 
-    fun dialogLogout(){
+    fun dialogLogout() {
         val dialogView = layoutInflater.inflate(R.layout.dialog_logout, null)
         val builder = AlertDialog.Builder(this)
 
@@ -80,7 +82,7 @@ class ActivityProfile: AppCompatActivity() {
         dialogLogout = builder.create()
         dialogLogout?.show()
 
-        btnYa.setOnClickListener(){
+        btnYa.setOnClickListener() {
             loading()
             val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .build()
@@ -95,7 +97,7 @@ class ActivityProfile: AppCompatActivity() {
             }
         }
 
-        btnTidak.setOnClickListener(){
+        btnTidak.setOnClickListener() {
             onBackPressed()
         }
     }
