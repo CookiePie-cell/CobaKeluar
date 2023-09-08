@@ -13,6 +13,13 @@ class ActivityHistory: AppCompatActivity() {
         val view = binding.root
         setContentView(view)
 
+        val score = intent.getIntExtra(SCORE, 0)
+
+        binding.nilaiData.text = score.toString()
+    }
+
+    companion object {
+        const val SCORE = "extra_score"
     }
 
 }

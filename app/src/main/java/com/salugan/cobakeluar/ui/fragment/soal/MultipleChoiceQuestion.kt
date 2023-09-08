@@ -1,5 +1,6 @@
 package com.salugan.cobakeluar.ui.fragment.soal
 
+import android.content.Intent
 import android.opengl.Visibility
 import android.os.Build
 import android.os.Bundle
@@ -25,6 +26,7 @@ import com.salugan.cobakeluar.adapter.AnswerAdapter
 import com.salugan.cobakeluar.databinding.FragmentMultipleChoiceQuestionBinding
 import com.salugan.cobakeluar.model.QuestionModel
 import com.salugan.cobakeluar.model.SelectionModel
+import com.salugan.cobakeluar.ui.activity.history.ActivityHistory
 import com.salugan.cobakeluar.ui.activity.soal.SoalActivity
 import com.salugan.cobakeluar.utils.QUESTION
 import io.github.kexanie.library.MathView
@@ -75,7 +77,11 @@ class MultipleChoiceQuestion : Fragment() {
                 viewPager.setCurrentItem(currentItem + 1, true)
             } else {
                 Toast.makeText(requireContext(), "Skormu ${(requireActivity() as SoalActivity).score}", Toast.LENGTH_SHORT).show()
+                val score = (requireActivity() as SoalActivity).score
 
+                val intent = Intent(requireActivity(), ActivityHistory::class.java)
+                intent.putExtra(ActivityHistory.SCORE, score)
+                startActivity(intent)
             }
         }
 
