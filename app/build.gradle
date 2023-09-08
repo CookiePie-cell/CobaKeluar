@@ -95,6 +95,10 @@ dependencies {
     implementation 'com.google.android.gms:play-services-auth:20.7.0'
     implementation 'com.google.firebase:firebase-database-ktx:20.2.2'
 
+    //pdf
+    implementation 'com.itextpdf:itext7-core:7.1.15'
+    
+    //mathView
     implementation("io.github.kexanie.library:MathView:0.0.6")
 
     testImplementation 'junit:junit:4.13.2'
