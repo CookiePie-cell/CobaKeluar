@@ -43,10 +43,10 @@ class ActivityLogin: AppCompatActivity() {
             }
         })
 
-        binding.btnDaftar.setOnClickListener({
-            val intent = Intent(this, ActivitySignUp::class.java)
-            startActivity(intent)
-        })
+//        binding.btnDaftar.setOnClickListener({
+//            val intent = Intent(this, ActivitySignUp::class.java)
+//            startActivity(intent)
+//        })
 
         binding.btnLoginGoogle.setOnClickListener({
             signIn()
