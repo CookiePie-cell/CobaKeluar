@@ -70,13 +70,6 @@ class ActivityHistory : AppCompatActivity() {
             saveBitmapToMediaStore(bitmap)
         }
 
-        binding.btnCetakPdf.setOnClickListener({
-            val bitmap = getBitmapFromView(binding.HalamanCetak)
-            val pdfFileName = "hasil-nilai.pdf"
-
-            createPdfFromBitmap(bitmap, pdfFileName)
-
-        })
     }
 
     private fun getBitmapFromView(view: View): Bitmap {
@@ -101,34 +94,6 @@ class ActivityHistory : AppCompatActivity() {
             e.printStackTrace()
             Toast.makeText(this, "Gagal mengunduh", Toast.LENGTH_SHORT).show()
         }
-    }
-
-    private fun createPdfFromBitmap(bitmap: Bitmap, pdfFileName: String) {
-        val storageDir = getExternalFilesDir(Environment.DIRECTORY_DOCUMENTS)
-        storageDir?.mkdirs()
-        val pdfFile = File(storageDir, pdfFileName)
-
-        val pdfWriter = PdfWriter(pdfFile)
-        val pdfDocument = PdfDocument(pdfWriter)
-        val document = Document(pdfDocument)
-
-        val image = Image(ImageDataFactory.create(bitmapToByteArray(bitmap)))
-        image.scaleToFit(pdfDocument.defaultPageSize.width, pdfDocument.defaultPageSize.height)
-
-        document.add(image)
-
-        document.close()
-        pdfWriter.close()
-
-        Log.d("PDF Creation", "PDF File Path: ${pdfFile.absolutePath}")
-
-        Toast.makeText(this, "PDF berhasil dibuat", Toast.LENGTH_SHORT).show()
-    }
-
-    private fun bitmapToByteArray(bitmap: Bitmap): ByteArray {
-        val stream = ByteArrayOutputStream()
-        bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream)
-        return stream.toByteArray()
     }
 
     companion object {
