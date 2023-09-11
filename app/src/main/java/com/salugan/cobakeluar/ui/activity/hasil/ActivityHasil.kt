@@ -4,7 +4,6 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.salugan.cobakeluar.R
 import com.salugan.cobakeluar.databinding.ActivityHasilToBinding
-import com.salugan.cobakeluar.ui.activity.history.ActivityHistory
 import com.salugan.cobakeluar.utils.DateTimeUtils
 
 class ActivityHasil: AppCompatActivity() {

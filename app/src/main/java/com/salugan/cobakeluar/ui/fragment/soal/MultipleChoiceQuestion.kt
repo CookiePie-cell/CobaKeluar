@@ -1,11 +1,9 @@
 package com.salugan.cobakeluar.ui.fragment.soal
 
 import android.content.Intent
-import android.opengl.Visibility
 import android.os.Build
 import android.os.Bundle
 import android.text.Html
-import android.util.Log
 import android.view.Gravity
 
 import androidx.fragment.app.Fragment
@@ -26,7 +24,7 @@ import com.salugan.cobakeluar.databinding.FragmentMultipleChoiceQuestionBinding
 import com.salugan.cobakeluar.model.QuestionModel
 import com.salugan.cobakeluar.model.SelectionModel
 import com.salugan.cobakeluar.ui.activity.hasil.ActivityHasil
-import com.salugan.cobakeluar.ui.activity.history.ActivityHistory
+import com.salugan.cobakeluar.ui.activity.history.ketidakpastian.ActivityHistory
 import com.salugan.cobakeluar.ui.activity.soal.SoalActivity
 import com.salugan.cobakeluar.utils.QUESTION
 import io.github.kexanie.library.MathView
@@ -177,7 +175,6 @@ class MultipleChoiceQuestion : Fragment() {
     private fun disableScrolling() {
         for (i in 0 until binding.answerOptionsContainer.childCount) {
             val child = binding.answerOptionsContainer.getChildAt(i)
-            Log.d("vmvm", i.toString())
             if (child is LinearLayout) {
                 child.setOnClickListener(null)
             }

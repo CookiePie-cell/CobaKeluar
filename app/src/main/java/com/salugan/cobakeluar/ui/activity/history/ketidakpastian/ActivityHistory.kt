@@ -1,26 +1,20 @@
-package com.salugan.cobakeluar.ui.activity.history
+package com.salugan.cobakeluar.ui.activity.history.ketidakpastian
 
 import android.content.ContentValues
 import android.graphics.Bitmap
 import android.os.Bundle
-import android.os.Environment
 import android.provider.MediaStore
-import android.util.Log
 import android.view.View
-import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.drawToBitmap
 import androidx.lifecycle.ViewModelProvider
-import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.auth.FirebaseAuth
 import com.salugan.cobakeluar.data.Result
 import com.salugan.cobakeluar.databinding.ActivityHistoryBinding
 import dagger.hilt.android.AndroidEntryPoint
 import java.io.IOException
-import com.salugan.cobakeluar.R
-import com.salugan.cobakeluar.ui.activity.hasil.ActivityHasil
 
 //import com.salugan.cobakeluar.adapter.ReportAdapter
 
