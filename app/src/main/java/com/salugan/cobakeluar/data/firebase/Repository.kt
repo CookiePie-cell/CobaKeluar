@@ -19,19 +19,13 @@ class Repository @Inject constructor(
 
     fun userData(addData: UserModel): LiveData<Result<String>> {
         val database = db.getReference("users").push()
-
         database.setValue(addData)
-
         resultAddData.postValue(Result.Loading)
-
-
         database.addListenerForSingleValueEvent(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 resultAddData.postValue(Result.Success("Data berhasil ditambahkan"))
                 Log.i("suksessBos", "suskes: " )
-
             }
-
             override fun onCancelled(error: DatabaseError) {
                 resultAddData.postValue(Result.Error(error.message))
                 Log.e("errorDatabaseBos", "onCancelled: "+ error.message )
