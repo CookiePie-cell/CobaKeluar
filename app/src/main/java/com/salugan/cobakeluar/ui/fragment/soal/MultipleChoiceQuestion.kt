@@ -14,6 +14,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.LinearLayout
+import android.widget.TextView
 import android.widget.Toast
 import androidx.cardview.widget.CardView
 import androidx.fragment.app.viewModels
@@ -21,6 +22,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.viewpager2.widget.ViewPager2
 import com.bumptech.glide.Glide
 import com.google.android.material.bottomsheet.BottomSheetDialog
+import com.google.android.material.tabs.TabLayout
 import com.salugan.cobakeluar.R
 import com.salugan.cobakeluar.adapter.AnswerAdapter
 import com.salugan.cobakeluar.databinding.FragmentMultipleChoiceQuestionBinding
@@ -64,6 +66,8 @@ class MultipleChoiceQuestion : Fragment() {
         val flags = Html.FROM_HTML_MODE_COMPACT or Html.FROM_HTML_MODE_LEGACY
 
         viewPager = requireActivity().findViewById(R.id.viewPager)
+
+        val tab = requireActivity().findViewById<TabLayout>(R.id.tabs)
 
         binding.btnNext.setOnClickListener {
             // Navigate to the next tab (fragment)
@@ -129,17 +133,25 @@ class MultipleChoiceQuestion : Fragment() {
 
             binding.btnJawab.setOnClickListener {
                 if (answer != null) {
+                    val tabView =
+                        LayoutInflater.from(requireContext()).inflate(R.layout.tab_title, null) as TextView
                     if (answer?.id == question.selectionAnswer?.get(0)?.selectionId) {
                         Toast.makeText(requireActivity(), "Jawaban benar", Toast.LENGTH_SHORT).show()
                         (requireActivity() as SoalActivity).score += 1
+                        tabView.setBackgroundResource(R.drawable.tab_correct_background)
                     } else {
                         Toast.makeText(requireActivity(), "Jawaban salah", Toast.LENGTH_SHORT).show()
                         (requireActivity() as SoalActivity).score -= 1
+                        tabView.setBackgroundResource(R.drawable.tab_uncorrect_background)
                     }
                     question.hasSelected = true
                     binding.btnJawab.visibility = View.GONE
                     binding.btnCekPembahasan.visibility = View.VISIBLE
                     showBottomSheet(question.discussion?.get(0)?.discussionText)
+
+                    val selectedTab = tab.getTabAt(viewPager.currentItem)
+
+                    selectedTab?.customView = tabView
                 }
             }
 
