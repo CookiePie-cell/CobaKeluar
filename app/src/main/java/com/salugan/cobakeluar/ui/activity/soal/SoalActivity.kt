@@ -1,5 +1,6 @@
 package com.salugan.cobakeluar.ui.activity.soal
 
+import android.content.Intent
 import android.content.res.Resources
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -21,6 +22,7 @@ import com.salugan.cobakeluar.adapter.TabPagerSoalAdapter
 import com.salugan.cobakeluar.data.Result
 import com.salugan.cobakeluar.databinding.ActivitySoalBinding
 import com.salugan.cobakeluar.model.QuestionModel
+import com.salugan.cobakeluar.ui.activity.hasil.ActivityHasil
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -31,6 +33,8 @@ class SoalActivity : AppCompatActivity(), MultiStateView.StateListener {
     private lateinit var multiStateView: MultiStateView
 
 //    private val tabTitles = arrayListOf("a", "b", "C")
+
+    var answers: MutableList<Int> = MutableList(10) { 0 }
 
     var score = 0
 
@@ -60,6 +64,10 @@ class SoalActivity : AppCompatActivity(), MultiStateView.StateListener {
 
         soalViewModel.eventCountDownFinish.observe(this) {
             Toast.makeText(this, "Waktu habis", Toast.LENGTH_SHORT).show()
+            val intent = Intent(this, ActivityHasil::class.java)
+            intent.putExtra(ActivityHasil.SCORE, score)
+            intent.putExtra(ActivityHasil.ANSWERS, ArrayList(answers))
+            startActivity(intent)
         }
     }
 
@@ -73,6 +81,7 @@ class SoalActivity : AppCompatActivity(), MultiStateView.StateListener {
                     multiStateView.viewState = MultiStateView.ViewState.CONTENT
                     Log.d("wkwkwk", it.data.toString())
                     val data: ArrayList<QuestionModel> = ArrayList(it.data)
+                    answers = MutableList(data.size) { 0 }
                     val tabPagerSoalAdapter = TabPagerSoalAdapter(this, data, data.size)
                     val viewPager: ViewPager2 = binding.viewPager
                     viewPager.offscreenPageLimit = 10
@@ -106,6 +115,7 @@ class SoalActivity : AppCompatActivity(), MultiStateView.StateListener {
                     multiStateView.viewState = MultiStateView.ViewState.CONTENT
                     Log.d("wkwkwk", it.data.toString())
                     val data: ArrayList<QuestionModel> = ArrayList(it.data)
+                    answers = MutableList(data.size) { 0 }
                     val tabPagerSoalAdapter = TabPagerSoalAdapter(this, data, data.size)
                     val viewPager: ViewPager2 = binding.viewPager
                     viewPager.isUserInputEnabled = false

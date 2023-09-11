@@ -38,8 +38,6 @@ class ActivityHistory : AppCompatActivity() {
         val currentUser = mAuth.currentUser
         val id = currentUser?.uid
 
-        val score = intent.getIntExtra(ActivityHistory.SCORE, 0)
-
 //        recyclerView = findViewById(R.id.recycleView)
 //
 //        //  RecyclerView
@@ -95,10 +93,6 @@ class ActivityHistory : AppCompatActivity() {
             e.printStackTrace()
             Toast.makeText(this, "Gagal mengunduh", Toast.LENGTH_SHORT).show()
         }
-    }
-
-    companion object {
-        const val SCORE = "extra_score"
     }
 
 }

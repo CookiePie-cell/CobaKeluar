@@ -25,6 +25,7 @@ import com.salugan.cobakeluar.R
 import com.salugan.cobakeluar.databinding.FragmentMultipleChoiceQuestionBinding
 import com.salugan.cobakeluar.model.QuestionModel
 import com.salugan.cobakeluar.model.SelectionModel
+import com.salugan.cobakeluar.ui.activity.hasil.ActivityHasil
 import com.salugan.cobakeluar.ui.activity.history.ActivityHistory
 import com.salugan.cobakeluar.ui.activity.soal.SoalActivity
 import com.salugan.cobakeluar.utils.QUESTION
@@ -105,10 +106,12 @@ class MultipleChoiceQuestion : Fragment() {
                     Toast.makeText(requireActivity(), "Jawaban benar", Toast.LENGTH_SHORT).show()
                     checkAnswerCorrectness(true)
                     (requireActivity() as SoalActivity).score += 1
+                    (requireActivity() as SoalActivity).answers[viewPager.currentItem] = 1
                     tabView.setBackgroundResource(R.drawable.tab_correct_background)
                 } else {
                     Toast.makeText(requireActivity(), "Jawaban salah", Toast.LENGTH_SHORT).show()
                     checkAnswerCorrectness(false)
+                    (requireActivity() as SoalActivity).answers[viewPager.currentItem] = 2
                     tabView.setBackgroundResource(R.drawable.tab_uncorrect_background)
                 }
                 question.hasSelected = true
@@ -218,7 +221,8 @@ class MultipleChoiceQuestion : Fragment() {
                 val score = (requireActivity() as SoalActivity).score
 
                 val intent = Intent(requireActivity(), ActivityHistory::class.java)
-                intent.putExtra(ActivityHistory.SCORE, score)
+                intent.putExtra(ActivityHasil.SCORE, score)
+                intent.putExtra(ActivityHasil.ANSWERS, ArrayList((requireActivity() as SoalActivity).answers))
                 startActivity(intent)
             }
         }

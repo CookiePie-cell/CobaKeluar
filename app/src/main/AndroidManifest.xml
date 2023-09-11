@@ -57,6 +57,9 @@
         <activity android:name=".ui.activity.authentication.ActivityForgotPassword"
             android:label="forgorPassword">
         </activity>
+        <activity android:name=".ui.activity.hasil.ActivityHasil"
+            android:label="hasil">
+        </activity>
     </application>
 
 </manifest>
