@@ -13,4 +13,8 @@
     <string name="jawab">JAWAB</string>
     <string name="pembahasan">Pembahasan</string>
     <string name="cek_pembahasan">Cek pembahasan</string>
+    <string name="countdown">Waktu tersisa: %1s</string>
+    <string name="benar">BENAR %1d</string>
+    <string name="salah">SALAH %1d</string>
+    <string name="kosong">KOSONG %1d</string>
 </resources>

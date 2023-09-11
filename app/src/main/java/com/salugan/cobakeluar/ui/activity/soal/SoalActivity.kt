@@ -1,5 +1,6 @@
 package com.salugan.cobakeluar.ui.activity.soal
 
+import android.content.Intent
 import android.content.res.Resources
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -9,6 +10,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.viewpager.widget.ViewPager
 import androidx.viewpager2.widget.ViewPager2
@@ -20,6 +22,7 @@ import com.salugan.cobakeluar.adapter.TabPagerSoalAdapter
 import com.salugan.cobakeluar.data.Result
 import com.salugan.cobakeluar.databinding.ActivitySoalBinding
 import com.salugan.cobakeluar.model.QuestionModel
+import com.salugan.cobakeluar.ui.activity.hasil.ActivityHasil
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -31,9 +34,11 @@ class SoalActivity : AppCompatActivity(), MultiStateView.StateListener {
 
 //    private val tabTitles = arrayListOf("a", "b", "C")
 
+    var answers: MutableList<Int> = MutableList(10) { 0 }
+
     var score = 0
 
-    private val soalViewModel: SoalViewModel by viewModels()
+    val soalViewModel: SoalViewModel by viewModels()
 
     val tes = "wowkowkwowk"
 
@@ -52,6 +57,18 @@ class SoalActivity : AppCompatActivity(), MultiStateView.StateListener {
         } else {
             setGeometriDanPengukuranTryOut()
         }
+
+        soalViewModel.currentTimeString.observe(this) {
+            binding.countDown.text = String.format(getString(R.string.countdown), it)
+        }
+
+        soalViewModel.eventCountDownFinish.observe(this) {
+            Toast.makeText(this, "Waktu habis", Toast.LENGTH_SHORT).show()
+            val intent = Intent(this, ActivityHasil::class.java)
+            intent.putExtra(ActivityHasil.SCORE, score)
+            intent.putExtra(ActivityHasil.ANSWERS, ArrayList(answers))
+            startActivity(intent)
+        }
     }
 
     private fun setDataDanKetidakPastianTryOut() {
@@ -59,17 +76,22 @@ class SoalActivity : AppCompatActivity(), MultiStateView.StateListener {
             when (it) {
                 is Result.Loading -> multiStateView.viewState = MultiStateView.ViewState.LOADING
                 is Result.Success -> {
+                    soalViewModel.setInitialTime(1)
+                    soalViewModel.startTimer()
                     multiStateView.viewState = MultiStateView.ViewState.CONTENT
                     Log.d("wkwkwk", it.data.toString())
                     val data: ArrayList<QuestionModel> = ArrayList(it.data)
-                    val tabPagerSoalAdapter = TabPagerSoalAdapter(this, data)
+                    answers = MutableList(data.size) { 0 }
+                    val tabPagerSoalAdapter = TabPagerSoalAdapter(this, data, data.size)
                     val viewPager: ViewPager2 = binding.viewPager
+                    viewPager.offscreenPageLimit = 10
                     viewPager.isUserInputEnabled = false
                     viewPager.adapter = tabPagerSoalAdapter
                     val tabs: TabLayout = binding.tabs
                     TabLayoutMediator(tabs, viewPager) { tab, position ->
                         tab.text = (position + 1).toString()
                     }.attach()
+
 
                     for (i in 0..9) {
                         val textView =
@@ -93,7 +115,8 @@ class SoalActivity : AppCompatActivity(), MultiStateView.StateListener {
                     multiStateView.viewState = MultiStateView.ViewState.CONTENT
                     Log.d("wkwkwk", it.data.toString())
                     val data: ArrayList<QuestionModel> = ArrayList(it.data)
-                    val tabPagerSoalAdapter = TabPagerSoalAdapter(this, data)
+                    answers = MutableList(data.size) { 0 }
+                    val tabPagerSoalAdapter = TabPagerSoalAdapter(this, data, data.size)
                     val viewPager: ViewPager2 = binding.viewPager
                     viewPager.isUserInputEnabled = false
                     viewPager.adapter = tabPagerSoalAdapter
@@ -101,6 +124,8 @@ class SoalActivity : AppCompatActivity(), MultiStateView.StateListener {
                     TabLayoutMediator(tabs, viewPager) { tab, position ->
                         tab.text = (position + 1).toString()
                     }.attach()
+
+
 
                     for (i in 0..9) {
                         val textView =

@@ -9,9 +9,8 @@
         android:layout_width="match_parent"
         android:layout_height="150dp"
         android:orientation="vertical"
-        android:layout_marginLeft="50dp"
         android:layout_marginTop="50dp"
-        android:layout_marginRight="50dp"
+        android:layout_marginHorizontal="30dp"
         android:background="@drawable/rounded_button_white"
         >
 
@@ -115,7 +114,7 @@
                     android:textColor="@color/lightGreen"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="BENAR 10"
+                    android:text="@string/benar"
                     ></TextView>
 
                 <TextView
@@ -123,8 +122,15 @@
                     android:textColor="@color/red"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="SALAH 0"
+                    android:text="@string/salah"
                     ></TextView>
+
+                <TextView
+                    android:id="@+id/kosong"
+                    android:textColor="@color/darkGrey"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/kosong"/>
 
 
             </LinearLayout>
@@ -138,7 +144,8 @@
     <LinearLayout
         android:layout_marginTop="20dp"
         android:layout_gravity="center"
-        android:layout_width="260dp"
+        android:layout_width="match_parent"
+        android:layout_marginHorizontal="40dp"
         android:layout_height="40dp"
         android:id="@+id/btnCetak"
         android:orientation="horizontal"
