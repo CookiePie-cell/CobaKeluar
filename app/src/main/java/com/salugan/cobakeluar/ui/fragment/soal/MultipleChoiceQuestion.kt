@@ -4,6 +4,8 @@ import android.content.Intent
 import android.os.Build
 import android.os.Bundle
 import android.text.Html
+import android.text.format.DateUtils
+import android.util.Log
 import android.view.Gravity
 
 import androidx.fragment.app.Fragment
@@ -85,8 +87,7 @@ class MultipleChoiceQuestion : Fragment() {
 
             setAnswerList(question)
 
-            setBtnJawab(question
-            )
+            setBtnJawab(question)
             binding.btnCekPembahasan.setOnClickListener {
                 showBottomSheet(question.discussion?.get(0)?.discussionText)
             }
@@ -215,11 +216,17 @@ class MultipleChoiceQuestion : Fragment() {
             if (currentItem < totalItems - 1) {
                 viewPager.setCurrentItem(currentItem + 1, true)
             } else {
+                (requireActivity() as SoalActivity).soalViewModel.resetTimer()
                 val score = (requireActivity() as SoalActivity).score
 
-                val intent = Intent(requireActivity(), ActivityHistory::class.java)
+                val completionTimeMillis = (requireActivity() as SoalActivity).soalViewModel.calculateCompletionTime()
+                val completionTimeSeconds = completionTimeMillis / 1000
+                val completionTimeString = DateUtils.formatElapsedTime(completionTimeSeconds)
+
+                val intent = Intent(requireActivity(), ActivityHasil::class.java)
                 intent.putExtra(ActivityHasil.SCORE, score)
                 intent.putExtra(ActivityHasil.ANSWERS, ArrayList((requireActivity() as SoalActivity).answers))
+                intent.putExtra(ActivityHasil.COMPLETION_TIME, completionTimeString)
                 startActivity(intent)
             }
         }

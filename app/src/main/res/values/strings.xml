@@ -17,4 +17,5 @@
     <string name="benar">BENAR %1d</string>
     <string name="salah">SALAH %1d</string>
     <string name="kosong">KOSONG %1d</string>
+    <string name="task_completion_time">%1s menit</string>
 </resources>

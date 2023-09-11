@@ -61,7 +61,7 @@
                     android:id="@+id/waktu"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="15.40 detik"
+                    android:text="@string/task_completion_time"
                     android:textColor="@color/darkBlue"></TextView>
 
                 <TextView

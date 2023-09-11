@@ -4,6 +4,7 @@ import android.content.Intent
 import android.content.res.Resources
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.text.format.DateUtils
 import android.util.Log
 import android.util.TypedValue
 import android.view.LayoutInflater
@@ -65,8 +66,13 @@ class SoalActivity : AppCompatActivity(), MultiStateView.StateListener {
         soalViewModel.eventCountDownFinish.observe(this) {
             Toast.makeText(this, "Waktu habis", Toast.LENGTH_SHORT).show()
             val intent = Intent(this, ActivityHasil::class.java)
+            val completionTimeMillis = soalViewModel.calculateCompletionTime()
+            val completionTimeSeconds = completionTimeMillis / 1000
+            val completionTimeString = DateUtils.formatElapsedTime(completionTimeSeconds)
+
             intent.putExtra(ActivityHasil.SCORE, score)
             intent.putExtra(ActivityHasil.ANSWERS, ArrayList(answers))
+            intent.putExtra(ActivityHasil.COMPLETION_TIME, completionTimeString)
             startActivity(intent)
         }
     }
@@ -77,6 +83,7 @@ class SoalActivity : AppCompatActivity(), MultiStateView.StateListener {
                 is Result.Loading -> multiStateView.viewState = MultiStateView.ViewState.LOADING
                 is Result.Success -> {
                     soalViewModel.setInitialTime(1)
+                    soalViewModel.setTotalExamTime(1)
                     soalViewModel.startTimer()
                     multiStateView.viewState = MultiStateView.ViewState.CONTENT
                     Log.d("wkwkwk", it.data.toString())

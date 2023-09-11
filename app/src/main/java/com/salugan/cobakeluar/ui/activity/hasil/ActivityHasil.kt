@@ -16,20 +16,23 @@ class ActivityHasil: AppCompatActivity() {
 
         val score = intent.getIntExtra(SCORE, 0)
         val answers = intent.getIntegerArrayListExtra(ANSWERS)
-
+        val completionTime = intent.getStringExtra(COMPLETION_TIME)
         binding.nilai.text = (score * 10).toString()
 
         binding.tanggal.text = DateTimeUtils.getCurrentDate()
 
+        binding.waktu.text = completionTime
+
         if (answers != null) {
-            binding.benar.text = String.format(getString(R.string.benar), answers.count { it -> it == 1})
-            binding.salah.text = String.format(getString(R.string.salah), answers.count { it -> it == 2})
-            binding.kosong.text = String.format(getString(R.string.kosong), answers.count { it -> it == 0})
+            binding.benar.text = String.format(getString(R.string.benar), answers.count { it == 1})
+            binding.salah.text = String.format(getString(R.string.salah), answers.count { it == 2})
+            binding.kosong.text = String.format(getString(R.string.kosong), answers.count { it == 0})
         }
     }
 
     companion object {
         const val SCORE = "extra_score"
         const val ANSWERS = "extra_answers"
+        const val COMPLETION_TIME = "extra_completion_time"
     }
 }
