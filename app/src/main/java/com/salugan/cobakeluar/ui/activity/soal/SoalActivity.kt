@@ -105,7 +105,6 @@ class SoalActivity : AppCompatActivity(), MultiStateView.StateListener {
                     for (i in 0..9) {
                         val textView =
                             LayoutInflater.from(this).inflate(R.layout.tab_title, null) as TextView
-
                         binding.tabs.getTabAt(i)?.customView = textView
                     }
                 }
