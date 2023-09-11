@@ -20,6 +20,8 @@ import com.salugan.cobakeluar.databinding.ActivityHistoryBinding
 import dagger.hilt.android.AndroidEntryPoint
 import java.io.IOException
 import com.salugan.cobakeluar.R
+import com.salugan.cobakeluar.ui.activity.hasil.ActivityHasil
+
 //import com.salugan.cobakeluar.adapter.ReportAdapter
 
 @AndroidEntryPoint
@@ -35,7 +37,9 @@ class ActivityHistory : AppCompatActivity() {
         val mAuth = FirebaseAuth.getInstance()
         val currentUser = mAuth.currentUser
         val id = currentUser?.uid
-        val score = intent.getIntExtra(SCORE, 0)
+
+        val score = intent.getIntExtra(ActivityHistory.SCORE, 0)
+
 //        recyclerView = findViewById(R.id.recycleView)
 //
 //        //  RecyclerView
@@ -45,6 +49,7 @@ class ActivityHistory : AppCompatActivity() {
 //        // Initialize and set up your RecyclerView adapter here
 //        val adapter = ReportAdapter()
 //        recyclerView.adapter = adapter
+
         viewModel = ViewModelProvider(this).get(HistoryViewModel::class.java)
         viewModel.dataProfile(id!!)
         viewModel.resultDataProfile.observe(this, { result ->
@@ -52,6 +57,7 @@ class ActivityHistory : AppCompatActivity() {
                 is Result.Success -> {
                     binding.namaPengguna.text = result.data.nama
                     binding.emailPengguna.text = result.data.email
+
 //                    val layoutManager = LinearLayoutManager(this)
 //                    recyclerView.adapter = adapter
 //                    recyclerView.layoutManager = layoutManager
@@ -90,6 +96,7 @@ class ActivityHistory : AppCompatActivity() {
             Toast.makeText(this, "Gagal mengunduh", Toast.LENGTH_SHORT).show()
         }
     }
+
     companion object {
         const val SCORE = "extra_score"
     }
