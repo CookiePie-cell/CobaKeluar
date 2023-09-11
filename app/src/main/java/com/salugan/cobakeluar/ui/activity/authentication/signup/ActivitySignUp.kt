@@ -28,22 +28,17 @@ class ActivitySignUp: AppCompatActivity() {
         binding = ActivitySignUpBinding.inflate(layoutInflater)
         val view = binding.root
         setContentView(view)
-
         viewModel = ViewModelProvider(this).get(SignupViewModel::class.java)
-
         val nama = intent.getStringExtra("nama")?:""
         val email = intent.getStringExtra("email")?: ""
-
         binding.nama.text = Editable.Factory.getInstance().newEditable(nama)
         binding.email.text = Editable.Factory.getInstance().newEditable(email)
-
         binding.btnDaftar.setOnClickListener({
             val nama = binding.nama.text.toString()
             val email = binding.email.text.toString()
             val noHp = binding.noHp.text.toString()
             val password = binding.Password.text.toString()
             val konfirmPassword = binding.konfirmPassword.text.toString()
-
             if (password != konfirmPassword){
                 Toast.makeText(this, "Password tidak sesuai", Toast.LENGTH_SHORT).show()
             }else if (nama.isEmpty() || email.isEmpty() || noHp.isEmpty() || password.isEmpty() || konfirmPassword.isEmpty() ){
@@ -55,28 +50,23 @@ class ActivitySignUp: AppCompatActivity() {
                         if (task.isSuccessful) {
                             val firebaseUser = FirebaseAuth.getInstance().currentUser
                             val uid = firebaseUser?.uid
-
                             val addData = UserModel(
                                 id = uid!!,
                                 nama = nama,
                                 email = email,
                                 noHp  = noHp,
                             )
-
                             viewModel.addUser(addData)
-
                             viewModel.resultAddData.observe(this) {
                                 when (it) {
                                     is Result.Loading -> {
                                         loading()
                                     }
-
                                     is Result.Success -> {
                                         loadingDialog?.dismiss()
                                         val intent = Intent(this, HomeActivity::class.java)
                                         startActivity(intent)
                                     }
-
                                     is Result.Error -> {
                                         val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                                             .build()
@@ -86,16 +76,13 @@ class ActivitySignUp: AppCompatActivity() {
                                         loadingDialog?.dismiss()
                                         Toast.makeText(this, it.error, Toast.LENGTH_SHORT).show()
                                     }
-
                         }}}
                         else{
                             Toast.makeText(this, "gagal :"+task.exception, Toast.LENGTH_SHORT).show()
-                            Log.e("errorFirebase", "onCreate: ", task.exception )
                         }
                         }
             }
         })
-
        }
     private fun loading() {
         val dialogView = layoutInflater.inflate(R.layout.dialog_loading, null)

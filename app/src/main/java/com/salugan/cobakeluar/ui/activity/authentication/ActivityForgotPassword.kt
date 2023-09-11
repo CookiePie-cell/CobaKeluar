@@ -13,20 +13,14 @@ import com.salugan.cobakeluar.databinding.ActivityForgotPasswordBinding
 class ActivityForgotPassword: AppCompatActivity() {
     private lateinit var binding: ActivityForgotPasswordBinding
     private lateinit var mAuth: FirebaseAuth
-
     var dialogForgotPassword: AlertDialog? = null
     var loadingDialog: AlertDialog? = null
-
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityForgotPasswordBinding.inflate(layoutInflater)
         val view = binding.root
         setContentView(view)
-
         mAuth = FirebaseAuth.getInstance()
-
-
         binding.btnKirim.setOnClickListener({
             val email = binding.textEmailLupaPass.text.toString()
             if (email.isNotEmpty()) {
@@ -35,7 +29,6 @@ class ActivityForgotPassword: AppCompatActivity() {
                 Toast.makeText(this, "Masukan email yang terdaftar", Toast.LENGTH_SHORT).show()
             }
         })
-
     }
     private fun resetPassword(email: String) {
         loading()
@@ -49,24 +42,18 @@ class ActivityForgotPassword: AppCompatActivity() {
                 }
             }
     }
-
     fun dialogForgotPassword(){
         val dialogView = layoutInflater.inflate(R.layout.dialog_forgot_password, null)
         val builder = AlertDialog.Builder(this)
-
         val btnOk = dialogView.findViewById<TextView>(R.id.btnOk)
-
         builder.setView(dialogView)
         dialogForgotPassword = builder.create()
         dialogForgotPassword?.show()
-
         btnOk.setOnClickListener(){
             finish()
             onBackPressed()
         }
-
     }
-
     private fun loading() {
         val dialogView = layoutInflater.inflate(R.layout.dialog_loading, null)
         val builder = AlertDialog.Builder(this)
@@ -74,5 +61,4 @@ class ActivityForgotPassword: AppCompatActivity() {
         loadingDialog = builder.create()
         loadingDialog?.show()
     }
-
 }

@@ -27,19 +27,15 @@ class ActivityHistory : AppCompatActivity() {
     private lateinit var binding: ActivityHistoryBinding
     private lateinit var viewModel: HistoryViewModel
     private lateinit var recyclerView: RecyclerView
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityHistoryBinding.inflate(layoutInflater)
         val view = binding.root
         setContentView(view)
-
         val mAuth = FirebaseAuth.getInstance()
         val currentUser = mAuth.currentUser
         val id = currentUser?.uid
-
         val score = intent.getIntExtra(SCORE, 0)
-
 //        recyclerView = findViewById(R.id.recycleView)
 //
 //        //  RecyclerView
@@ -49,43 +45,33 @@ class ActivityHistory : AppCompatActivity() {
 //        // Initialize and set up your RecyclerView adapter here
 //        val adapter = ReportAdapter()
 //        recyclerView.adapter = adapter
-
         viewModel = ViewModelProvider(this).get(HistoryViewModel::class.java)
         viewModel.dataProfile(id!!)
-
         viewModel.resultDataProfile.observe(this, { result ->
             when (result) {
                 is Result.Success -> {
                     binding.namaPengguna.text = result.data.nama
                     binding.emailPengguna.text = result.data.email
-
 //                    val layoutManager = LinearLayoutManager(this)
 //                    recyclerView.adapter = adapter
 //                    recyclerView.layoutManager = layoutManager
 //                    recyclerView.setHasFixedSize(true)
                 }
-
                 is Result.Error -> {
                     Toast.makeText(this, "Data gagal diambil", Toast.LENGTH_SHORT).show()
                 }
-
                 is Result.Loading -> {
                 }
             }
         })
-
-
         binding.btnCetak.setOnClickListener {
             val bitmap = getBitmapFromView(binding.halamanCetak)
             saveBitmapToMediaStore(bitmap)
         }
-
     }
-
     private fun getBitmapFromView(view: View): Bitmap {
         return view.drawToBitmap()
     }
-
     private fun saveBitmapToMediaStore(bitmap: Bitmap) {
         val resolver = contentResolver
         val values = ContentValues().apply {
@@ -94,7 +80,6 @@ class ActivityHistory : AppCompatActivity() {
         }
         val imageUri = resolver.insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values)
         val output = resolver.openOutputStream(imageUri!!)
-
         try {
             bitmap.compress(Bitmap.CompressFormat.JPEG, 100, output)
             output?.close()
@@ -105,7 +90,6 @@ class ActivityHistory : AppCompatActivity() {
             Toast.makeText(this, "Gagal mengunduh", Toast.LENGTH_SHORT).show()
         }
     }
-
     companion object {
         const val SCORE = "extra_score"
     }
