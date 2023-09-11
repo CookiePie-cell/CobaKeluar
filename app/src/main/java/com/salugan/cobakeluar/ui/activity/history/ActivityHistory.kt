@@ -7,29 +7,26 @@ import android.os.Environment
 import android.provider.MediaStore
 import android.util.Log
 import android.view.View
+import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.drawToBitmap
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.auth.FirebaseAuth
 import com.salugan.cobakeluar.data.Result
 import com.salugan.cobakeluar.databinding.ActivityHistoryBinding
 import dagger.hilt.android.AndroidEntryPoint
-import java.io.File
-import java.io.FileOutputStream
 import java.io.IOException
-import com.itextpdf.io.image.ImageDataFactory
-import com.itextpdf.kernel.pdf.PdfDocument
-import com.itextpdf.kernel.pdf.PdfWriter
-import com.itextpdf.layout.Document
-import com.itextpdf.layout.element.Image
-import java.io.ByteArrayOutputStream
+import com.salugan.cobakeluar.R
+//import com.salugan.cobakeluar.adapter.ReportAdapter
 
 @AndroidEntryPoint
 class ActivityHistory : AppCompatActivity() {
     private lateinit var binding: ActivityHistoryBinding
-
     private lateinit var viewModel: HistoryViewModel
+    private lateinit var recyclerView: RecyclerView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -43,7 +40,15 @@ class ActivityHistory : AppCompatActivity() {
 
         val score = intent.getIntExtra(SCORE, 0)
 
-        binding.nilaiData.text = score.toString()
+//        recyclerView = findViewById(R.id.recycleView)
+//
+//        //  RecyclerView
+//        val layoutManager = LinearLayoutManager(this)
+//        recyclerView.layoutManager = layoutManager
+//
+//        // Initialize and set up your RecyclerView adapter here
+//        val adapter = ReportAdapter()
+//        recyclerView.adapter = adapter
 
         viewModel = ViewModelProvider(this).get(HistoryViewModel::class.java)
         viewModel.dataProfile(id!!)
@@ -53,6 +58,11 @@ class ActivityHistory : AppCompatActivity() {
                 is Result.Success -> {
                     binding.namaPengguna.text = result.data.nama
                     binding.emailPengguna.text = result.data.email
+
+//                    val layoutManager = LinearLayoutManager(this)
+//                    recyclerView.adapter = adapter
+//                    recyclerView.layoutManager = layoutManager
+//                    recyclerView.setHasFixedSize(true)
                 }
 
                 is Result.Error -> {
@@ -66,7 +76,7 @@ class ActivityHistory : AppCompatActivity() {
 
 
         binding.btnCetak.setOnClickListener {
-            val bitmap = getBitmapFromView(binding.HalamanCetak)
+            val bitmap = getBitmapFromView(binding.halamanCetak)
             saveBitmapToMediaStore(bitmap)
         }
 

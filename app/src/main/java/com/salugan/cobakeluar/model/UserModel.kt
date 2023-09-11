@@ -4,8 +4,9 @@ data class UserModel(
     val id: String?,
     val nama: String?,
     val email: String?,
-    val noHp: String?
-){
+    val noHp: String?,
+
+    ){
     constructor() : this("", "", "", "")
 
 }

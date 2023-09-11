@@ -60,7 +60,7 @@ class ActivitySignUp: AppCompatActivity() {
                                 id = uid!!,
                                 nama = nama,
                                 email = email,
-                                noHp  = noHp
+                                noHp  = noHp,
                             )
 
                             viewModel.addUser(addData)

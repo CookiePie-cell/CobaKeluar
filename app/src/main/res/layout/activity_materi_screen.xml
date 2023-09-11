@@ -178,9 +178,9 @@
         android:layout_height="40dp"
         android:layout_marginTop="50dp"
         android:background="@drawable/rounded_button_white"
-        android:text="@string/history"
+        android:text="Report Data dan ketidakpastian"
         android:textColor="@color/darkBlue"
-        android:textSize="20sp"
+        android:textSize="15dp"
         android:layout_gravity="center"
         android:textStyle="bold" />
 
@@ -190,9 +190,9 @@
         android:layout_height="40dp"
         android:layout_marginTop="10dp"
         android:background="@drawable/rounded_button_white"
-        android:text="CARA PENGERJAAN"
+        android:text="REPORT GEAOMETRI PENGUKURAN"
         android:textColor="@color/darkBlue"
-        android:textSize="20sp"
+        android:textSize="15dp"
         android:layout_gravity="center"
         android:textStyle="bold" />
 
