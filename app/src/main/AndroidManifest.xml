@@ -45,7 +45,7 @@
 
         </activity>
 
-        <activity android:name=".ui.activity.history.ActivityHistory"
+        <activity android:name=".ui.activity.history.ketidakpastian.ActivityHistory"
             android:label="history">
 
         </activity>

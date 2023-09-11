@@ -3,7 +3,6 @@ package com.salugan.cobakeluar.ui.activity.hasil
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.salugan.cobakeluar.databinding.ActivityHasilToBinding
-import com.salugan.cobakeluar.ui.activity.history.ActivityHistory
 
 class ActivityHasil: AppCompatActivity() {
     private lateinit var binding: ActivityHasilToBinding

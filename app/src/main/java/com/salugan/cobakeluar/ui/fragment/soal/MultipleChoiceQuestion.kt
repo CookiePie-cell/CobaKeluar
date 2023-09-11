@@ -1,11 +1,9 @@
 package com.salugan.cobakeluar.ui.fragment.soal
 
 import android.content.Intent
-import android.opengl.Visibility
 import android.os.Build
 import android.os.Bundle
 import android.text.Html
-import android.util.Log
 import android.view.Gravity
 
 import androidx.fragment.app.Fragment
@@ -16,8 +14,6 @@ import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.Toast
-import androidx.cardview.widget.CardView
-import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.viewpager2.widget.ViewPager2
 import com.bumptech.glide.Glide
@@ -28,7 +24,7 @@ import com.salugan.cobakeluar.adapter.AnswerAdapter
 import com.salugan.cobakeluar.databinding.FragmentMultipleChoiceQuestionBinding
 import com.salugan.cobakeluar.model.QuestionModel
 import com.salugan.cobakeluar.model.SelectionModel
-import com.salugan.cobakeluar.ui.activity.history.ActivityHistory
+import com.salugan.cobakeluar.ui.activity.history.ketidakpastian.ActivityHistory
 import com.salugan.cobakeluar.ui.activity.soal.SoalActivity
 import com.salugan.cobakeluar.utils.QUESTION
 import io.github.kexanie.library.MathView

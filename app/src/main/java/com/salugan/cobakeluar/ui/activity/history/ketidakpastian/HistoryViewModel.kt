@@ -1,4 +1,4 @@
-package com.salugan.cobakeluar.ui.activity.history
+package com.salugan.cobakeluar.ui.activity.history.ketidakpastian
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
