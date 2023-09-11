@@ -69,32 +69,9 @@ class MultipleChoiceQuestion : Fragment() {
 
         val tab = requireActivity().findViewById<TabLayout>(R.id.tabs)
 
-        binding.btnNext.setOnClickListener {
-            // Navigate to the next tab (fragment)
-            val totalItems = viewPager.adapter?.itemCount ?: 0
+        setButtonNext()
 
-            // Get the current item
-            val currentItem = viewPager.currentItem
-
-            // Check if it's not the last item
-            if (currentItem < totalItems - 1) {
-                viewPager.setCurrentItem(currentItem + 1, true)
-            } else {
-                Toast.makeText(requireContext(), "Skormu ${(requireActivity() as SoalActivity).score}", Toast.LENGTH_SHORT).show()
-                val score = (requireActivity() as SoalActivity).score
-
-                val intent = Intent(requireActivity(), ActivityHistory::class.java)
-                intent.putExtra(ActivityHistory.SCORE, score)
-                startActivity(intent)
-            }
-        }
-
-
-        binding.btnPrev.setOnClickListener {
-            // Navigate to the previous tab (fragment)
-            val currentItem = viewPager.currentItem
-            viewPager.setCurrentItem(currentItem - 1, true)
-        }
+        setButtonPrevious()
 
         if (question != null) {
             val images = mutableListOf<String>()
@@ -104,27 +81,7 @@ class MultipleChoiceQuestion : Fragment() {
             }, null).toString()
 
 
-            for(i in 0 until images.size) {
-                val imageView = ImageView(requireActivity())
-
-                Glide.with(requireActivity())
-                    .load(images[i])
-                    .into(imageView)
-
-                val desiredWidthInPixels = 720
-                val desiredHeightInPixels = 480
-
-                val layoutParams = LinearLayout.LayoutParams(
-                    desiredWidthInPixels,
-                    desiredHeightInPixels
-                )
-
-                layoutParams.gravity = Gravity.CENTER_HORIZONTAL
-
-                imageView.layoutParams = layoutParams
-
-                binding.llQuestion.addView(imageView)
-            }
+            setImageInQuestion(images)
 
             val layoutManager = LinearLayoutManager(requireActivity())
             binding.rvAnswer.layoutManager = layoutManager
@@ -159,13 +116,71 @@ class MultipleChoiceQuestion : Fragment() {
                 showBottomSheet(question.discussion?.get(0)?.discussionText)
             }
 
-            if (question.hasSelected) {
-                binding.btnJawab.visibility = View.GONE
-                binding.btnCekPembahasan.visibility = View.VISIBLE
+            checkQuestionState(question)
+        }
+    }
+
+    private fun checkQuestionState(question: QuestionModel) {
+        if (question.hasSelected) {
+            binding.btnJawab.visibility = View.GONE
+            binding.btnCekPembahasan.visibility = View.VISIBLE
+        } else {
+            binding.btnJawab.visibility = View.VISIBLE
+            binding.btnCekPembahasan.visibility = View.GONE
+        }
+    }
+
+    private fun setButtonNext() {
+        binding.btnNext.setOnClickListener {
+            // Navigate to the next tab (fragment)
+            val totalItems = viewPager.adapter?.itemCount ?: 0
+
+            // Get the current item
+            val currentItem = viewPager.currentItem
+
+            // Check if it's not the last item
+            if (currentItem < totalItems - 1) {
+                viewPager.setCurrentItem(currentItem + 1, true)
             } else {
-                binding.btnJawab.visibility = View.VISIBLE
-                binding.btnCekPembahasan.visibility = View.GONE
+                Toast.makeText(requireContext(), "Skormu ${(requireActivity() as SoalActivity).score}", Toast.LENGTH_SHORT).show()
+                val score = (requireActivity() as SoalActivity).score
+
+                val intent = Intent(requireActivity(), ActivityHistory::class.java)
+                intent.putExtra(ActivityHistory.SCORE, score)
+                startActivity(intent)
             }
+        }
+    }
+
+    private fun setButtonPrevious() {
+        binding.btnPrev.setOnClickListener {
+            // Navigate to the previous tab (fragment)
+            val currentItem = viewPager.currentItem
+            viewPager.setCurrentItem(currentItem - 1, true)
+        }
+    }
+
+    private fun setImageInQuestion(images: List<String>) {
+        for(element in images) {
+            val imageView = ImageView(requireActivity())
+
+            Glide.with(requireActivity())
+                .load(element)
+                .into(imageView)
+
+            val desiredWidthInPixels = 720
+            val desiredHeightInPixels = 480
+
+            val layoutParams = LinearLayout.LayoutParams(
+                desiredWidthInPixels,
+                desiredHeightInPixels
+            )
+
+            layoutParams.gravity = Gravity.CENTER_HORIZONTAL
+
+            imageView.layoutParams = layoutParams
+
+            binding.llQuestion.addView(imageView)
         }
     }
 

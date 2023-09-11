@@ -134,6 +134,7 @@
                 android:layout_marginHorizontal="16dp"
                 android:layout_weight="2"
                 android:background="@drawable/button_radius_bg_yellow"
+                android:textColor="@color/black"
                 android:text="@string/cek_pembahasan"
                 android:textSize="18sp"
                 app:backgroundTint="@null"
