@@ -41,6 +41,10 @@ class ActivityHistory : AppCompatActivity() {
         val currentUser = mAuth.currentUser
         val id = currentUser?.uid
 
+        val score = intent.getIntExtra(SCORE, 0)
+
+        binding.nilaiData.text = score.toString()
+
         viewModel = ViewModelProvider(this).get(HistoryViewModel::class.java)
         viewModel.dataProfile(id!!)
 
@@ -125,9 +129,6 @@ class ActivityHistory : AppCompatActivity() {
         val stream = ByteArrayOutputStream()
         bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream)
         return stream.toByteArray()
-        val score = intent.getIntExtra(SCORE, 0)
-
-        binding.nilaiData.text = score.toString()
     }
 
     companion object {
