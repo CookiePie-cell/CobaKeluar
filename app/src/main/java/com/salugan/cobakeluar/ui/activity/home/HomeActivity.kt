@@ -2,9 +2,11 @@ package com.salugan.cobakeluar.ui.activity.home
 
 
 import android.content.Intent
+import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
+import android.widget.Toast
 import androidx.viewpager2.widget.ViewPager2
 import com.google.firebase.auth.FirebaseAuth
 import com.salugan.cobakeluar.R
@@ -19,7 +21,7 @@ class HomeActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityHomeBinding
     private val autoSlideHandler = Handler()
-    private val delayMillis: Long = 3000 // Interval perpindahan otomatis (3 detik)
+    private val delayMillis: Long = 2000
     private var currentPage = 0
     private lateinit var viewPager: ViewPager2
 
@@ -52,9 +54,23 @@ class HomeActivity : AppCompatActivity() {
             startActivity(intent)
         }
 
-        binding.button.setOnClickListener {
+        binding.iconFAQ.setOnClickListener({
+            val intent = Intent(Intent.ACTION_VIEW, Uri.parse("https://www.eurekaedutech.com/contact"))
+            startActivity(intent)
+        })
+
+        binding.btnAbout.setOnClickListener({
+            val intent = Intent(Intent.ACTION_VIEW, Uri.parse("https://www.eurekaedutech.com/about"))
+            startActivity(intent)
+        })
+
+        binding.button.setOnClickListener ({
             startActivity(Intent(this@HomeActivity, MateriScreenActivity::class.java))
-        }
+        })
+
+        binding.btnLiterasi.setOnClickListener({
+            Toast.makeText(this, "Try out tidak tersedia", Toast.LENGTH_SHORT).show()
+        })
     }
 
     private fun startAutoSlider() {

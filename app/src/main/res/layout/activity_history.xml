@@ -2,144 +2,109 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
     android:background="@color/darkBlue"
     android:orientation="vertical">
 
-
     <LinearLayout
-        android:layout_marginTop="50dp"
-        android:layout_width="match_parent"
-        android:layout_height="2dp"
-        android:background="@color/white"
-        ></LinearLayout>
-
-    <LinearLayout
+        android:background="@color/darkBlue"
+        android:layout_marginTop="30dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:background="@color/yellow"
-        >
-        <TextView
-            android:layout_margin="20dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="History"
-            android:textStyle="bold"
-            android:textSize="35dp"
-            android:layout_gravity="center"
-            android:textColor="@color/darkBlue"
-            ></TextView>
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="2dp"
-        android:background="@color/white"
-        ></LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="150dp"
-        android:orientation="vertical"
-        android:layout_marginLeft="50dp"
-        android:layout_marginTop="50dp"
-        android:layout_marginRight="50dp"
-        android:background="@drawable/rounded_button_white"
-        >
-
-        <TextView
-            android:layout_marginTop="10dp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="NILAI DATA KETIDAKPASTIAN"
-            android:textColor="@color/darkBlue"
-            android:gravity="center"
-            android:textSize="15dp"
-            android:textStyle="bold|italic"
-            ></TextView>
-
-        <TextView
-            android:layout_marginBottom="10dp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="yang pasti-pasti aja ga sie"
-            android:textColor="@color/darkBlue"
-            android:gravity="center"
-            android:textSize="10dp"
-            ></TextView>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="2dp"
-            android:background="@color/darkBlue"
-            ></LinearLayout>
-
-        <TextView
-            android:id="@+id/nilaiData"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:text="NILAI"
-            android:textColor="@color/lightGreen"
-            android:textSize="50dp"
-            android:textStyle="bold"
-            android:layout_gravity="center"
-            android:gravity="center"
-            ></TextView>
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="150dp"
-        android:orientation="vertical"
-        android:layout_marginLeft="50dp"
-        android:layout_marginTop="20dp"
-        android:layout_marginRight="50dp"
-        android:background="@drawable/rounded_button_white"
-        >
-
-        <TextView
-            android:layout_marginTop="10dp"
-            android:layout_marginBottom="10dp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="GEOMETRI PENGUKURAN"
-            android:textColor="@color/darkBlue"
-            android:gravity="center"
-            android:textSize="15dp"
-            android:textStyle="bold|italic"
-            ></TextView>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="2dp"
-            android:background="@color/darkBlue"
-            ></LinearLayout>
-
-        <TextView
-            android:id="@+id/nilaiGeometri"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:text="NILAI"
-            android:textColor="@color/lightGreen"
-            android:textSize="50dp"
-            android:textStyle="bold"
-            android:layout_gravity="center"
-            android:gravity="center"
-            ></TextView>
-
-    </LinearLayout>
-
-
-    <ImageView
         android:layout_gravity="center"
-        android:layout_width="200dp"
-        android:layout_height="match_parent"
-        android:layout_marginTop="25dp"
-        android:layout_marginBottom="25dp"
-        android:scaleType="centerCrop"
-        android:src="@drawable/logo"></ImageView>
+        android:orientation="vertical"
+        >
+
+        <LinearLayout
+            android:layout_marginTop="25dp"
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:layout_marginRight="50dp"
+            android:layout_marginLeft="50dp"
+            android:background="@color/white"
+            ></LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginRight="50dp"
+            android:layout_marginLeft="50dp"
+            android:background="@color/yellow"
+            >
+            <TextView
+                android:text="..."
+                android:layout_marginTop="15dp"
+                android:id="@+id/namaPengguna"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textStyle="bold"
+                android:textSize="30dp"
+                android:layout_gravity="center"
+                android:textColor="@color/darkBlue"
+                ></TextView>
+
+            <TextView
+                android:text="............"
+                android:layout_marginBottom="15dp"
+                android:id="@+id/emailPengguna"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textStyle="italic"
+                android:textSize="15dp"
+                android:layout_gravity="center"
+                android:textColor="@color/darkBlue"
+                ></TextView>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:background="@color/white"
+            android:layout_marginRight="50dp"
+            android:layout_marginLeft="50dp"
+            ></LinearLayout>
+
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/halamanCetak"
+        android:background="@color/darkBlue"
+        android:layout_width="match_parent"
+        android:layout_height="500dp"
+        >
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recycleView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            tools:listitem="@layout/item_card"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_marginTop="20dp"
+        android:layout_gravity="center"
+        android:layout_width="260dp"
+        android:layout_height="40dp"
+        android:id="@+id/btnCetak"
+        android:orientation="horizontal"
+        android:background="@drawable/rounded_button_yellow"
+        android:gravity="center"
+
+        >
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="Download Report"
+            android:gravity="center"
+            android:textStyle="bold"
+            android:textSize="20dp"
+            android:textColor="@color/darkBlue"
+            ></TextView>
+
+    </LinearLayout>
 
 
 </LinearLayout>

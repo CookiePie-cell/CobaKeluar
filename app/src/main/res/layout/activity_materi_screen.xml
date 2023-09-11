@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/darkBlue"
+    android:orientation="vertical"
     tools:context=".ui.activity.main.MainActivity">
 
 
@@ -13,14 +14,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
+        android:layout_marginTop="50dp"
         android:gravity="center"
-        android:orientation="vertical"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.132">
+        android:orientation="vertical">
 
 
         <LinearLayout
@@ -42,8 +38,8 @@
                 style="@style/TextViewLarge"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/besok"
                 android:layout_marginStart="5dp"
+                android:text="@string/besok"
                 android:textColor="@color/white"
                 android:textStyle="bold" />
 
@@ -66,99 +62,139 @@
             android:text="Besok juga selesai, jadi besok-besok aja!"
             android:textColor="@color/white"
             android:textSize="15dp"
-            android:textStyle="bold"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/ivProfile" />
+            android:textStyle="bold" />
 
     </LinearLayout>
 
     <LinearLayout
-        android:background="@color/white"
         android:id="@+id/line"
         android:layout_width="match_parent"
         android:layout_height="2dp"
-        android:orientation="vertical"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/textLayout"
-        app:layout_constraintVertical_bias="0.062"></LinearLayout>
-
+        android:layout_margin="30dp"
+        android:background="@color/white"
+        android:orientation="vertical"></LinearLayout>
 
     <LinearLayout
-        android:id="@+id/btnDataDanKetidakpastian"
-        android:layout_width="0dp"
-        android:layout_height="50dp"
-        android:layout_marginHorizontal="64dp"
-        android:background="@drawable/rounded_button_yellow"
-        android:paddingVertical="16dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/line"
-        android:gravity="center"
-        app:layout_constraintVertical_bias="0.084">
+        android:layout_width="300dp"
+        android:layout_height="150dp"
+        android:layout_gravity="center"
+        android:background="@drawable/rounded_button_white"
+        android:orientation="horizontal">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Data dan Ketidakpastioan"
-            android:textSize="16dp"
-            android:textStyle="bold"
-            android:textColor="@color/darkBlue"
-            ></TextView>
+        <LinearLayout
+            android:layout_width="200dp"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:padding="10dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Try Out Numerasi - BEAJA"
+                android:textColor="@color/black"
+                android:textStyle="bold"></TextView>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Data dan Ketidakpastian"
+                android:textColor="@color/black"></TextView>
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btnDataDanKetidakpastian"
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:layout_marginTop="15dp"
+                android:background="@drawable/rounded_button_yellow"
+                android:text="MULAI"
+                android:textColor="@color/darkBlue"
+                android:textSize="12dp"
+                android:textStyle="bold" />
+
+        </LinearLayout>
+
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:padding="10dp"
+            android:src="@drawable/img_data_tidak_pasti"></ImageView>
+
     </LinearLayout>
 
     <LinearLayout
-        android:id="@+id/btnGeometriPengukuran"
-        android:layout_width="0dp"
-        android:layout_height="50dp"
-        android:layout_marginHorizontal="64dp"
-        android:layout_marginTop="10dp"
-        android:background="@drawable/rounded_button_yellow"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        android:gravity="center"
-        app:layout_constraintTop_toBottomOf="@+id/btnDataDanKetidakpastian"
-        >
+        android:layout_marginTop="20dp"
+        android:layout_width="300dp"
+        android:layout_height="150dp"
+        android:layout_gravity="center"
+        android:background="@drawable/rounded_button_white"
+        android:orientation="horizontal">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/geometri_pengukuran"
-            android:textSize="16dp"
-            android:textColor="@color/darkBlue"
-            android:textStyle="bold">
+        <LinearLayout
+            android:layout_width="200dp"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:padding="10dp">
 
-        </TextView>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Try Out Numerasi - BEAJA"
+                android:textColor="@color/black"
+                android:textStyle="bold"></TextView>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Geometri Pengukuran"
+                android:textColor="@color/black"></TextView>
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btnGeometriPengukuran"
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:layout_marginTop="15dp"
+                android:background="@drawable/rounded_button_yellow"
+                android:text="MULAI"
+                android:textColor="@color/darkBlue"
+                android:textSize="12dp"
+                android:textStyle="bold" />
+
+        </LinearLayout>
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:padding="10dp"
+            android:src="@drawable/img_pengukuran"></ImageView>
+
     </LinearLayout>
-
-
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/btnHistory"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginHorizontal="64dp"
-        android:layout_marginTop="30dp"
+        android:layout_width="300dp"
+        android:layout_height="40dp"
+        android:layout_marginTop="50dp"
         android:background="@drawable/rounded_button_white"
-        android:text="@string/history"
+        android:text="Report Data dan ketidakpastian"
         android:textColor="@color/darkBlue"
-        android:textSize="20sp"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btnGeometriPengukuran" />
+        android:textSize="15dp"
+        android:layout_gravity="center"
+        android:textStyle="bold" />
 
-    <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:scaleType="centerCrop"
-        android:src="@drawable/logo"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"/>
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btnTataCara"
+        android:layout_width="300dp"
+        android:layout_height="40dp"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/rounded_button_white"
+        android:text="REPORT GEAOMETRI PENGUKURAN"
+        android:textColor="@color/darkBlue"
+        android:textSize="15dp"
+        android:layout_gravity="center"
+        android:textStyle="bold" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+
+</LinearLayout>

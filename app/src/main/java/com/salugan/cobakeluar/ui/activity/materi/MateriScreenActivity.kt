@@ -7,6 +7,7 @@ import android.text.Spannable
 import android.text.SpannableString
 import android.text.style.AbsoluteSizeSpan
 import android.text.style.ForegroundColorSpan
+import android.widget.Toast
 import androidx.core.content.ContextCompat
 import com.salugan.cobakeluar.R
 import com.salugan.cobakeluar.databinding.ActivityMainBinding
@@ -25,7 +26,15 @@ class MateriScreenActivity : AppCompatActivity() {
 
 
         binding.btnDataDanKetidakpastian.setOnClickListener {
-            startActivity(Intent(this@MateriScreenActivity, SoalActivity::class.java))
+            val intent = Intent(this@MateriScreenActivity, SoalActivity::class.java)
+            intent.putExtra(SoalActivity.KATEGORI, DATA_DAN_KETIDAKPASTIAN)
+            startActivity(intent)
+        }
+
+        binding.btnGeometriPengukuran.setOnClickListener {
+            val intent = Intent(this@MateriScreenActivity, SoalActivity::class.java)
+            intent.putExtra(SoalActivity.KATEGORI, GEOMETRI_DAN_PENGUKURAN)
+            startActivity(intent)
         }
 
         binding.btnHistory.setOnClickListener({
@@ -33,5 +42,14 @@ class MateriScreenActivity : AppCompatActivity() {
 
         })
 
+        binding.btnTataCara.setOnClickListener({
+            Toast.makeText(this, "DIKERJAIN!!", Toast.LENGTH_LONG).show()
+        })
+
+    }
+
+    companion object {
+        const val DATA_DAN_KETIDAKPASTIAN = 0
+        const val GEOMETRI_DAN_PENGUKURAN = 1
     }
 }

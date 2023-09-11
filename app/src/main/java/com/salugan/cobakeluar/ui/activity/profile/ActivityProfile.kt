@@ -98,7 +98,7 @@ class ActivityProfile : AppCompatActivity() {
         }
 
         btnTidak.setOnClickListener() {
-            onBackPressed()
+            dialogLogout?.dismiss()
         }
     }
 
