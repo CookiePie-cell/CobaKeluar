@@ -1,6 +1,5 @@
 package com.salugan.cobakeluar.adapter
 
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,6 +9,7 @@ import com.salugan.cobakeluar.R
 import com.salugan.cobakeluar.databinding.AnswerItemBinding
 import com.salugan.cobakeluar.model.QuestionModel
 import com.salugan.cobakeluar.model.SelectionModel
+
 
 class AnswerAdapter(
     private val selections: ArrayList<SelectionModel>, private val question: QuestionModel,

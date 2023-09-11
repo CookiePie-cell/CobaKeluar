@@ -16,58 +16,40 @@ class Repository @Inject constructor(
 ){
     val resultAddData = MutableLiveData<Result<String>>()
     val resultDataProfile = MutableLiveData<Result<UserModel>>()
-
     fun userData(addData: UserModel): LiveData<Result<String>> {
         val database = db.getReference("users").push()
-
         database.setValue(addData)
-
         resultAddData.postValue(Result.Loading)
-
-
         database.addListenerForSingleValueEvent(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 resultAddData.postValue(Result.Success("Data berhasil ditambahkan"))
-                Log.i("suksessBos", "suskes: " )
-
             }
-
             override fun onCancelled(error: DatabaseError) {
                 resultAddData.postValue(Result.Error(error.message))
-                Log.e("errorDatabaseBos", "onCancelled: "+ error.message )
             }
         })
-
         return resultAddData
     }
-
     fun dataProfile(id: String): LiveData<Result<UserModel>> {
         val database =db.getReference("users")
         val query = database.orderByChild("id").equalTo(id)
-
         query.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 val foundUser = mutableListOf<UserModel>()
-
                 for (dataSnapshot in snapshot.children) {
                     val user = dataSnapshot.getValue(UserModel::class.java)
                     user?.let { foundUser.add(it) }
                 }
-
                 if (foundUser.isNotEmpty()) {
                     resultDataProfile.value = Result.Success(foundUser[0])
                 } else {
-                    resultDataProfile.value = Result.Error("User not found")
+                    resultDataProfile.value = Result.Error("User tidak ditemukan")
                 }
             }
-
             override fun onCancelled(error: DatabaseError) {
                 resultDataProfile.value = Result.Error(error.message)
             }
         })
-
         return resultDataProfile
     }
-
-
 }

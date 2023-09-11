@@ -9,7 +9,6 @@ import com.salugan.cobakeluar.R
 
 class BannerAdapter(private val imageList: List<Int>) :
     RecyclerView.Adapter<BannerAdapter.ImageViewHolder>() {
-
     inner class ImageViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val imageView: ImageView = itemView.findViewById(R.id.imageView)
     }
@@ -18,12 +17,10 @@ class BannerAdapter(private val imageList: List<Int>) :
             .inflate(R.layout.item_banner, parent, false)
         return ImageViewHolder(view)
     }
-
     override fun onBindViewHolder(holder: ImageViewHolder, position: Int) {
         val image = imageList[position]
         holder.imageView.setImageResource(image)
     }
-
     override fun getItemCount(): Int {
         return imageList.size
     }
