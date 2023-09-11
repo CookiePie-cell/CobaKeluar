@@ -9,6 +9,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.viewpager.widget.ViewPager
 import androidx.viewpager2.widget.ViewPager2
@@ -52,6 +53,14 @@ class SoalActivity : AppCompatActivity(), MultiStateView.StateListener {
         } else {
             setGeometriDanPengukuranTryOut()
         }
+
+        soalViewModel.currentTimeString.observe(this) {
+            binding.countDown.text = String.format(getString(R.string.countdown), it)
+        }
+
+        soalViewModel.eventCountDownFinish.observe(this) {
+            Toast.makeText(this, "Waktu habis", Toast.LENGTH_SHORT).show()
+        }
     }
 
     private fun setDataDanKetidakPastianTryOut() {
@@ -59,6 +68,8 @@ class SoalActivity : AppCompatActivity(), MultiStateView.StateListener {
             when (it) {
                 is Result.Loading -> multiStateView.viewState = MultiStateView.ViewState.LOADING
                 is Result.Success -> {
+                    soalViewModel.setInitialTime(1)
+                    soalViewModel.startTimer()
                     multiStateView.viewState = MultiStateView.ViewState.CONTENT
                     Log.d("wkwkwk", it.data.toString())
                     val data: ArrayList<QuestionModel> = ArrayList(it.data)
@@ -103,6 +114,8 @@ class SoalActivity : AppCompatActivity(), MultiStateView.StateListener {
                     TabLayoutMediator(tabs, viewPager) { tab, position ->
                         tab.text = (position + 1).toString()
                     }.attach()
+
+
 
                     for (i in 0..9) {
                         val textView =

@@ -13,4 +13,5 @@
     <string name="jawab">JAWAB</string>
     <string name="pembahasan">Pembahasan</string>
     <string name="cek_pembahasan">Cek pembahasan</string>
+    <string name="countdown">Waktu tersisa: %1s</string>
 </resources>

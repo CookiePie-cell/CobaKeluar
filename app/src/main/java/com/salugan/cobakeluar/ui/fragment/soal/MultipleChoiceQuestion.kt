@@ -17,16 +17,11 @@ import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.Toast
-import androidx.cardview.widget.CardView
-import androidx.core.content.ContextCompat
-import androidx.fragment.app.viewModels
-import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.viewpager2.widget.ViewPager2
 import com.bumptech.glide.Glide
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.tabs.TabLayout
 import com.salugan.cobakeluar.R
-import com.salugan.cobakeluar.adapter.AnswerAdapter
 import com.salugan.cobakeluar.databinding.FragmentMultipleChoiceQuestionBinding
 import com.salugan.cobakeluar.model.QuestionModel
 import com.salugan.cobakeluar.model.SelectionModel
@@ -65,6 +60,8 @@ class MultipleChoiceQuestion : Fragment() {
             @Suppress("DEPRECATION")
             arguments?.getParcelable(QUESTION)
         }
+
+
         val mathView: MathView = binding.formulaOne
 
         val flags = Html.FROM_HTML_MODE_COMPACT or Html.FROM_HTML_MODE_LEGACY
@@ -130,7 +127,7 @@ class MultipleChoiceQuestion : Fragment() {
     private fun setAnswerList(question: QuestionModel) {
         for (option in question.selections!!) {
             val linearLayout = LinearLayout(requireContext())
-            val layoutParams = ViewGroup.MarginLayoutParams(
+            val layoutParams = LinearLayout.LayoutParams(
                 ViewGroup.LayoutParams.MATCH_PARENT, // Width
                 ViewGroup.LayoutParams.WRAP_CONTENT  // Height
             )
