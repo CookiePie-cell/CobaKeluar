@@ -106,12 +106,12 @@ class MultipleChoiceQuestion : Fragment() {
                     LayoutInflater.from(requireContext()).inflate(R.layout.tab_title, null) as TextView
                 if (answer?.id == question.selectionAnswer?.get(0)?.selectionId) {
                     Toast.makeText(requireActivity(), "Jawaban benar", Toast.LENGTH_SHORT).show()
-                    checkAnswerCorrectness(true, answer!!)
+                    checkAnswerCorrectness(true)
                     (requireActivity() as SoalActivity).score += 1
                     tabView.setBackgroundResource(R.drawable.tab_correct_background)
                 } else {
                     Toast.makeText(requireActivity(), "Jawaban salah", Toast.LENGTH_SHORT).show()
-                    checkAnswerCorrectness(false, answer!!)
+                    checkAnswerCorrectness(false)
                     tabView.setBackgroundResource(R.drawable.tab_uncorrect_background)
                 }
                 question.hasSelected = true
@@ -140,7 +140,7 @@ class MultipleChoiceQuestion : Fragment() {
             linearLayout.setBackgroundResource(R.drawable.radio_not_selected)
 
             if (answer != null) {
-                checkAnswerCorrectness(answer?.id == question.selectionAnswer?.get(0)?.selectionId, answer!!)
+                checkAnswerCorrectness(answer?.id == question.selectionAnswer?.get(0)?.selectionId)
                 disableScrolling()
             }
 
@@ -183,12 +183,12 @@ class MultipleChoiceQuestion : Fragment() {
             }
         }
     }
-    private fun checkAnswerCorrectness(isCorrect: Boolean, answer: SelectionModel) {
+    private fun checkAnswerCorrectness(isCorrect: Boolean) {
         for (i in 0 until binding.answerOptionsContainer.childCount) {
             val child = binding.answerOptionsContainer.getChildAt(i)
             if (child is LinearLayout) {
                 val mathview = child.getChildAt(0) as MathView
-                if (mathview.text == answer.text) {
+                if (mathview.text == answer?.text) {
                     if (isCorrect) {
                         child.setBackgroundResource(R.drawable.radio_correct)
                     } else {
