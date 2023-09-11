@@ -10,8 +10,8 @@ import com.salugan.cobakeluar.ui.fragment.soal.EssayQuestion
 import com.salugan.cobakeluar.ui.fragment.soal.MultipleChoiceQuestion
 import com.salugan.cobakeluar.utils.QUESTION
 
-class TabPagerSoalAdapter(activity: AppCompatActivity, private val questions: ArrayList<QuestionModel>) : FragmentStateAdapter(activity) {
-    override fun getItemCount(): Int = questions.size
+class TabPagerSoalAdapter(activity: AppCompatActivity, private val questions: ArrayList<QuestionModel>, private val size: Int) : FragmentStateAdapter(activity) {
+    override fun getItemCount(): Int = size
 
     override fun createFragment(position: Int): Fragment {
         val fragment: Fragment = if (questions[position].isMultipleChoice) {

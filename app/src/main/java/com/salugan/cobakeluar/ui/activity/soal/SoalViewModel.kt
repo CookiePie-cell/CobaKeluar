@@ -13,7 +13,7 @@ import com.salugan.cobakeluar.model.SelectionModel
 @HiltViewModel
 class SoalViewModel @Inject constructor(private val tryoutRepository: TryoutRepository) : ViewModel(){
 
-    val tabButtonState = mutableMapOf<Int, Boolean>()
+    val soalState: MutableMap<Int, SelectionModel> = mutableMapOf()
 
     fun getDataDanKetidakPastianQuestion(): LiveData<Result<List<QuestionModel>>> {
         return tryoutRepository.getDataDanKetidakPastianQuestions()

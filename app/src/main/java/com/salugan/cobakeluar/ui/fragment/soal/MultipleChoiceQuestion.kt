@@ -12,11 +12,13 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.Toast
 import androidx.cardview.widget.CardView
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.viewpager2.widget.ViewPager2
@@ -39,6 +41,8 @@ class MultipleChoiceQuestion : Fragment() {
     private val binding get() = _binding!!
 
     private lateinit var viewPager: ViewPager2
+
+    private lateinit var tab: TabLayout
 
     private var answer: SelectionModel? = null
 
@@ -67,7 +71,7 @@ class MultipleChoiceQuestion : Fragment() {
 
         viewPager = requireActivity().findViewById(R.id.viewPager)
 
-        val tab = requireActivity().findViewById<TabLayout>(R.id.tabs)
+        tab = requireActivity().findViewById(R.id.tabs)
 
         setButtonNext()
 
@@ -83,40 +87,115 @@ class MultipleChoiceQuestion : Fragment() {
 
             setImageInQuestion(images)
 
-            val layoutManager = LinearLayoutManager(requireActivity())
-            binding.rvAnswer.layoutManager = layoutManager
+            setAnswerList(question)
 
-            setAdapter(question.selections!!, question)
-
-            binding.btnJawab.setOnClickListener {
-                if (answer != null) {
-                    val tabView =
-                        LayoutInflater.from(requireContext()).inflate(R.layout.tab_title, null) as TextView
-                    if (answer?.id == question.selectionAnswer?.get(0)?.selectionId) {
-                        Toast.makeText(requireActivity(), "Jawaban benar", Toast.LENGTH_SHORT).show()
-                        (requireActivity() as SoalActivity).score += 1
-                        tabView.setBackgroundResource(R.drawable.tab_correct_background)
-                    } else {
-                        Toast.makeText(requireActivity(), "Jawaban salah", Toast.LENGTH_SHORT).show()
-                        (requireActivity() as SoalActivity).score -= 1
-                        tabView.setBackgroundResource(R.drawable.tab_uncorrect_background)
-                    }
-                    question.hasSelected = true
-                    binding.btnJawab.visibility = View.GONE
-                    binding.btnCekPembahasan.visibility = View.VISIBLE
-                    showBottomSheet(question.discussion?.get(0)?.discussionText)
-
-                    val selectedTab = tab.getTabAt(viewPager.currentItem)
-
-                    selectedTab?.customView = tabView
-                }
-            }
-
+            setBtnJawab(question
+            )
             binding.btnCekPembahasan.setOnClickListener {
                 showBottomSheet(question.discussion?.get(0)?.discussionText)
             }
 
             checkQuestionState(question)
+        }
+    }
+
+    private fun setBtnJawab(question: QuestionModel) {
+        binding.btnJawab.setOnClickListener {
+            if (answer != null) {
+                val tabView =
+                    LayoutInflater.from(requireContext()).inflate(R.layout.tab_title, null) as TextView
+                if (answer?.id == question.selectionAnswer?.get(0)?.selectionId) {
+                    Toast.makeText(requireActivity(), "Jawaban benar", Toast.LENGTH_SHORT).show()
+                    checkAnswerCorrectness(true, answer!!)
+                    (requireActivity() as SoalActivity).score += 1
+                    tabView.setBackgroundResource(R.drawable.tab_correct_background)
+                } else {
+                    Toast.makeText(requireActivity(), "Jawaban salah", Toast.LENGTH_SHORT).show()
+                    checkAnswerCorrectness(false, answer!!)
+                    tabView.setBackgroundResource(R.drawable.tab_uncorrect_background)
+                }
+                question.hasSelected = true
+                binding.btnJawab.visibility = View.GONE
+                binding.btnCekPembahasan.visibility = View.VISIBLE
+                showBottomSheet(question.discussion?.get(0)?.discussionText)
+
+                val selectedTab = tab.getTabAt(viewPager.currentItem)
+
+                selectedTab?.customView = tabView
+
+                disableScrolling()
+            }
+        }
+    }
+    private fun setAnswerList(question: QuestionModel) {
+        for (option in question.selections!!) {
+            val linearLayout = LinearLayout(requireContext())
+            val layoutParams = ViewGroup.MarginLayoutParams(
+                ViewGroup.LayoutParams.MATCH_PARENT, // Width
+                ViewGroup.LayoutParams.WRAP_CONTENT  // Height
+            )
+
+            linearLayout.setPadding(16, 24, 16, 24)
+
+            linearLayout.setBackgroundResource(R.drawable.radio_not_selected)
+
+            if (answer != null) {
+                checkAnswerCorrectness(answer?.id == question.selectionAnswer?.get(0)?.selectionId, answer!!)
+                disableScrolling()
+            }
+
+            layoutParams.setMargins(0, 0, 0, 16)
+
+            linearLayout.orientation = LinearLayout.VERTICAL
+
+            val mathViewOption = MathView(requireContext(), null)
+            val mathViewLayoutParams = LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.WRAP_CONTENT,
+                LinearLayout.LayoutParams.WRAP_CONTENT
+            )
+            mathViewLayoutParams.setMargins(8,8,8,8)
+            mathViewOption.layoutParams = mathViewLayoutParams
+            mathViewOption.text = option.text
+
+            linearLayout.addView(mathViewOption)
+            linearLayout.setOnClickListener {
+                answer = option
+                for (i in 0 until binding.answerOptionsContainer.childCount) {
+                    val child = binding.answerOptionsContainer.getChildAt(i)
+                    if (child is LinearLayout) {
+                        child.setBackgroundResource(R.drawable.radio_not_selected)
+                    }
+                }
+
+                linearLayout.setBackgroundResource(R.drawable.radio_selected)
+            }
+            linearLayout.layoutParams = layoutParams
+            binding.answerOptionsContainer.addView(linearLayout)
+        }
+    }
+
+    private fun disableScrolling() {
+        for (i in 0 until binding.answerOptionsContainer.childCount) {
+            val child = binding.answerOptionsContainer.getChildAt(i)
+            Log.d("vmvm", i.toString())
+            if (child is LinearLayout) {
+                child.setOnClickListener(null)
+            }
+        }
+    }
+    private fun checkAnswerCorrectness(isCorrect: Boolean, answer: SelectionModel) {
+        for (i in 0 until binding.answerOptionsContainer.childCount) {
+            val child = binding.answerOptionsContainer.getChildAt(i)
+            if (child is LinearLayout) {
+                val mathview = child.getChildAt(0) as MathView
+                if (mathview.text == answer.text) {
+                    if (isCorrect) {
+                        child.setBackgroundResource(R.drawable.radio_correct)
+                    } else {
+                        child.setBackgroundResource(R.drawable.radio_incorrect)
+                    }
+                }
+            }
         }
     }
 
@@ -132,17 +211,13 @@ class MultipleChoiceQuestion : Fragment() {
 
     private fun setButtonNext() {
         binding.btnNext.setOnClickListener {
-            // Navigate to the next tab (fragment)
             val totalItems = viewPager.adapter?.itemCount ?: 0
 
-            // Get the current item
             val currentItem = viewPager.currentItem
 
-            // Check if it's not the last item
             if (currentItem < totalItems - 1) {
                 viewPager.setCurrentItem(currentItem + 1, true)
             } else {
-                Toast.makeText(requireContext(), "Skormu ${(requireActivity() as SoalActivity).score}", Toast.LENGTH_SHORT).show()
                 val score = (requireActivity() as SoalActivity).score
 
                 val intent = Intent(requireActivity(), ActivityHistory::class.java)
@@ -192,16 +267,5 @@ class MultipleChoiceQuestion : Fragment() {
 
         val mathView = bottomSheetView.findViewById<MathView>(R.id.mvDiscussion)
         mathView.text = discussion
-    }
-
-    private fun setAdapter(selections: List<SelectionModel>, questionType: QuestionModel) {
-        val selectionsArrayList = ArrayList<SelectionModel>()
-        selections.forEach {
-            selectionsArrayList.add(it)
-        }
-        val adapter = AnswerAdapter(selectionsArrayList, questionType) { selection ->
-            answer = selection
-        }
-        binding.rvAnswer.adapter = adapter
     }
 }

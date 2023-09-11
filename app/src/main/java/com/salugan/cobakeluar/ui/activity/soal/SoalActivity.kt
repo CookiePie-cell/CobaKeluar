@@ -33,7 +33,7 @@ class SoalActivity : AppCompatActivity(), MultiStateView.StateListener {
 
     var score = 0
 
-    private val soalViewModel: SoalViewModel by viewModels()
+    val soalViewModel: SoalViewModel by viewModels()
 
     val tes = "wowkowkwowk"
 
@@ -62,14 +62,16 @@ class SoalActivity : AppCompatActivity(), MultiStateView.StateListener {
                     multiStateView.viewState = MultiStateView.ViewState.CONTENT
                     Log.d("wkwkwk", it.data.toString())
                     val data: ArrayList<QuestionModel> = ArrayList(it.data)
-                    val tabPagerSoalAdapter = TabPagerSoalAdapter(this, data)
+                    val tabPagerSoalAdapter = TabPagerSoalAdapter(this, data, data.size)
                     val viewPager: ViewPager2 = binding.viewPager
+                    viewPager.offscreenPageLimit = 10
                     viewPager.isUserInputEnabled = false
                     viewPager.adapter = tabPagerSoalAdapter
                     val tabs: TabLayout = binding.tabs
                     TabLayoutMediator(tabs, viewPager) { tab, position ->
                         tab.text = (position + 1).toString()
                     }.attach()
+
 
                     for (i in 0..9) {
                         val textView =
@@ -93,7 +95,7 @@ class SoalActivity : AppCompatActivity(), MultiStateView.StateListener {
                     multiStateView.viewState = MultiStateView.ViewState.CONTENT
                     Log.d("wkwkwk", it.data.toString())
                     val data: ArrayList<QuestionModel> = ArrayList(it.data)
-                    val tabPagerSoalAdapter = TabPagerSoalAdapter(this, data)
+                    val tabPagerSoalAdapter = TabPagerSoalAdapter(this, data, data.size)
                     val viewPager: ViewPager2 = binding.viewPager
                     viewPager.isUserInputEnabled = false
                     viewPager.adapter = tabPagerSoalAdapter

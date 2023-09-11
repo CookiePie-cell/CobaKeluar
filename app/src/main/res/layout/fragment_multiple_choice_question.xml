@@ -81,12 +81,12 @@
 
         </LinearLayout>
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rvAnswer"
+        <LinearLayout
+            android:id="@+id/answerOptionsContainer"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginHorizontal="16dp"
-            tools:listitem="@layout/answer_item"/>
+            android:orientation="vertical"
+            android:layout_marginHorizontal="16dp"/>
 
         <LinearLayout
             android:id="@+id/linearLayout3"
