@@ -7,6 +7,7 @@ import androidx.fragment.app.Fragment
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import com.salugan.cobakeluar.model.QuestionModel
 import com.salugan.cobakeluar.ui.fragment.soal.EssayQuestion
+import com.salugan.cobakeluar.ui.fragment.soal.MultipleAnswerQuestion
 import com.salugan.cobakeluar.ui.fragment.soal.MultipleChoiceQuestion
 import com.salugan.cobakeluar.utils.QUESTION
 
@@ -23,7 +24,7 @@ class TabPagerSoalAdapter(activity: AppCompatActivity, private val questions: Ar
             Log.d("terpanggil", "essay")
             EssayQuestion()
         } else {
-            MultipleChoiceQuestion()
+            MultipleAnswerQuestion()
         }
 
         fragment.arguments = Bundle().apply {

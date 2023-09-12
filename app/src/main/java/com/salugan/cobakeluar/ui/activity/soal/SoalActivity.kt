@@ -82,11 +82,8 @@ class SoalActivity : AppCompatActivity(), MultiStateView.StateListener {
             when (it) {
                 is Result.Loading -> multiStateView.viewState = MultiStateView.ViewState.LOADING
                 is Result.Success -> {
-                    soalViewModel.setInitialTime(1)
-                    soalViewModel.setTotalExamTime(1)
-                    soalViewModel.startTimer()
                     multiStateView.viewState = MultiStateView.ViewState.CONTENT
-                    Log.d("wkwkwk", it.data.toString())
+                    startTimer()
                     val data: ArrayList<QuestionModel> = ArrayList(it.data)
                     answers = MutableList(data.size) { 0 }
                     val tabPagerSoalAdapter = TabPagerSoalAdapter(this, data, data.size)
@@ -120,7 +117,7 @@ class SoalActivity : AppCompatActivity(), MultiStateView.StateListener {
                 is Result.Loading -> multiStateView.viewState = MultiStateView.ViewState.LOADING
                 is Result.Success -> {
                     multiStateView.viewState = MultiStateView.ViewState.CONTENT
-                    Log.d("wkwkwk", it.data.toString())
+                    startTimer()
                     val data: ArrayList<QuestionModel> = ArrayList(it.data)
                     answers = MutableList(data.size) { 0 }
                     val tabPagerSoalAdapter = TabPagerSoalAdapter(this, data, data.size)
@@ -144,6 +141,12 @@ class SoalActivity : AppCompatActivity(), MultiStateView.StateListener {
                 is Result.Error -> multiStateView.viewState = MultiStateView.ViewState.ERROR
             }
         }
+    }
+
+    private fun startTimer() {
+        soalViewModel.setInitialTime(1)
+        soalViewModel.setTotalExamTime(1)
+        soalViewModel.startTimer()
     }
 
     companion object{

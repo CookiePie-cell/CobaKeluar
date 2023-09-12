@@ -45,12 +45,10 @@ class SoalViewModel @Inject constructor(private val tryoutRepository: TryoutRepo
 
     private val totalExamTimeMillis = MutableLiveData<Long>()
 
-    // Function to set the total exam time
     fun setTotalExamTime(minutes: Long) {
         totalExamTimeMillis.value = minutes * 60 * 1000
     }
 
-    // Function to calculate completion time
     fun calculateCompletionTime(): Long {
         // Check if it's the last item
         val remainingTimeMillis = currentTime.value ?: 0
