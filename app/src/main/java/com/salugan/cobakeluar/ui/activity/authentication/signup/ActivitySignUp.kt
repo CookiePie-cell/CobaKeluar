@@ -3,7 +3,6 @@ package com.salugan.cobakeluar.ui.activity.authentication.signup
 import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
-import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity

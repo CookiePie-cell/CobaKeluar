@@ -10,12 +10,14 @@ import com.google.firebase.database.ValueEventListener
 import com.salugan.cobakeluar.model.UserModel
 import javax.inject.Inject
 import com.salugan.cobakeluar.data.Result
+import com.salugan.cobakeluar.model.HasilModel
 
 class Repository @Inject constructor(
     private val db: FirebaseDatabase
 ){
     val resultAddData = MutableLiveData<Result<String>>()
     val resultDataProfile = MutableLiveData<Result<UserModel>>()
+    val resulHasilTO = MutableLiveData<Result<String>>()
     fun userData(addData: UserModel): LiveData<Result<String>> {
         val database = db.getReference("users").push()
         database.setValue(addData)
@@ -51,5 +53,22 @@ class Repository @Inject constructor(
             }
         })
         return resultDataProfile
+    }
+
+    //Hasill try out
+    fun hasilTryOut(addData: HasilModel): LiveData<Result<String>> {
+        val database = db.getReference("hasilTO").push()
+        database.setValue(addData)
+        resulHasilTO.postValue(Result.Loading)
+        database.addListenerForSingleValueEvent(object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+
+                resulHasilTO.postValue(Result.Success("data berhasil disimpan"))
+            }
+            override fun onCancelled(error: DatabaseError) {
+                resulHasilTO.postValue(Result.Error(error.message))
+            }
+        })
+        return resulHasilTO
     }
 }
