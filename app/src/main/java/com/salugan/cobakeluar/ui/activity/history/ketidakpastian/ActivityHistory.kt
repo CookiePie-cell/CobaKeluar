@@ -4,15 +4,20 @@ import android.content.ContentValues
 import android.graphics.Bitmap
 import android.os.Bundle
 import android.provider.MediaStore
+import android.util.Log
 import android.view.View
 import android.widget.Toast
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.drawToBitmap
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.auth.FirebaseAuth
+import com.salugan.cobakeluar.adapter.HistoryAdapter
 import com.salugan.cobakeluar.data.Result
 import com.salugan.cobakeluar.databinding.ActivityHistoryBinding
+import com.salugan.cobakeluar.model.HasilModel
 import dagger.hilt.android.AndroidEntryPoint
 import java.io.IOException
 
@@ -21,8 +26,7 @@ import java.io.IOException
 @AndroidEntryPoint
 class ActivityHistory : AppCompatActivity() {
     private lateinit var binding: ActivityHistoryBinding
-    private lateinit var viewModel: HistoryViewModel
-    private lateinit var recyclerView: RecyclerView
+    private val viewModel: HistoryViewModel by viewModels()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityHistoryBinding.inflate(layoutInflater)
@@ -35,16 +39,15 @@ class ActivityHistory : AppCompatActivity() {
 //        recyclerView = findViewById(R.id.recycleView)
 //
 //        //  RecyclerView
-//        val layoutManager = LinearLayoutManager(this)
-//        recyclerView.layoutManager = layoutManager
+        val layoutManager = LinearLayoutManager(this)
+        binding.recycleView.layoutManager = layoutManager
 //
 //        // Initialize and set up your RecyclerView adapter here
 //        val adapter = ReportAdapter()
 //        recyclerView.adapter = adapter
 
-        viewModel = ViewModelProvider(this).get(HistoryViewModel::class.java)
         viewModel.dataProfile(id!!)
-        viewModel.resultDataProfile.observe(this, { result ->
+        viewModel.resultDataProfile.observe(this) { result ->
             when (result) {
                 is Result.Success -> {
                     binding.namaPengguna.text = result.data.nama
@@ -55,18 +58,39 @@ class ActivityHistory : AppCompatActivity() {
 //                    recyclerView.layoutManager = layoutManager
 //                    recyclerView.setHasFixedSize(true)
                 }
+
                 is Result.Error -> {
                     Toast.makeText(this, "Data gagal diambil", Toast.LENGTH_SHORT).show()
                 }
+
                 is Result.Loading -> {
                 }
             }
-        })
+        }
+
+
+        viewModel.getHasilHistory(id).observe(this) {
+            when(it) {
+                is Result.Loading -> ""
+                is Result.Success -> {
+                    Log.d("masukbos", it.data.toString())
+                    setAdapter(it.data)
+                }
+                is Result.Error -> ""
+            }
+        }
         binding.btnCetak.setOnClickListener {
             val bitmap = getBitmapFromView(binding.halamanCetak)
             saveBitmapToMediaStore(bitmap)
         }
     }
+
+    private fun setAdapter(hasilList: List<HasilModel>) {
+        val hasilArrayList = ArrayList(hasilList)
+        val adapter = HistoryAdapter(hasilArrayList)
+        binding.recycleView.adapter = adapter
+    }
+
     private fun getBitmapFromView(view: View): Bitmap {
         return view.drawToBitmap()
     }

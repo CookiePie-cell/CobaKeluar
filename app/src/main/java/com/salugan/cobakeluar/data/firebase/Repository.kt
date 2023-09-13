@@ -3,6 +3,7 @@ package com.salugan.cobakeluar.data.firebase
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.liveData
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
@@ -56,13 +57,32 @@ class Repository @Inject constructor(
         return resultDataProfile
     }
 
-    //Hasill try out
-    fun hasilTryOut(addData: HasilModel): LiveData<Result<String>> {
-        val userRef = db.getReference("users")
-        val userSpecificRef = userRef.child(addData.userId!!)
+    fun getHasilTryout(userId: String): LiveData<Result<String>> = liveData {
+        val liveData = MutableLiveData<Result<List<HasilModel>>>()
+        liveData.value = Result.Loading
+        val hasilListener = object : ValueEventListener {
+            override fun onDataChange(dataSnapshot: DataSnapshot) {
+                val listHasil = mutableListOf<HasilModel>()
+                dataSnapshot.children.forEach { snapshot ->
+                    val hasilTo = snapshot.getValue(HasilModel::class.java)
+                    if (hasi)
+                }
+            }
 
-        // You can directly set the data under the user's specific reference
-        userSpecificRef.setValue(addData)
+            override fun onCancelled(error: DatabaseError) {
+                TODO("Not yet implemented")
+            }
+
+        }
+    }
+
+    //Hasill try out
+    fun addHasilTryout(addData: HasilModel): LiveData<Result<String>> {
+        val hasil = db.getReference("hasilTO").push()
+        val id = hasil.key
+        addData.id = id
+
+        hasil.setValue(addData)
             .addOnSuccessListener {
                 resulHasilTO.value = Result.Success("Data berhasil disimpan")
             }

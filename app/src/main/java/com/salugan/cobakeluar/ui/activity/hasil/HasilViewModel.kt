@@ -12,5 +12,5 @@ class HasilViewModel @Inject constructor(
     private val repository: Repository
 ): ViewModel(){
     val resultHasilTO = repository.resulHasilTO
-    fun addHasil(addHasil: HasilModel) =repository.hasilTryOut(addHasil)
+    fun addHasil(addHasil: HasilModel) =repository.addHasilTryout(addHasil)
 }
