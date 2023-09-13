@@ -88,7 +88,7 @@ class SoalActivity : AppCompatActivity(), MultiStateView.StateListener {
                     answers = MutableList(data.size) { 0 }
                     val tabPagerSoalAdapter = TabPagerSoalAdapter(this, data, data.size)
                     val viewPager: ViewPager2 = binding.viewPager
-                    viewPager.offscreenPageLimit = 10
+                    viewPager.offscreenPageLimit = data.size
                     viewPager.isUserInputEnabled = false
                     viewPager.adapter = tabPagerSoalAdapter
                     val tabs: TabLayout = binding.tabs
