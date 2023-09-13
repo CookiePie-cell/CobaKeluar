@@ -16,12 +16,8 @@ class TabPagerSoalAdapter(activity: AppCompatActivity, private val questions: Ar
 
     override fun createFragment(position: Int): Fragment {
         val fragment: Fragment = if (questions[position].isMultipleChoice) {
-            Log.d("terpanggil", "multiple")
-
             MultipleChoiceQuestion()
-
         } else if (questions[position].isEssay) {
-            Log.d("terpanggil", "essay")
             EssayQuestion()
         } else {
             MultipleAnswerQuestion()

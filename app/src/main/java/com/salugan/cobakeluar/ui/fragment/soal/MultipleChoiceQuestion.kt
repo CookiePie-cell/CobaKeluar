@@ -17,6 +17,7 @@ import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.Toast
+import androidx.core.view.get
 import androidx.viewpager2.widget.ViewPager2
 import com.bumptech.glide.Glide
 import com.google.android.material.bottomsheet.BottomSheetDialog
@@ -43,6 +44,8 @@ class MultipleChoiceQuestion : Fragment() {
     private var answer: SelectionModel? = null
 
     private lateinit var bottomSheetDialog: BottomSheetDialog
+
+    private var selectionIndex = 0
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -96,41 +99,11 @@ class MultipleChoiceQuestion : Fragment() {
         }
     }
 
-    private fun setBtnJawab(question: QuestionModel) {
-        binding.btnJawab.setOnClickListener {
-            if (answer != null) {
-                val tabView =
-                    LayoutInflater.from(requireContext()).inflate(R.layout.tab_title, null) as TextView
-                if (answer?.id == question.selectionAnswer?.get(0)?.selectionId) {
-                    Toast.makeText(requireActivity(), "Jawaban benar", Toast.LENGTH_SHORT).show()
-                    checkAnswerCorrectness(true)
-                    (requireActivity() as SoalActivity).score += 1
-                    (requireActivity() as SoalActivity).answers[viewPager.currentItem] = 1
-                    tabView.setBackgroundResource(R.drawable.tab_correct_background)
-                } else {
-                    Toast.makeText(requireActivity(), "Jawaban salah", Toast.LENGTH_SHORT).show()
-                    checkAnswerCorrectness(false)
-                    (requireActivity() as SoalActivity).answers[viewPager.currentItem] = 2
-                    tabView.setBackgroundResource(R.drawable.tab_uncorrect_background)
-                }
-                question.hasSelected = true
-                binding.btnJawab.visibility = View.GONE
-                binding.btnCekPembahasan.visibility = View.VISIBLE
-                showBottomSheet(question.discussion?.get(0)?.discussionText)
-
-                val selectedTab = tab.getTabAt(viewPager.currentItem)
-
-                selectedTab?.customView = tabView
-
-                disableScrolling()
-            }
-        }
-    }
     private fun setAnswerList(question: QuestionModel) {
         val flags = Html.FROM_HTML_MODE_COMPACT or Html.FROM_HTML_MODE_LEGACY
 
         val images = mutableListOf<String>()
-        for (option in question.selections!!) {
+        for ((index, option) in question.selections?.withIndex() ?: emptyList<SelectionModel>().withIndex()) {
             val linearLayout = LinearLayout(requireContext())
             val layoutParams = LinearLayout.LayoutParams(
                 ViewGroup.LayoutParams.MATCH_PARENT, // Width
@@ -142,7 +115,7 @@ class MultipleChoiceQuestion : Fragment() {
             linearLayout.setBackgroundResource(R.drawable.radio_not_selected)
 
             if (answer != null) {
-                checkAnswerCorrectness(answer?.id == question.selectionAnswer?.get(0)?.selectionId)
+                setSelectionBackground(answer?.id == question.selectionAnswer?.get(0)?.selectionId)
                 disableScrolling()
             }
 
@@ -192,10 +165,59 @@ class MultipleChoiceQuestion : Fragment() {
                     }
                 }
 
+                selectionIndex = index
                 linearLayout.setBackgroundResource(R.drawable.radio_selected)
             }
             linearLayout.layoutParams = layoutParams
             binding.answerOptionsContainer.addView(linearLayout)
+        }
+    }
+
+    private fun setBtnJawab(question: QuestionModel) {
+        binding.btnJawab.setOnClickListener {
+            if (answer != null) {
+                val tabView =
+                    LayoutInflater.from(requireContext()).inflate(R.layout.tab_title, null) as TextView
+                if (answer?.id == question.selectionAnswer?.get(0)?.selectionId) {
+                    Toast.makeText(requireActivity(), "Jawaban benar", Toast.LENGTH_SHORT).show()
+                    setSelectionBackground(true)
+                    (requireActivity() as SoalActivity).score += 1
+                    (requireActivity() as SoalActivity).answers[viewPager.currentItem] = 1
+                    tabView.setBackgroundResource(R.drawable.tab_correct_background)
+                } else {
+                    Toast.makeText(requireActivity(), "Jawaban salah", Toast.LENGTH_SHORT).show()
+                    setSelectionBackground(false)
+                    (requireActivity() as SoalActivity).answers[viewPager.currentItem] = 2
+                    tabView.setBackgroundResource(R.drawable.tab_uncorrect_background)
+                }
+                question.hasSelected = true
+                binding.btnJawab.visibility = View.GONE
+                binding.btnCekPembahasan.visibility = View.VISIBLE
+                showBottomSheet(question.discussion?.get(0)?.discussionText)
+
+                val selectedTab = tab.getTabAt(viewPager.currentItem)
+
+                selectedTab?.customView = tabView
+
+                disableScrolling()
+            }
+        }
+    }
+
+    private fun setSelectionBackground(isCorrect: Boolean) {
+        for (i in 0 until binding.answerOptionsContainer.childCount) {
+            val child = binding.answerOptionsContainer.getChildAt(i)
+            if (child is LinearLayout) {
+                if (i == selectionIndex) {
+                    if (isCorrect) {
+                        child.setBackgroundResource(R.drawable.radio_correct)
+                    } else {
+                        child.setBackgroundResource(R.drawable.radio_incorrect)
+                    }
+                } else {
+                    child.setBackgroundResource(R.drawable.radio_not_selected)
+                }
+            }
         }
     }
 
@@ -204,21 +226,6 @@ class MultipleChoiceQuestion : Fragment() {
             val child = binding.answerOptionsContainer.getChildAt(i)
             if (child is LinearLayout) {
                 child.setOnClickListener(null)
-            }
-        }
-    }
-    private fun checkAnswerCorrectness(isCorrect: Boolean) {
-        for (i in 0 until binding.answerOptionsContainer.childCount) {
-            val child = binding.answerOptionsContainer.getChildAt(i)
-            if (child is LinearLayout) {
-                val mathview = child.getChildAt(0) as MathView
-                if (mathview.text == answer?.text) {
-                    if (isCorrect) {
-                        child.setBackgroundResource(R.drawable.radio_correct)
-                    } else {
-                        child.setBackgroundResource(R.drawable.radio_incorrect)
-                    }
-                }
             }
         }
     }
@@ -242,8 +249,9 @@ class MultipleChoiceQuestion : Fragment() {
             if (currentItem < totalItems - 1) {
                 viewPager.setCurrentItem(currentItem + 1, true)
             } else {
-                (requireActivity() as SoalActivity).soalViewModel.resetTimer()
                 val score = (requireActivity() as SoalActivity).score
+
+                (requireActivity() as SoalActivity).soalViewModel.stopTimer()
 
                 val completionTimeMillis = (requireActivity() as SoalActivity).soalViewModel.calculateCompletionTime()
                 val completionTimeSeconds = completionTimeMillis / 1000
@@ -254,6 +262,7 @@ class MultipleChoiceQuestion : Fragment() {
                 intent.putExtra(ActivityHasil.ANSWERS, ArrayList((requireActivity() as SoalActivity).answers))
                 intent.putExtra(ActivityHasil.COMPLETION_TIME, completionTimeString)
                 startActivity(intent)
+
             }
         }
     }

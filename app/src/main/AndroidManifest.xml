@@ -21,6 +21,7 @@
             android:exported="false" />
         <activity
             android:name=".ui.activity.soal.SoalActivity"
+            android:windowSoftInputMode="adjustPan"
             android:exported="false" />
         <activity
             android:name=".ui.activity.materi.MateriScreenActivity"
