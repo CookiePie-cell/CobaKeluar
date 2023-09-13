@@ -21,22 +21,22 @@ class Repository @Inject constructor(
     val resulHasilTO = MutableLiveData<Result<String>>()
 
     fun userData(addData: UserModel): LiveData<Result<String>> {
-        val database = db.getReference("users").push()
-        database.setValue(addData)
-        resultAddData.postValue(Result.Loading)
-        database.addListenerForSingleValueEvent(object : ValueEventListener {
-            override fun onDataChange(snapshot: DataSnapshot) {
-                resultAddData.postValue(Result.Success("Data berhasil ditambahkan"))
+        val database = db.getReference("users")
+        val spesificDatabase = database.child(addData.userId!!)
+
+        spesificDatabase.setValue(addData)
+            .addOnSuccessListener {
+                resultAddData.value = Result.Success("Data berhasil disimpan")
             }
-            override fun onCancelled(error: DatabaseError) {
-                resultAddData.postValue(Result.Error(error.message))
+            .addOnFailureListener { error ->
+                resultAddData.value = Result.Error(error.message ?: "Terjadi kesalahan")
             }
-        })
         return resultAddData
     }
-    fun dataProfile(id: String): LiveData<Result<UserModel>> {
+
+    fun dataProfile(userId: String): LiveData<Result<UserModel>> {
         val database =db.getReference("users")
-        val query = database.orderByChild("id").equalTo(id)
+        val query = database.orderByChild("userId").equalTo(userId)
         query.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 val foundUser = mutableListOf<UserModel>()
@@ -57,32 +57,15 @@ class Repository @Inject constructor(
         return resultDataProfile
     }
 
-    fun getHasilTryout(userId: String): LiveData<Result<String>> = liveData {
-        val liveData = MutableLiveData<Result<List<HasilModel>>>()
-        liveData.value = Result.Loading
-        val hasilListener = object : ValueEventListener {
-            override fun onDataChange(dataSnapshot: DataSnapshot) {
-                val listHasil = mutableListOf<HasilModel>()
-                dataSnapshot.children.forEach { snapshot ->
-                    val hasilTo = snapshot.getValue(HasilModel::class.java)
-                    if (hasi)
-                }
-            }
-
-            override fun onCancelled(error: DatabaseError) {
-                TODO("Not yet implemented")
-            }
-
-        }
-    }
 
     //Hasill try out
-    fun addHasilTryout(addData: HasilModel): LiveData<Result<String>> {
-        val hasil = db.getReference("hasilTO").push()
-        val id = hasil.key
-        addData.id = id
+    fun hasilTryOut(addData: HasilModel): LiveData<Result<String>> {
+        val userRef = db.getReference("users")
+        val userSpecificRef = userRef.child(addData.userId!!).child("tryout")
+        val newUserRef = userSpecificRef.push()
 
-        hasil.setValue(addData)
+        // You can directly set the data under the user's specific reference
+        newUserRef.setValue(addData)
             .addOnSuccessListener {
                 resulHasilTO.value = Result.Success("Data berhasil disimpan")
             }
@@ -92,4 +75,37 @@ class Repository @Inject constructor(
 
         return resulHasilTO
     }
+
+    fun getHasilTryout(userId: String): LiveData<Result<List<HasilModel>>> = liveData {
+        val userRef = db.getReference("users")
+
+        val liveData = MutableLiveData<Result<List<HasilModel>>>()
+        liveData.value = Result.Loading
+
+        val tryoutsRef = userRef.child(userId).child("tryout")
+
+        val tryoutsListener = object : ValueEventListener {
+            override fun onDataChange(dataSnapshot: DataSnapshot) {
+                val tryoutsList = mutableListOf<HasilModel>()
+
+                dataSnapshot.children.forEach { tryoutSnapshot ->
+                    val tryout = tryoutSnapshot.getValue(HasilModel::class.java)
+                    if (tryout != null) {
+                        tryoutsList.add(tryout)
+                    }
+                }
+
+                liveData.value = Result.Success(tryoutsList)
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                liveData.value = Result.Error(error.message)
+            }
+        }
+
+        tryoutsRef.addValueEventListener(tryoutsListener)
+
+        emitSource(liveData)
+    }
+
 }

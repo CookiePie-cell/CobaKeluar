@@ -19,7 +19,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import java.util.regex.Pattern
 
 @AndroidEntryPoint
-class ActivitySignUp: AppCompatActivity() {
+class ActivitySignUp : AppCompatActivity() {
     private lateinit var binding: ActivitySignUpBinding
     private lateinit var viewModel: SignupViewModel
     var loadingDialog: AlertDialog? = null
@@ -29,8 +29,8 @@ class ActivitySignUp: AppCompatActivity() {
         val view = binding.root
         setContentView(view)
         viewModel = ViewModelProvider(this).get(SignupViewModel::class.java)
-        val nama = intent.getStringExtra("nama")?:""
-        val email = intent.getStringExtra("email")?: ""
+        val nama = intent.getStringExtra("nama") ?: ""
+        val email = intent.getStringExtra("email") ?: ""
         binding.nama.text = Editable.Factory.getInstance().newEditable(nama)
         binding.email.text = Editable.Factory.getInstance().newEditable(email)
         binding.btnDaftar.setOnClickListener({
@@ -39,14 +39,13 @@ class ActivitySignUp: AppCompatActivity() {
             val noHp = binding.noHp.text.toString()
             val password = binding.Password.text.toString()
             val konfirmPassword = binding.konfirmPassword.text.toString()
-            if (password != konfirmPassword){
+            if (password != konfirmPassword) {
                 Toast.makeText(this, "Password tidak sesuai", Toast.LENGTH_SHORT).show()
-            }else if (nama.isEmpty() || email.isEmpty() || noHp.isEmpty() || password.isEmpty() || konfirmPassword.isEmpty() ){
+            } else if (nama.isEmpty() || email.isEmpty() || noHp.isEmpty() || password.isEmpty() || konfirmPassword.isEmpty()) {
                 Toast.makeText(this, "Data harus terisi semua", Toast.LENGTH_SHORT).show()
-            }else if(!isValidPhoneNumber(noHp)){
+            } else if (!isValidPhoneNumber(noHp)) {
                 Toast.makeText(this, "Nomor telepon tidak valid", Toast.LENGTH_SHORT).show()
-            }
-            else{
+            } else {
                 loading()
                 FirebaseAuth.getInstance().createUserWithEmailAndPassword(email, password)
                     .addOnCompleteListener(this) { task ->
@@ -54,10 +53,11 @@ class ActivitySignUp: AppCompatActivity() {
                             val firebaseUser = FirebaseAuth.getInstance().currentUser
                             val uid = firebaseUser?.uid
                             val addData = UserModel(
-                                id = uid!!,
+                                id = null,
+                                userId = uid!!,
                                 nama = nama,
                                 email = email,
-                                noHp  = noHp,
+                                noHp = noHp,
                             )
                             viewModel.addUser(addData)
                             viewModel.resultAddData.observe(this) {
@@ -65,35 +65,44 @@ class ActivitySignUp: AppCompatActivity() {
                                     is Result.Loading -> {
                                         loading()
                                     }
+
                                     is Result.Success -> {
                                         loadingDialog?.dismiss()
                                         val intent = Intent(this, HomeActivity::class.java)
                                         startActivity(intent)
+                                        Toast.makeText(this, "berhasil mendaftar", Toast.LENGTH_SHORT).show()
                                     }
+
                                     is Result.Error -> {
-                                        val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-                                            .build()
+                                        val gso =
+                                            GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                                                .build()
                                         val googleSignInClient = GoogleSignIn.getClient(this, gso)
                                         googleSignInClient.signOut().addOnCompleteListener(this) {
-                                            FirebaseAuth.getInstance().signOut()}
+                                            FirebaseAuth.getInstance().signOut()
+                                        }
                                         loadingDialog?.dismiss()
                                         Toast.makeText(this, it.error, Toast.LENGTH_SHORT).show()
                                     }
-                        }}}
-                        else{
+
+                                }
+                            }
+                        } else {
                             loadingDialog?.dismiss()
-                            Toast.makeText(this, "gagal :"+task.exception, Toast.LENGTH_SHORT).show()
+                            Toast.makeText(this, "gagal :" + task.exception, Toast.LENGTH_SHORT)
+                                .show()
                         }
-                        }
+                    }
             }
         })
-       }
+    }
 
     private fun isValidPhoneNumber(noHP: String): Boolean {
         val pattern = Pattern.compile("^[0-9]{12}\$|^[0-9]{11}\$|^[0-9]{13}\$")
         val matcher = pattern.matcher(noHP)
         return matcher.matches()
     }
+
     private fun loading() {
         val dialogView = layoutInflater.inflate(R.layout.dialog_loading, null)
         val builder = AlertDialog.Builder(this)

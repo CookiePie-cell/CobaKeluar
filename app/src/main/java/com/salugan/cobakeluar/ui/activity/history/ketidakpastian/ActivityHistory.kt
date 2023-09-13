@@ -73,7 +73,6 @@ class ActivityHistory : AppCompatActivity() {
             when(it) {
                 is Result.Loading -> ""
                 is Result.Success -> {
-                    Log.d("masukbos", it.data.toString())
                     setAdapter(it.data)
                 }
                 is Result.Error -> ""
@@ -86,6 +85,7 @@ class ActivityHistory : AppCompatActivity() {
     }
 
     private fun setAdapter(hasilList: List<HasilModel>) {
+
         val hasilArrayList = ArrayList(hasilList)
         val adapter = HistoryAdapter(hasilArrayList)
         binding.recycleView.adapter = adapter

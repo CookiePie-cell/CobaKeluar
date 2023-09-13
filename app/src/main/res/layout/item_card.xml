@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     android:id="@+id/itemCard">
 
     <LinearLayout
@@ -23,8 +23,7 @@
             android:textColor="@color/darkBlue"
             android:gravity="center"
             android:textSize="15dp"
-            android:textStyle="bold|italic"
-            ></TextView>
+            android:textStyle="bold|italic" />
 
         <TextView
             android:layout_marginBottom="10dp"
@@ -33,14 +32,12 @@
             android:text="data dan ketidakpastian"
             android:textColor="@color/darkBlue"
             android:gravity="center"
-            android:textSize="10dp"
-            ></TextView>
+            android:textSize="10sp" />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="2dp"
-            android:background="@color/darkBlue"
-            ></LinearLayout>
+            android:background="@color/darkBlue" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -54,8 +51,7 @@
                 android:layout_marginRight="20dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                >
+                android:orientation="vertical">
 
 
                 <TextView
@@ -63,24 +59,21 @@
                     android:textColor="@color/darkBlue"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="15.40 detik"
-                    ></TextView>
+                    android:text="15.40 detik"/>
 
                 <TextView
                     android:id="@+id/tanggal"
                     android:textColor="@color/darkBlue"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="23:08:2023"
-                    ></TextView>
+                    android:text="23:08:2023"/>
 
             </LinearLayout>
 
             <LinearLayout
                 android:layout_width="2dp"
                 android:layout_height="match_parent"
-                android:background="@color/darkBlue"
-                ></LinearLayout>
+                android:background="@color/darkBlue"/>
 
             <TextView
                 android:layout_marginLeft="20dp"
@@ -93,14 +86,12 @@
                 android:textSize="30dp"
                 android:textStyle="bold"
                 android:layout_gravity="center"
-                android:gravity="center"
-                ></TextView>
+                android:gravity="center"/>
 
             <LinearLayout
                 android:layout_width="2dp"
                 android:layout_height="match_parent"
-                android:background="@color/darkBlue"
-                ></LinearLayout>
+                android:background="@color/darkBlue" />
 
             <LinearLayout
                 android:layout_marginLeft="20dp"
@@ -116,16 +107,14 @@
                     android:textColor="@color/lightGreen"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="BENAR 10"
-                    ></TextView>
+                    android:text="BENAR 10" />
 
                 <TextView
                     android:id="@+id/salah"
                     android:textColor="@color/red"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="SALAH 0"
-                    ></TextView>
+                    android:text="SALAH 0" />
 
 
             </LinearLayout>
