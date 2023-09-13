@@ -60,6 +60,10 @@ class SoalViewModel @Inject constructor(private val tryoutRepository: TryoutRepo
         timer?.start()
     }
 
+    fun stopTimer() {
+        timer?.cancel()
+    }
+
     fun resetTimer() {
         timer?.cancel()
         _eventCountDownFinish.value = true

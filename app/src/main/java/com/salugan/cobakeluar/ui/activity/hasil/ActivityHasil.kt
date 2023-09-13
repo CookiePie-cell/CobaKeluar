@@ -64,7 +64,8 @@ class ActivityHasil : AppCompatActivity() {
 
 
             val addHasil = HasilModel(
-                id = id,
+                id = null,
+                userId = id,
                 nilai = nilai,
                 tanggal = tanggal,
                 waktu = waktu,

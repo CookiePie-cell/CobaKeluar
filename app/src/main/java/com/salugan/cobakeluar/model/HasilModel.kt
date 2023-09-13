@@ -1,8 +1,8 @@
 package com.salugan.cobakeluar.model
 
 data class HasilModel(
-
-    val id: String?,
+    var id: String?,
+    val userId: String?,
     val nilai: String?,
     val tanggal: String?,
     val waktu: String?,

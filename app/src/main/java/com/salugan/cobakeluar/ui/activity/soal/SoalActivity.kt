@@ -122,6 +122,7 @@ class SoalActivity : AppCompatActivity(), MultiStateView.StateListener {
                     answers = MutableList(data.size) { 0 }
                     val tabPagerSoalAdapter = TabPagerSoalAdapter(this, data, data.size)
                     val viewPager: ViewPager2 = binding.viewPager
+                    viewPager.offscreenPageLimit = data.size
                     viewPager.isUserInputEnabled = false
                     viewPager.adapter = tabPagerSoalAdapter
                     val tabs: TabLayout = binding.tabs
@@ -144,8 +145,8 @@ class SoalActivity : AppCompatActivity(), MultiStateView.StateListener {
     }
 
     private fun startTimer() {
-        soalViewModel.setInitialTime(1)
-        soalViewModel.setTotalExamTime(1)
+        soalViewModel.setInitialTime(30)
+        soalViewModel.setTotalExamTime(30)
         soalViewModel.startTimer()
     }
 

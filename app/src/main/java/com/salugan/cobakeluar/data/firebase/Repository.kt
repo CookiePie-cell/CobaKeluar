@@ -18,6 +18,7 @@ class Repository @Inject constructor(
     val resultAddData = MutableLiveData<Result<String>>()
     val resultDataProfile = MutableLiveData<Result<UserModel>>()
     val resulHasilTO = MutableLiveData<Result<String>>()
+
     fun userData(addData: UserModel): LiveData<Result<String>> {
         val database = db.getReference("users").push()
         database.setValue(addData)
@@ -57,18 +58,18 @@ class Repository @Inject constructor(
 
     //Hasill try out
     fun hasilTryOut(addData: HasilModel): LiveData<Result<String>> {
-        val database = db.getReference("hasilTO").push()
-        database.setValue(addData)
-        resulHasilTO.postValue(Result.Loading)
-        database.addListenerForSingleValueEvent(object : ValueEventListener {
-            override fun onDataChange(snapshot: DataSnapshot) {
+        val userRef = db.getReference("users")
+        val userSpecificRef = userRef.child(addData.userId!!)
 
-                resulHasilTO.postValue(Result.Success("data berhasil disimpan"))
+        // You can directly set the data under the user's specific reference
+        userSpecificRef.setValue(addData)
+            .addOnSuccessListener {
+                resulHasilTO.value = Result.Success("Data berhasil disimpan")
             }
-            override fun onCancelled(error: DatabaseError) {
-                resulHasilTO.postValue(Result.Error(error.message))
+            .addOnFailureListener { error ->
+                resulHasilTO.value = Result.Error(error.message ?: "Terjadi kesalahan")
             }
-        })
+
         return resulHasilTO
     }
 }
