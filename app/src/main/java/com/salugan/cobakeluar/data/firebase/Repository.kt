@@ -20,22 +20,22 @@ class Repository @Inject constructor(
     val resulHasilTO = MutableLiveData<Result<String>>()
 
     fun userData(addData: UserModel): LiveData<Result<String>> {
-        val database = db.getReference("users").push()
-        database.setValue(addData)
-        resultAddData.postValue(Result.Loading)
-        database.addListenerForSingleValueEvent(object : ValueEventListener {
-            override fun onDataChange(snapshot: DataSnapshot) {
-                resultAddData.postValue(Result.Success("Data berhasil ditambahkan"))
+        val database = db.getReference("users")
+        val spesificDatabase = database.child(addData.userId!!)
+
+        spesificDatabase.setValue(addData)
+            .addOnSuccessListener {
+                resultAddData.value = Result.Success("Data berhasil disimpan")
             }
-            override fun onCancelled(error: DatabaseError) {
-                resultAddData.postValue(Result.Error(error.message))
+            .addOnFailureListener { error ->
+                resultAddData.value = Result.Error(error.message ?: "Terjadi kesalahan")
             }
-        })
         return resultAddData
     }
-    fun dataProfile(id: String): LiveData<Result<UserModel>> {
+
+    fun dataProfile(userId: String): LiveData<Result<UserModel>> {
         val database =db.getReference("users")
-        val query = database.orderByChild("id").equalTo(id)
+        val query = database.orderByChild("userId").equalTo(userId)
         query.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 val foundUser = mutableListOf<UserModel>()
@@ -59,10 +59,11 @@ class Repository @Inject constructor(
     //Hasill try out
     fun hasilTryOut(addData: HasilModel): LiveData<Result<String>> {
         val userRef = db.getReference("users")
-        val userSpecificRef = userRef.child(addData.userId!!)
+        val userSpecificRef = userRef.child(addData.userId!!).child("tryout")
+        val newUserRef = userSpecificRef.push()
 
         // You can directly set the data under the user's specific reference
-        userSpecificRef.setValue(addData)
+        newUserRef.setValue(addData)
             .addOnSuccessListener {
                 resulHasilTO.value = Result.Success("Data berhasil disimpan")
             }
