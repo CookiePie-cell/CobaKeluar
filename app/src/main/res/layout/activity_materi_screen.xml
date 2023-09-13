@@ -66,13 +66,13 @@
 
     </LinearLayout>
 
-    <LinearLayout
+    <view
         android:id="@+id/line"
         android:layout_width="match_parent"
         android:layout_height="2dp"
         android:layout_margin="30dp"
         android:background="@color/white"
-        android:orientation="vertical"></LinearLayout>
+        android:orientation="vertical"/>
 
     <LinearLayout
         android:layout_width="300dp"
@@ -93,13 +93,13 @@
                 android:layout_height="wrap_content"
                 android:text="Try Out Numerasi - BEAJA"
                 android:textColor="@color/black"
-                android:textStyle="bold"></TextView>
+                android:textStyle="bold"/>
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Data dan Ketidakpastian"
-                android:textColor="@color/black"></TextView>
+                android:textColor="@color/black"/>
 
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/btnDataDanKetidakpastian"
@@ -119,7 +119,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:padding="10dp"
-            android:src="@drawable/img_data_tidak_pasti"></ImageView>
+            android:src="@drawable/img_data_tidak_pasti"/>
 
     </LinearLayout>
 
@@ -143,13 +143,13 @@
                 android:layout_height="wrap_content"
                 android:text="Try Out Numerasi - BEAJA"
                 android:textColor="@color/black"
-                android:textStyle="bold"></TextView>
+                android:textStyle="bold"/>
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Geometri Pengukuran"
-                android:textColor="@color/black"></TextView>
+                android:textColor="@color/black"/>
 
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/btnGeometriPengukuran"
@@ -168,7 +168,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:padding="10dp"
-            android:src="@drawable/img_pengukuran"></ImageView>
+            android:src="@drawable/img_pengukuran"/>
 
     </LinearLayout>
 
@@ -176,25 +176,14 @@
         android:id="@+id/btnHistory"
         android:layout_width="300dp"
         android:layout_height="40dp"
-        android:layout_marginTop="50dp"
+        android:layout_marginTop="20dp"
         android:background="@drawable/rounded_button_white"
-        android:text="Report Data dan ketidakpastian"
+        android:text="HISTORI"
         android:textColor="@color/darkBlue"
         android:textSize="15dp"
         android:layout_gravity="center"
         android:textStyle="bold" />
 
-    <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/btnTataCara"
-        android:layout_width="300dp"
-        android:layout_height="40dp"
-        android:layout_marginTop="10dp"
-        android:background="@drawable/rounded_button_white"
-        android:text="REPORT GEAOMETRI PENGUKURAN"
-        android:textColor="@color/darkBlue"
-        android:textSize="15dp"
-        android:layout_gravity="center"
-        android:textStyle="bold" />
 
 
 </LinearLayout>

@@ -35,10 +35,6 @@ class MateriScreenActivity : AppCompatActivity() {
 
         })
 
-        binding.btnTataCara.setOnClickListener({
-            Toast.makeText(this, "DIKERJAIN!!", Toast.LENGTH_LONG).show()
-        })
-
     }
 
     companion object {
