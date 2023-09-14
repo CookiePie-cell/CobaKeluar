@@ -156,7 +156,7 @@ class MultipleAnswerQuestion : Fragment() {
                 for (i in 0 until binding.answerOptionsContainer.childCount) {
                     val child = binding.answerOptionsContainer.getChildAt(i)
                     if (child is LinearLayout) {
-                        val optionAtIndex = question.selections?.get(i)
+                        val optionAtIndex = question.selections.get(i)
                         if (optionAtIndex != null) {
                             if (optionAtIndex.isSelected) {
                                 child.setBackgroundResource(R.drawable.radio_selected)

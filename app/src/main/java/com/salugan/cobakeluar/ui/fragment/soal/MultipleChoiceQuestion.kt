@@ -47,6 +47,8 @@ class MultipleChoiceQuestion : Fragment() {
 
     private var selectionIndex = 0
 
+    private var correctAnswerIndex = 0
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -100,15 +102,17 @@ class MultipleChoiceQuestion : Fragment() {
     }
 
     private fun setAnswerList(question: QuestionModel) {
-        val flags = Html.FROM_HTML_MODE_COMPACT or Html.FROM_HTML_MODE_LEGACY
 
-        val images = mutableListOf<String>()
         for ((index, option) in question.selections?.withIndex() ?: emptyList<SelectionModel>().withIndex()) {
             val linearLayout = LinearLayout(requireContext())
             val layoutParams = LinearLayout.LayoutParams(
                 ViewGroup.LayoutParams.MATCH_PARENT, // Width
                 ViewGroup.LayoutParams.WRAP_CONTENT  // Height
             )
+
+            if(option.id == question.selectionAnswer?.get(0)?.selectionId) {
+                correctAnswerIndex = index
+            }
 
             linearLayout.setPadding(16, 24, 16, 24)
 
@@ -199,6 +203,8 @@ class MultipleChoiceQuestion : Fragment() {
 
                 selectedTab?.customView = tabView
 
+                highlightCorrectAnswer()
+
                 disableScrolling()
             }
         }
@@ -216,6 +222,17 @@ class MultipleChoiceQuestion : Fragment() {
                     }
                 } else {
                     child.setBackgroundResource(R.drawable.radio_not_selected)
+                }
+            }
+        }
+    }
+
+    private fun highlightCorrectAnswer() {
+        for (i in 0 until binding.answerOptionsContainer.childCount) {
+            val child = binding.answerOptionsContainer.getChildAt(i)
+            if (child is LinearLayout) {
+                if (i == correctAnswerIndex) {
+                    child.setBackgroundResource(R.drawable.radio_correct)
                 }
             }
         }

@@ -33,15 +33,12 @@ class SoalActivity : AppCompatActivity(), MultiStateView.StateListener {
 
     private lateinit var multiStateView: MultiStateView
 
-//    private val tabTitles = arrayListOf("a", "b", "C")
-
     var answers: MutableList<Int> = MutableList(10) { 0 }
 
     var score = 0
 
     val soalViewModel: SoalViewModel by viewModels()
 
-    val tes = "wowkowkwowk"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

@@ -71,11 +71,11 @@ class ActivityHistory : AppCompatActivity() {
 
         viewModel.getHasilHistory(id).observe(this) {
             when(it) {
-                is Result.Loading -> ""
+                is Result.Loading -> Toast.makeText(this, "Loading", Toast.LENGTH_SHORT).show()
                 is Result.Success -> {
                     setAdapter(it.data)
                 }
-                is Result.Error -> ""
+                is Result.Error -> Toast.makeText(this, "Error", Toast.LENGTH_SHORT).show()
             }
         }
         binding.btnCetak.setOnClickListener {
