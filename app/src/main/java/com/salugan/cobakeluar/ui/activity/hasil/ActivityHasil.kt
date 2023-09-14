@@ -15,6 +15,7 @@ import com.salugan.cobakeluar.model.HasilModel
 import com.salugan.cobakeluar.model.UserModel
 import com.salugan.cobakeluar.ui.activity.authentication.signup.SignupViewModel
 import com.salugan.cobakeluar.ui.activity.home.HomeActivity
+import com.salugan.cobakeluar.ui.activity.materi.MateriScreenActivity
 import com.salugan.cobakeluar.utils.DateTimeUtils
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -31,6 +32,11 @@ class ActivityHasil : AppCompatActivity() {
 
         viewModel = ViewModelProvider(this).get(HasilViewModel::class.java)
 
+        initView()
+
+    }
+
+    private fun initView(){
 
         val score = intent.getIntExtra(SCORE, 0)
         val answers = intent.getIntegerArrayListExtra(ANSWERS)
@@ -40,9 +46,14 @@ class ActivityHasil : AppCompatActivity() {
         val tanggal = DateTimeUtils.getCurrentDate()
         val waktu = completionTime
 
+
         binding.nilai.text = nilai
         binding.tanggal.text = tanggal
         binding.waktu.text = waktu
+
+        binding.btnHome.setOnClickListener{
+            startActivity(Intent(this, HomeActivity::class.java))
+        }
 
         if (answers != null) {
 
@@ -90,6 +101,7 @@ class ActivityHasil : AppCompatActivity() {
                 }
             }
         }
+
     }
 
     companion object {
