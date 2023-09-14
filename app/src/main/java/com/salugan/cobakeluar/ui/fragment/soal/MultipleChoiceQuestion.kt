@@ -17,6 +17,7 @@ import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.Toast
+import androidx.core.content.ContextCompat
 import androidx.core.view.get
 import androidx.viewpager2.widget.ViewPager2
 import com.bumptech.glide.Glide
@@ -103,6 +104,7 @@ class MultipleChoiceQuestion : Fragment() {
 
     private fun setAnswerList(question: QuestionModel) {
 
+
         for ((index, option) in question.selections?.withIndex() ?: emptyList<SelectionModel>().withIndex()) {
             val linearLayout = LinearLayout(requireContext())
             val layoutParams = LinearLayout.LayoutParams(
@@ -125,7 +127,11 @@ class MultipleChoiceQuestion : Fragment() {
 
             layoutParams.setMargins(0, 0, 0, 16)
 
-            linearLayout.orientation = LinearLayout.VERTICAL
+            linearLayout.orientation = LinearLayout.HORIZONTAL
+
+            val optionText = TextView(requireContext())
+            optionText.setTextColor(ContextCompat.getColor(requireContext(), R.color.black))
+            optionText.text = "("+(97+index).toChar().toString().uppercase() + ") "
 
             val mathViewOption = MathView(requireContext(), null)
             val mathViewLayoutParams = LinearLayout.LayoutParams(
@@ -135,6 +141,8 @@ class MultipleChoiceQuestion : Fragment() {
             mathViewLayoutParams.setMargins(8,8,8,8)
             mathViewOption.layoutParams = mathViewLayoutParams
             mathViewOption.text = option.text
+
+            linearLayout.addView(optionText)
 
             if (option.image != "image") {
                 Log.d("opsibossss", option.image!!)
