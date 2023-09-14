@@ -110,41 +110,43 @@ class EssayQuestion : Fragment() {
 
     private fun setBtnJawab(question: QuestionModel) {
         binding.btnJawab.setOnClickListener {
-            val userAnswer: Double = binding.edtJawaban.text.toString().toDouble()
-            val tabView =
-                LayoutInflater.from(requireContext()).inflate(R.layout.tab_title, null) as TextView
+            val userAnswerText = binding.edtJawaban.text.toString()
+            val userAnswer = userAnswerText.replace(',', '.').toDoubleOrNull()
 
-            val systemAnswer: Double? = question.shortAnswer?.get(0)?.shortAnswerText?.toDouble()
-            val systemAnswer1: Double? = question.shortAnswer?.get(0)?.firstRange?.toDouble()
-            val systemAnswer2: Double? = question.shortAnswer?.get(0)?.secondRange?.toDouble()
+            if (userAnswer != null) {
+                val tabView = LayoutInflater.from(requireContext()).inflate(R.layout.tab_title, null) as TextView
 
-            if (systemAnswer == userAnswer) {
-                jawabanBenar(tabView)
-            } else {
-                if (systemAnswer1!! > systemAnswer2!!) {
-                    if (userAnswer in systemAnswer2..systemAnswer1) {
-                        jawabanBenar(tabView)
+                val systemAnswer: Double? = question.shortAnswer?.get(0)?.shortAnswerText?.replace(',', '.')?.toDoubleOrNull()
+                val systemAnswer1: Double? = question.shortAnswer?.get(0)?.firstRange?.replace(',', '.')?.toDoubleOrNull()
+                val systemAnswer2: Double? = question.shortAnswer?.get(0)?.secondRange?.replace(',', '.')?.toDoubleOrNull()
+
+                if (systemAnswer != null && systemAnswer == userAnswer) {
+                    jawabanBenar(tabView)
+                } else if (systemAnswer1 != null && systemAnswer2 != null) {
+                    val (rangeStart, rangeEnd) = if (systemAnswer1 > systemAnswer2) {
+                        Pair(systemAnswer2, systemAnswer1)
                     } else {
-                        jawabanSalah(tabView)
+                        Pair(systemAnswer1, systemAnswer2)
                     }
-                } else {
-                    if (userAnswer in systemAnswer1..systemAnswer2) {
+
+                    if (userAnswer in rangeStart..rangeEnd) {
                         jawabanBenar(tabView)
                     } else {
                         jawabanSalah(tabView)
                     }
                 }
+
+                question.hasSelected = true
+                binding.btnJawab.visibility = View.GONE
+                binding.btnCekPembahasanEssay.visibility = View.VISIBLE
+                showBottomSheet(question.discussion?.get(0)?.discussionText)
+
+                val selectedTab = tab.getTabAt(viewPager.currentItem)
+
+                selectedTab?.customView = tabView
             }
-
-            question.hasSelected = true
-            binding.btnJawab.visibility = View.GONE
-            binding.btnCekPembahasanEssay.visibility = View.VISIBLE
-            showBottomSheet(question.discussion?.get(0)?.discussionText)
-
-            val selectedTab = tab.getTabAt(viewPager.currentItem)
-
-            selectedTab?.customView = tabView
         }
+
     }
 
     private fun jawabanBenar(tab: TextView) {
