@@ -59,7 +59,7 @@ class ActivityHistory : AppCompatActivity() {
 //                    recyclerView.setHasFixedSize(true)
                 }
 
-                is Result.Error -> {
+                is Result.Error<*> -> {
                     Toast.makeText(this, "Data gagal diambil", Toast.LENGTH_SHORT).show()
                 }
 
@@ -75,7 +75,7 @@ class ActivityHistory : AppCompatActivity() {
                 is Result.Success -> {
                     setAdapter(it.data)
                 }
-                is Result.Error -> Toast.makeText(this, "Error", Toast.LENGTH_SHORT).show()
+                is Result.Error<*> -> Toast.makeText(this, "Error", Toast.LENGTH_SHORT).show()
             }
         }
         binding.btnCetak.setOnClickListener {

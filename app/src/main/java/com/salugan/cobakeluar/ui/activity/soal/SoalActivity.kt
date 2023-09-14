@@ -20,6 +20,7 @@ import com.google.android.material.tabs.TabLayoutMediator
 import com.kennyc.view.MultiStateView
 import com.salugan.cobakeluar.R
 import com.salugan.cobakeluar.adapter.TabPagerSoalAdapter
+import com.salugan.cobakeluar.data.Error
 import com.salugan.cobakeluar.data.Result
 import com.salugan.cobakeluar.databinding.ActivitySoalBinding
 import com.salugan.cobakeluar.model.QuestionModel
@@ -102,7 +103,11 @@ class SoalActivity : AppCompatActivity(), MultiStateView.StateListener {
                     }
                 }
 
-                is Result.Error -> multiStateView.viewState = MultiStateView.ViewState.ERROR
+                is Result.Error<*> -> {
+                    multiStateView.viewState = MultiStateView.ViewState.ERROR
+                    val errorData = it.errorData as Error
+                    Toast.makeText(this, "${errorData.statusCode} - ${errorData.message}", Toast.LENGTH_SHORT).show()
+                }
             }
         }
     }
@@ -136,7 +141,11 @@ class SoalActivity : AppCompatActivity(), MultiStateView.StateListener {
                     }
                 }
 
-                is Result.Error -> multiStateView.viewState = MultiStateView.ViewState.ERROR
+                is Result.Error<*> -> {
+                    multiStateView.viewState = MultiStateView.ViewState.ERROR
+                    val errorData = it.errorData as Error
+                    Toast.makeText(this, "${errorData.statusCode} - ${errorData.message}", Toast.LENGTH_SHORT).show()
+                }
             }
         }
     }

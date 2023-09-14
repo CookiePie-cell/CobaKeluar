@@ -42,7 +42,7 @@ class ActivityProfile : AppCompatActivity() {
                     binding.email.text = result.data.email
                     binding.phoneNumber.text = result.data.noHp
                 }
-                is Result.Error -> {
+                is Result.Error<*> -> {
                     loadingDialog?.dismiss()
                     Toast.makeText(this, "Data gagal diambil", Toast.LENGTH_SHORT).show()
                 }

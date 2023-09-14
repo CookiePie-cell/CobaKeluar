@@ -11,6 +11,7 @@ import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.firebase.auth.FirebaseAuth
 import com.salugan.cobakeluar.R
+import com.salugan.cobakeluar.data.Error
 import com.salugan.cobakeluar.databinding.ActivitySignUpBinding
 import com.salugan.cobakeluar.model.UserModel
 import com.salugan.cobakeluar.ui.activity.home.HomeActivity
@@ -73,7 +74,7 @@ class ActivitySignUp : AppCompatActivity() {
                                         Toast.makeText(this, "berhasil mendaftar", Toast.LENGTH_SHORT).show()
                                     }
 
-                                    is Result.Error -> {
+                                    is Result.Error<*> -> {
                                         val gso =
                                             GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                                                 .build()
@@ -82,7 +83,8 @@ class ActivitySignUp : AppCompatActivity() {
                                             FirebaseAuth.getInstance().signOut()
                                         }
                                         loadingDialog?.dismiss()
-                                        Toast.makeText(this, it.error, Toast.LENGTH_SHORT).show()
+
+                                        Toast.makeText(this, (it.errorData as Error).message, Toast.LENGTH_SHORT).show()
                                     }
 
                                 }

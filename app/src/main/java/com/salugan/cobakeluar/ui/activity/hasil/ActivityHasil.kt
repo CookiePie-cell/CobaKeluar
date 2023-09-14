@@ -84,8 +84,8 @@ class ActivityHasil : AppCompatActivity() {
                         Toast.makeText(this, it.toString(), Toast.LENGTH_SHORT).show()
                     }
 
-                    is Result.Error -> {
-                        Toast.makeText(this, it.error, Toast.LENGTH_SHORT).show()
+                    is Result.Error<*> -> {
+                        Toast.makeText(this, it.errorData as String, Toast.LENGTH_SHORT).show()
                     }
                 }
             }
