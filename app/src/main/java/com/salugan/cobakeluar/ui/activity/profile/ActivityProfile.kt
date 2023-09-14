@@ -10,9 +10,9 @@ import androidx.lifecycle.ViewModelProvider
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.firebase.auth.FirebaseAuth
+import com.kennyc.view.MultiStateView
 import com.salugan.cobakeluar.R
 import com.salugan.cobakeluar.databinding.ActivityProfileBinding
-import com.salugan.cobakeluar.model.UserModel
 import com.salugan.cobakeluar.ui.activity.authentication.ActivityLogin
 import com.salugan.cobakeluar.data.Result
 import dagger.hilt.android.AndroidEntryPoint
@@ -24,33 +24,41 @@ class ActivityProfile : AppCompatActivity() {
     var dialogLogout: AlertDialog? = null
     var loadingDialog: AlertDialog? = null
     private lateinit var viewModel: ProfileViewModel
+    private lateinit var multiStateView: MultiStateView
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityProfileBinding.inflate(layoutInflater)
         val view = binding.root
         setContentView(view)
+
+        multiStateView = binding.dataProfile
+
         val mAuth = FirebaseAuth.getInstance()
         val currentUser = mAuth.currentUser
         val id = currentUser?.uid
         viewModel = ViewModelProvider(this).get(ProfileViewModel::class.java)
         viewModel.dataProfile(id!!)
-        viewModel.resultDataProfile.observe(this, { result ->
-            when (result) {
+        viewModel.resultDataProfile.observe(this) {
+            when (it) {
                 is Result.Success -> {
-                    loadingDialog?.dismiss()
-                    binding.nama.text = result.data.nama
-                    binding.email.text = result.data.email
-                    binding.phoneNumber.text = result.data.noHp
+                    if(it.data.email!!.isEmpty() && it.data.nama!!.isEmpty() && it.data.noHp!!.isEmpty()){
+                        multiStateView.viewState = MultiStateView.ViewState.EMPTY
+                    }
+                    multiStateView.viewState = MultiStateView.ViewState.CONTENT
+                    binding.nama.text = it.data.nama
+                    binding.email.text = it.data.email
+                    binding.phoneNumber.text = it.data.noHp
                 }
                 is Result.Error<*> -> {
+                    multiStateView.viewState = MultiStateView.ViewState.ERROR
                     loadingDialog?.dismiss()
                     Toast.makeText(this, "Data gagal diambil", Toast.LENGTH_SHORT).show()
                 }
                 is Result.Loading -> {
-                    loading()
+                    multiStateView.viewState = MultiStateView.ViewState.LOADING
                 }
             }
-        })
+        }
         binding.btnLogout.setOnClickListener() {
             dialogLogout()
         }
