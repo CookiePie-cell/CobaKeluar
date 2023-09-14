@@ -14,6 +14,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.auth.FirebaseAuth
+import com.kennyc.view.MultiStateView
 import com.salugan.cobakeluar.adapter.HistoryAdapter
 import com.salugan.cobakeluar.data.Result
 import com.salugan.cobakeluar.databinding.ActivityHistoryBinding
@@ -27,24 +28,22 @@ import java.io.IOException
 class ActivityHistory : AppCompatActivity() {
     private lateinit var binding: ActivityHistoryBinding
     private val viewModel: HistoryViewModel by viewModels()
+    private lateinit var multiStateView: MultiStateView
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityHistoryBinding.inflate(layoutInflater)
         val view = binding.root
         setContentView(view)
+
+        multiStateView = binding.listHistori
+
         val mAuth = FirebaseAuth.getInstance()
         val currentUser = mAuth.currentUser
         val id = currentUser?.uid
 
-//        recyclerView = findViewById(R.id.recycleView)
-//
-//        //  RecyclerView
         val layoutManager = LinearLayoutManager(this)
         binding.recycleView.layoutManager = layoutManager
-//
-//        // Initialize and set up your RecyclerView adapter here
-//        val adapter = ReportAdapter()
-//        recyclerView.adapter = adapter
 
         viewModel.dataProfile(id!!)
         viewModel.resultDataProfile.observe(this) { result ->
@@ -52,15 +51,9 @@ class ActivityHistory : AppCompatActivity() {
                 is Result.Success -> {
                     binding.namaPengguna.text = result.data.nama
                     binding.emailPengguna.text = result.data.email
-
-//                    val layoutManager = LinearLayoutManager(this)
-//                    recyclerView.adapter = adapter
-//                    recyclerView.layoutManager = layoutManager
-//                    recyclerView.setHasFixedSize(true)
                 }
 
                 is Result.Error -> {
-                    Toast.makeText(this, "Data gagal diambil", Toast.LENGTH_SHORT).show()
                 }
 
                 is Result.Loading -> {
@@ -68,14 +61,18 @@ class ActivityHistory : AppCompatActivity() {
             }
         }
 
-
         viewModel.getHasilHistory(id).observe(this) {
-            when(it) {
-                is Result.Loading -> Toast.makeText(this, "Loading", Toast.LENGTH_SHORT).show()
+            when (it) {
+                is Result.Loading -> multiStateView.viewState = MultiStateView.ViewState.LOADING
                 is Result.Success -> {
-                    setAdapter(it.data)
+                    if(it.data.isEmpty()){
+                        multiStateView.viewState = MultiStateView.ViewState.EMPTY
+                    }else{
+                        multiStateView.viewState = MultiStateView.ViewState.CONTENT
+                        setAdapter(it.data)
+                    }
                 }
-                is Result.Error -> Toast.makeText(this, "Error", Toast.LENGTH_SHORT).show()
+                is Result.Error -> multiStateView.viewState = MultiStateView.ViewState.ERROR
             }
         }
         binding.btnCetak.setOnClickListener {
@@ -94,6 +91,7 @@ class ActivityHistory : AppCompatActivity() {
     private fun getBitmapFromView(view: View): Bitmap {
         return view.drawToBitmap()
     }
+
     private fun saveBitmapToMediaStore(bitmap: Bitmap) {
         val resolver = contentResolver
         val values = ContentValues().apply {
