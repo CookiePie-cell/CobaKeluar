@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.provider.MediaStore
 import android.util.Log
 import android.view.View
+import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
@@ -15,10 +16,12 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.auth.FirebaseAuth
 import com.kennyc.view.MultiStateView
+import com.salugan.cobakeluar.R
 import com.salugan.cobakeluar.adapter.HistoryAdapter
 import com.salugan.cobakeluar.data.Result
 import com.salugan.cobakeluar.databinding.ActivityHistoryBinding
 import com.salugan.cobakeluar.model.HasilModel
+import com.salugan.cobakeluar.utils.DeviceConnection
 import dagger.hilt.android.AndroidEntryPoint
 import java.io.IOException
 
@@ -61,6 +64,11 @@ class ActivityHistory : AppCompatActivity() {
             }
         }
 
+//        if (!DeviceConnection.isNetworkConnected(applicationContext)) {
+//            Toast.makeText(this, "Error", Toast.LENGTH_SHORT).show()
+//            multiStateView.viewState = MultiStateView.ViewState.ERROR
+//        }
+
         viewModel.getHasilHistory(id).observe(this) {
             when (it) {
                 is Result.Loading -> multiStateView.viewState = MultiStateView.ViewState.LOADING
@@ -72,10 +80,11 @@ class ActivityHistory : AppCompatActivity() {
                         setAdapter(it.data)
                     }
                 }
-                is Result.Error<*> -> Toast.makeText(this, "Error", Toast.LENGTH_SHORT).show()
                 is Result.Error<*> -> {
                     multiStateView.viewState = MultiStateView.ViewState.ERROR
-                    Toast.makeText(this, "Error", Toast.LENGTH_SHORT).show()
+                    val tvError: TextView = multiStateView.findViewById(R.id.tvError)
+                    tvError.text = it.errorData.toString()
+                    Toast.makeText(this, it.errorData.toString(), Toast.LENGTH_SHORT).show()
                 }
             }
         }

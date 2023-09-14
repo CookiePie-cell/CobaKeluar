@@ -26,6 +26,7 @@ import com.salugan.cobakeluar.databinding.ActivitySoalBinding
 import com.salugan.cobakeluar.model.QuestionModel
 import com.salugan.cobakeluar.ui.activity.hasil.ActivityHasil
 import dagger.hilt.android.AndroidEntryPoint
+import org.w3c.dom.Text
 
 @AndroidEntryPoint
 class SoalActivity : AppCompatActivity(), MultiStateView.StateListener {
@@ -40,6 +41,7 @@ class SoalActivity : AppCompatActivity(), MultiStateView.StateListener {
 
     val soalViewModel: SoalViewModel by viewModels()
 
+    private lateinit var tvError: TextView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -56,6 +58,8 @@ class SoalActivity : AppCompatActivity(), MultiStateView.StateListener {
         } else {
             setGeometriDanPengukuranTryOut()
         }
+
+        tvError = multiStateView.findViewById(R.id.tvError)
 
         soalViewModel.currentTimeString.observe(this) {
             binding.countDown.text = String.format(getString(R.string.countdown), it)
@@ -106,6 +110,7 @@ class SoalActivity : AppCompatActivity(), MultiStateView.StateListener {
                 is Result.Error<*> -> {
                     multiStateView.viewState = MultiStateView.ViewState.ERROR
                     val errorData = it.errorData as Error
+                    tvError.text = errorData.message
                     Toast.makeText(this, "${errorData.statusCode} - ${errorData.message}", Toast.LENGTH_SHORT).show()
                 }
             }
@@ -144,6 +149,7 @@ class SoalActivity : AppCompatActivity(), MultiStateView.StateListener {
                 is Result.Error<*> -> {
                     multiStateView.viewState = MultiStateView.ViewState.ERROR
                     val errorData = it.errorData as Error
+                    tvError.text = errorData.message
                     Toast.makeText(this, "${errorData.statusCode} - ${errorData.message}", Toast.LENGTH_SHORT).show()
                 }
             }

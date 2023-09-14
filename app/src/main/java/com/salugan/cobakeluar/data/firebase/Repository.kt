@@ -1,5 +1,6 @@
 package com.salugan.cobakeluar.data.firebase
 
+import android.content.Context
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -12,9 +13,11 @@ import com.salugan.cobakeluar.model.UserModel
 import javax.inject.Inject
 import com.salugan.cobakeluar.data.Result
 import com.salugan.cobakeluar.model.HasilModel
+import com.salugan.cobakeluar.utils.DeviceConnection
 
 class Repository @Inject constructor(
-    private val db: FirebaseDatabase
+    private val db: FirebaseDatabase,
+    private val context: Context
 ){
     val resultAddData = MutableLiveData<Result<String>>()
     val resultDataProfile = MutableLiveData<Result<UserModel>>()
@@ -65,7 +68,6 @@ class Repository @Inject constructor(
         val userSpecificRef = userRef.child(addData.userId!!).child("tryout")
         val newUserRef = userSpecificRef.push()
 
-        // You can directly set the data under the user's specific reference
         newUserRef.setValue(addData)
             .addOnSuccessListener {
                 resulHasilTO.value = Result.Success("Data berhasil disimpan")
@@ -80,8 +82,14 @@ class Repository @Inject constructor(
     fun getHasilTryout(userId: String): LiveData<Result<List<HasilModel>>> = liveData {
         val userRef = db.getReference("users")
 
+
+
         val liveData = MutableLiveData<Result<List<HasilModel>>>()
         liveData.value = Result.Loading
+
+        if (!DeviceConnection.isNetworkConnected(context)) {
+            liveData.value = Result.Error("Check your internet connection")
+        }
 
         val tryoutsRef = userRef.child(userId).child("tryout")
 

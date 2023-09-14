@@ -1,5 +1,7 @@
 package com.salugan.cobakeluar.di
 
+import android.app.Application
+import android.content.Context
 import com.google.firebase.database.FirebaseDatabase
 import com.salugan.cobakeluar.data.TryoutRepository
 import com.salugan.cobakeluar.data.firebase.Repository
@@ -18,11 +20,17 @@ object AppModule {
 
     @Singleton
     @Provides
+    fun provideContext(application: Application): Context {
+        return application.applicationContext
+    }
+
+    @Singleton
+    @Provides
     fun provideFirebaseDatabase(): FirebaseDatabase = FirebaseDatabase.getInstance()
 
     @Singleton
     @Provides
-    fun provideRepository(db: FirebaseDatabase): Repository = Repository(db)
+    fun provideRepository(db: FirebaseDatabase, context: Context): Repository = Repository(db, context)
 
 
     @Provides
