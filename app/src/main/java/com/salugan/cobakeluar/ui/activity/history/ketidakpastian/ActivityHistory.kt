@@ -14,6 +14,7 @@ import androidx.core.view.drawToBitmap
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.auth.FirebaseAuth
 import com.kennyc.view.MultiStateView
 import com.salugan.cobakeluar.R
@@ -64,11 +65,16 @@ class ActivityHistory : AppCompatActivity() {
             }
         }
 
-//        if (!DeviceConnection.isNetworkConnected(applicationContext)) {
-//            Toast.makeText(this, "Error", Toast.LENGTH_SHORT).show()
-//            multiStateView.viewState = MultiStateView.ViewState.ERROR
-//        }
 
+        showHistoryTryout(id)
+
+        binding.btnCetak.setOnClickListener {
+            val bitmap = getBitmapFromView(binding.halamanCetak)
+            saveBitmapToMediaStore(bitmap)
+        }
+    }
+
+    private fun showHistoryTryout(id: String) {
         viewModel.getHasilHistory(id).observe(this) {
             when (it) {
                 is Result.Loading -> multiStateView.viewState = MultiStateView.ViewState.LOADING
@@ -84,13 +90,15 @@ class ActivityHistory : AppCompatActivity() {
                     multiStateView.viewState = MultiStateView.ViewState.ERROR
                     val tvError: TextView = multiStateView.findViewById(R.id.tvError)
                     tvError.text = it.errorData.toString()
-                    Toast.makeText(this, it.errorData.toString(), Toast.LENGTH_SHORT).show()
+                    Snackbar.make(
+                        window.decorView.rootView,
+                        it.errorData.toString(),
+                        Snackbar.LENGTH_INDEFINITE
+                    ).setAction("RETRY") {
+                        showHistoryTryout(id)
+                    }.show()
                 }
             }
-        }
-        binding.btnCetak.setOnClickListener {
-            val bitmap = getBitmapFromView(binding.halamanCetak)
-            saveBitmapToMediaStore(bitmap)
         }
     }
 
