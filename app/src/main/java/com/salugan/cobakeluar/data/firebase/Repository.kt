@@ -35,6 +35,7 @@ class Repository @Inject constructor(
     }
 
     fun dataProfile(userId: String): LiveData<Result<UserModel>> {
+        resultDataProfile.value = Result.Loading
         val database =db.getReference("users")
         val query = database.orderByChild("userId").equalTo(userId)
         query.addValueEventListener(object : ValueEventListener {
