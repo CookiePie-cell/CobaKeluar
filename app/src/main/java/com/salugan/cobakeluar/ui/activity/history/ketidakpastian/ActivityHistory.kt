@@ -17,6 +17,7 @@ import androidx.core.view.drawToBitmap
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.auth.FirebaseAuth
 import com.kennyc.view.MultiStateView
 import com.salugan.cobakeluar.R
@@ -27,8 +28,6 @@ import com.salugan.cobakeluar.model.HasilModel
 import com.salugan.cobakeluar.utils.DeviceConnection
 import dagger.hilt.android.AndroidEntryPoint
 import java.io.IOException
-
-//import com.salugan.cobakeluar.adapter.ReportAdapter
 
 @AndroidEntryPoint
 class ActivityHistory : AppCompatActivity() {
@@ -47,9 +46,12 @@ class ActivityHistory : AppCompatActivity() {
         val layoutManager = LinearLayoutManager(this)
         binding.recycleView.layoutManager = layoutManager
 
-        dataProfile()
 
-        getHasilHistroy()
+        val mAuth = FirebaseAuth.getInstance()
+        val currentUser = mAuth.currentUser
+        val id = currentUser?.uid
+
+        showHistoryTryout(id!!)
 
         binding.btnCetak.setOnClickListener {
             val bitmap = getBitmapFromView(binding.halamanCetak)
@@ -57,53 +59,35 @@ class ActivityHistory : AppCompatActivity() {
         }
     }
 
-    private fun getHasilHistroy(){
-        val mAuth = FirebaseAuth.getInstance()
-        val currentUser = mAuth.currentUser
-        val id = currentUser?.uid
-
-        viewModel.getHasilHistory(id!!).observe(this) {
+    private fun showHistoryTryout(id: String) {
+        viewModel.getHasilHistory(id).observe(this) {
             when (it) {
                 is Result.Loading -> multiStateView.viewState = MultiStateView.ViewState.LOADING
                 is Result.Success -> {
-                    if(it.data.isEmpty()){
+                    if (it.data.isEmpty()) {
                         multiStateView.viewState = MultiStateView.ViewState.EMPTY
-                    }else{
+                    } else {
                         multiStateView.viewState = MultiStateView.ViewState.CONTENT
                         setAdapter(it.data)
                     }
                 }
+
                 is Result.Error<*> -> {
                     multiStateView.viewState = MultiStateView.ViewState.ERROR
                     val tvError: TextView = multiStateView.findViewById(R.id.tvError)
                     tvError.text = it.errorData.toString()
-                    Toast.makeText(this, it.errorData.toString(), Toast.LENGTH_SHORT).show()
+                    Snackbar.make(
+                        window.decorView.rootView,
+                        it.errorData.toString(),
+                        Snackbar.LENGTH_INDEFINITE
+                    ).setAction("RETRY") {
+                        showHistoryTryout(id)
+                    }.show()
                 }
             }
         }
 
-    }
 
-    private fun dataProfile(){
-        val mAuth = FirebaseAuth.getInstance()
-        val currentUser = mAuth.currentUser
-        val id = currentUser?.uid
-
-        viewModel.dataProfile(id!!)
-        viewModel.resultDataProfile.observe(this) { result ->
-            when (result) {
-                is Result.Loading -> {
-                }
-                is Result.Success -> {
-                    binding.namaPengguna.text = result.data.nama
-                    binding.emailPengguna.text = result.data.email
-                }
-
-                is Result.Error<*> -> {
-                    Toast.makeText(this, "Data gagal diambil", Toast.LENGTH_SHORT).show()
-                }
-            }
-        }
     }
 
     private fun setAdapter(hasilList: List<HasilModel>) {
