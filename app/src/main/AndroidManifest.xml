@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
 
     <application
         android:name=".MyApplication"
@@ -16,6 +17,13 @@
         android:theme="@style/Theme.CobaKeluar"
         tools:targetApi="31">
         <activity
+            android:name=".ui.activity.home.HomeActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.activity.soal.SoalActivity"
+            android:windowSoftInputMode="adjustPan"
+            android:exported="false" />
+        <activity
             android:name=".ui.activity.materi.MateriScreenActivity"
             android:exported="false" />
         <activity
@@ -26,6 +34,32 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+
+        <activity android:name=".ui.activity.authentication.ActivityLogin"
+            android:label="login">
+
+        </activity>
+
+        <activity android:name=".ui.activity.profile.ActivityProfile"
+            android:label="profile">
+
+        </activity>
+
+        <activity android:name=".ui.activity.history.ketidakpastian.ActivityHistory"
+            android:label="history">
+
+        </activity>
+
+        <activity android:name=".ui.activity.authentication.signup.ActivitySignUp"
+            android:label="signup">
+        </activity>
+
+        <activity android:name=".ui.activity.authentication.ActivityForgotPassword"
+            android:label="forgorPassword">
+        </activity>
+        <activity android:name=".ui.activity.hasil.ActivityHasil"
+            android:label="hasil">
         </activity>
     </application>
 

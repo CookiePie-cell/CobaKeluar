@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:auto="http://schemas.android.com/apk/res-auto"
+    android:paddingVertical="16dp"
+    android:layout_marginBottom="8dp"
+    android:clickable="true"
+    android:orientation="vertical"
+    android:background="@drawable/radio_not_selected"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:focusable="true">
+
+    <io.github.kexanie.library.MathView
+        android:id="@+id/mvSelection"
+        android:clickable="true"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="12dp"
+        auto:engine="MathJax"
+        android:focusable="true" />
+
+    <ImageView
+        android:id="@+id/ivSelection"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:layout_marginHorizontal="12dp"
+        android:visibility="gone"/>
+
+</LinearLayout>

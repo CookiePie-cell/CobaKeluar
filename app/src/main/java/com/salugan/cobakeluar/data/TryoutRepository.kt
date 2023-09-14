@@ -11,39 +11,60 @@ class TryoutRepository(private val apiService: ApiService) {
 
     fun getDataDanKetidakPastianQuestions(): LiveData<Result<List<QuestionModel>>> = liveData {
         emit(Result.Loading)
+
         try {
-            val data = apiService.getTryOut().data
+            val response = apiService.getTryOut()
 
-            val question = data
-                .filter { it.idSubject == 6 }[0]
-                .tryout
-                .filter { it.id == 30 }[0]
-                .question
-
-            val mappedQuestion = DataMapper.mapQuestionItemToModel(question)
-            emit(Result.Success(mappedQuestion))
+            if (response.isSuccessful) {
+                val data = response.body()?.data
+                if (data != null) {
+                    val question = data
+                        .filter { it.idSubject == 6 }[0]
+                        .tryout
+                        .filter { it.id == 30 }[0]
+                        .question
+                    val mappedQuestion = DataMapper.mapQuestionItemToModel(question)
+                    emit(Result.Success(mappedQuestion))
+                }
+            } else {
+                val errorBody = response.errorBody()
+                val errorMessage = errorBody?.string() ?: "Unknown error"
+                val errorCode = response.code()
+                emit(Result.Error(Error(errorCode, errorMessage)))
+            }
         } catch (e: Exception) {
-            Log.e("ERRORRRRR", e.message.toString())
-            emit(Result.Error(e.message.toString()))
+            val errorMessage = "Check your internet connection"
+            emit(Result.Error(Error(-1, errorMessage)))
         }
     }
 
+
     fun getGeometriDanPengukuranQuestion(): LiveData<Result<List<QuestionModel>>> = liveData {
         emit(Result.Loading)
+
         try {
-            val data = apiService.getTryOut().data
+            val response = apiService.getTryOut()
+            if (response.isSuccessful) {
+                val data = response.body()?.data
+                if (data != null) {
+                    val question = data
+                        .filter { it.idSubject == 6 }[0]
+                        .tryout
+                        .filter { it.id == 31 }[0]
+                        .question
 
-            val question = data
-                .filter { it.idSubject == 6 }[0]
-                .tryout
-                .filter { it.id == 31 }[0]
-                .question
-
-            val mappedQuestion = DataMapper.mapQuestionItemToModel(question)
-            emit(Result.Success(mappedQuestion))
-        } catch (e: Exception) {
-            Log.e("ERRORRRRR", e.message.toString())
-            emit(Result.Error(e.message.toString()))
+                    val mappedQuestion = DataMapper.mapQuestionItemToModel(question)
+                    emit(Result.Success(mappedQuestion))
+                }
+            } else {
+                val errorBody = response.errorBody()
+                val errorMessage = errorBody?.string() ?: "Unknown error"
+                val errorCode = response.code()
+                emit(Result.Error(Error(errorCode, errorMessage)))
+            }
+        } catch(exception: Exception) {
+            val errorMessage = "Check your internet connection"
+            emit(Result.Error(Error(-1, errorMessage)))
         }
     }
 }

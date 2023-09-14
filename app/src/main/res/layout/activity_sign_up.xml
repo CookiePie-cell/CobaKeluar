@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/darkBlue"
+    android:gravity="center"
+    android:orientation="vertical">
+
+        <ImageView
+            android:layout_gravity="center"
+            android:layout_width="150dp"
+            android:layout_height="100dp"
+            android:scaleType="centerCrop"
+            android:src="@drawable/logo"
+            ></ImageView>
+
+        <EditText
+            android:id="@+id/nama"
+            android:layout_width="260dp"
+            android:layout_height="40dp"
+            android:background="@color/lightGrey"
+            android:hint="Nama"
+            android:padding="10dp"></EditText>
+
+        <EditText
+            android:inputType="none"
+            android:focusable="false"
+            android:focusableInTouchMode="false"
+            android:id="@+id/email"
+            android:layout_marginTop="10dp"
+            android:layout_width="260dp"
+            android:layout_height="40dp"
+            android:background="@color/lightGrey"
+            android:hint="Email"
+            android:padding="10dp"></EditText>
+
+        <EditText
+            android:id="@+id/noHp"
+            android:layout_marginTop="10dp"
+            android:layout_width="260dp"
+            android:layout_height="40dp"
+            android:background="@color/lightGrey"
+            android:hint="No. HP"
+            android:inputType="phone"
+            android:padding="10dp"></EditText>
+
+        <EditText
+            android:id="@+id/Password"
+            android:layout_marginTop="10dp"
+            android:layout_width="260dp"
+            android:layout_height="40dp"
+            android:background="@color/lightGrey"
+            android:hint="Password"
+            android:inputType="textPassword"
+            android:padding="10dp"></EditText>
+
+        <EditText
+            android:id="@+id/konfirmPassword"
+            android:layout_marginTop="10dp"
+            android:layout_width="260dp"
+            android:layout_height="40dp"
+            android:background="@color/lightGrey"
+            android:inputType="textPassword"
+            android:hint="Konfirmasi Password"
+            android:padding="10dp"></EditText>
+
+        <LinearLayout
+            android:layout_marginTop="10dp"
+            android:layout_width="260dp"
+            android:layout_height="40dp"
+            android:id="@+id/btnDaftar"
+            >
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="Daftar"
+                android:gravity="center"
+                android:textStyle="bold"
+                android:textSize="20dp"
+                android:textColor="@color/darkBlue"
+                android:background="@drawable/rounded_button_yellow"
+                ></TextView>
+
+        </LinearLayout>
+
+
+</LinearLayout>

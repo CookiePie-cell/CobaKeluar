@@ -1,8 +1,13 @@
 plugins {
     id 'com.android.application'
     id 'org.jetbrains.kotlin.android'
+
     id 'com.google.dagger.hilt.android'
     id 'kotlin-kapt'
+    id 'kotlin-parcelize'
+
+    id("com.google.gms.google-services")
+
 }
 
 android {
@@ -45,13 +50,22 @@ android {
 }
 
 dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
 
     implementation 'androidx.core:core-ktx:1.10.1'
     implementation 'androidx.appcompat:appcompat:1.6.1'
     implementation 'com.google.android.material:material:1.9.0'
     implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
     implementation "androidx.activity:activity-ktx:1.7.2"
+    implementation "androidx.fragment:fragment-ktx:1.6.1"
 
+    implementation  'com.github.Kennyc1012:MultiStateView:2.2.0'
+    implementation 'com.facebook.shimmer:shimmer:0.5.0'
+
+
+    //glide
+    implementation ("com.github.bumptech.glide:glide:4.12.0")
+    annotationProcessor ("com.github.bumptech.glide:compiler:4.12.0")
 
     //retrofit
     implementation 'com.squareup.retrofit2:retrofit:2.9.0'
@@ -67,6 +81,22 @@ dependencies {
     //hilt
     implementation "com.google.dagger:hilt-android:2.47"
     kapt "com.google.dagger:hilt-compiler:2.47"
+
+    //viewpager
+    implementation "androidx.viewpager2:viewpager2:1.0.0"
+    implementation("com.tbuonomo:dotsindicator:5.0")
+
+    implementation 'org.jsoup:jsoup:1.14.3' // Use the latest version of Jsoup
+
+    //firebase
+    implementation(platform("com.google.firebase:firebase-bom:32.2.3"))
+    implementation("com.google.firebase:firebase-analytics-ktx")
+    implementation ("com.google.firebase:firebase-auth-ktx:22.1.1")
+    implementation 'com.google.android.gms:play-services-auth:20.7.0'
+    implementation 'com.google.firebase:firebase-database-ktx:20.2.2'
+
+    //mathView
+    implementation("io.github.kexanie.library:MathView:0.0.6")
 
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.5'
