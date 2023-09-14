@@ -1,7 +1,10 @@
 package com.salugan.cobakeluar.ui.activity.history.ketidakpastian
 
 import android.content.ContentValues
+import android.content.Context
 import android.graphics.Bitmap
+import android.net.ConnectivityManager
+import android.net.NetworkInfo
 import android.os.Bundle
 import android.provider.MediaStore
 import android.util.Log
@@ -41,35 +44,25 @@ class ActivityHistory : AppCompatActivity() {
 
         multiStateView = binding.listHistori
 
+        val layoutManager = LinearLayoutManager(this)
+        binding.recycleView.layoutManager = layoutManager
+
+        dataProfile()
+
+        getHasilHistroy()
+
+        binding.btnCetak.setOnClickListener {
+            val bitmap = getBitmapFromView(binding.halamanCetak)
+            saveBitmapToMediaStore(bitmap)
+        }
+    }
+
+    private fun getHasilHistroy(){
         val mAuth = FirebaseAuth.getInstance()
         val currentUser = mAuth.currentUser
         val id = currentUser?.uid
 
-        val layoutManager = LinearLayoutManager(this)
-        binding.recycleView.layoutManager = layoutManager
-
-        viewModel.dataProfile(id!!)
-        viewModel.resultDataProfile.observe(this) { result ->
-            when (result) {
-                is Result.Loading -> {
-                }
-                is Result.Success -> {
-                    binding.namaPengguna.text = result.data.nama
-                    binding.emailPengguna.text = result.data.email
-                }
-
-                is Result.Error<*> -> {
-                    Toast.makeText(this, "Data gagal diambil", Toast.LENGTH_SHORT).show()
-                }
-            }
-        }
-
-//        if (!DeviceConnection.isNetworkConnected(applicationContext)) {
-//            Toast.makeText(this, "Error", Toast.LENGTH_SHORT).show()
-//            multiStateView.viewState = MultiStateView.ViewState.ERROR
-//        }
-
-        viewModel.getHasilHistory(id).observe(this) {
+        viewModel.getHasilHistory(id!!).observe(this) {
             when (it) {
                 is Result.Loading -> multiStateView.viewState = MultiStateView.ViewState.LOADING
                 is Result.Success -> {
@@ -88,9 +81,28 @@ class ActivityHistory : AppCompatActivity() {
                 }
             }
         }
-        binding.btnCetak.setOnClickListener {
-            val bitmap = getBitmapFromView(binding.halamanCetak)
-            saveBitmapToMediaStore(bitmap)
+
+    }
+
+    private fun dataProfile(){
+        val mAuth = FirebaseAuth.getInstance()
+        val currentUser = mAuth.currentUser
+        val id = currentUser?.uid
+
+        viewModel.dataProfile(id!!)
+        viewModel.resultDataProfile.observe(this) { result ->
+            when (result) {
+                is Result.Loading -> {
+                }
+                is Result.Success -> {
+                    binding.namaPengguna.text = result.data.nama
+                    binding.emailPengguna.text = result.data.email
+                }
+
+                is Result.Error<*> -> {
+                    Toast.makeText(this, "Data gagal diambil", Toast.LENGTH_SHORT).show()
+                }
+            }
         }
     }
 

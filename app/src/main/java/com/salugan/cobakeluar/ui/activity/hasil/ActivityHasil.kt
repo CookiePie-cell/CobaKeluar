@@ -15,7 +15,6 @@ import com.salugan.cobakeluar.model.HasilModel
 import com.salugan.cobakeluar.model.UserModel
 import com.salugan.cobakeluar.ui.activity.authentication.signup.SignupViewModel
 import com.salugan.cobakeluar.ui.activity.home.HomeActivity
-import com.salugan.cobakeluar.ui.activity.materi.MateriScreenActivity
 import com.salugan.cobakeluar.utils.DateTimeUtils
 import dagger.hilt.android.AndroidEntryPoint
 
