@@ -59,6 +59,15 @@ class ActivityHistory : AppCompatActivity() {
         }
     }
 
+    /**
+     * This function is used to retrieve and display the history of a user's tryouts based on their ID.
+     * It uses the ViewModel to fetch the tryout history data and updates the UI accordingly.
+     * @author [Julio Nicholas]
+     * @since September 2023.
+     * @param id The user's ID for whom the tryout history is to be displayed.
+     * @see [ViewModel](https://developer.android.com/topic/libraries/architecture/viewmodel)
+     * @see [MultiStateView](https://github.com/Kennyc1012/MultiStateView)
+     */
     private fun showHistoryTryout(id: String) {
         viewModel.getHasilHistory(id).observe(this) {
             when (it) {
@@ -90,6 +99,14 @@ class ActivityHistory : AppCompatActivity() {
 
     }
 
+    /**
+     * This function is used to set up and attach an adapter to a RecyclerView to display a list of quiz results.
+     * @author [Julio Nicholas]
+     * @since September 2023.
+     * @param hasilList The list of quiz results to be displayed in the RecyclerView.
+     * @see [RecyclerView](https://developer.android.com/guide/topics/ui/layout/recyclerview)
+     * @see [HistoryAdapter](link/to/HistoryAdapter)
+     */
     private fun setAdapter(hasilList: List<HasilModel>) {
 
         val hasilArrayList = ArrayList(hasilList)
@@ -101,6 +118,16 @@ class ActivityHistory : AppCompatActivity() {
         return view.drawToBitmap()
     }
 
+    /**
+     * This function is used to save a bitmap image to the device's media store, making it available in the gallery.
+     * It creates an entry for the image in the media store and writes the bitmap data to it.
+     * @author [Faiz Ivan Tama]
+     * @since September 2023.
+     * @param bitmap The bitmap image to be saved to the media store.
+     * @see [ContentResolver](https://developer.android.com/reference/android/content/ContentResolver)
+     * @see [MediaStore.Images.Media](https://developer.android.com/reference/android/provider/MediaStore.Images.Media)
+     * @see [Bitmap](https://developer.android.com/reference/android/graphics/Bitmap)
+     */
     private fun saveBitmapToMediaStore(bitmap: Bitmap) {
         val resolver = contentResolver
         val values = ContentValues().apply {
