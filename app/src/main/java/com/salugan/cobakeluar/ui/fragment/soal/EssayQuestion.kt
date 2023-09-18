@@ -25,6 +25,7 @@ import com.salugan.cobakeluar.model.QuestionModel
 import com.salugan.cobakeluar.ui.activity.hasil.ActivityHasil
 import com.salugan.cobakeluar.ui.activity.soal.SoalActivity
 import com.salugan.cobakeluar.utils.QUESTION
+import com.salugan.cobakeluar.utils.StringProcessing
 import io.github.kexanie.library.MathView
 
 class EssayQuestion : Fragment() {
@@ -69,13 +70,9 @@ class EssayQuestion : Fragment() {
         setButtonPrevious()
 
         if (question != null) {
-            Log.d("terpanggil", question.toString())
-            val images = mutableListOf<String>()
-            mathView.text = Html.fromHtml(question.questionText, flags, { source ->
-                Log.d("mbmb", source)
-                images.add(source.replace("""\"""", ""))
-                null
-            }, null).toString()
+            val processedLatexText = StringProcessing.processLatexText(question.questionText!!)
+
+            mathView.text = processedLatexText
 
             checkTryoutStatus()
 
@@ -83,27 +80,6 @@ class EssayQuestion : Fragment() {
 
             binding.btnCekPembahasanEssay.setOnClickListener {
                 showBottomSheet(question.discussion?.get(0)?.discussionText)
-            }
-            for (i in 0 until images.size) {
-                val imageView = ImageView(requireActivity())
-
-                Glide.with(requireActivity())
-                    .load(images[i])
-                    .into(imageView)
-
-                val desiredWidthInPixels = 720
-                val desiredHeightInPixels = 480
-
-                val layoutParams = LinearLayout.LayoutParams(
-                    desiredWidthInPixels,
-                    desiredHeightInPixels
-                )
-
-                layoutParams.gravity = Gravity.CENTER_HORIZONTAL
-
-                imageView.layoutParams = layoutParams
-
-                binding.llQuestion.addView(imageView)
             }
         }
     }

@@ -26,6 +26,7 @@ import com.salugan.cobakeluar.model.SelectionModel
 import com.salugan.cobakeluar.ui.activity.hasil.ActivityHasil
 import com.salugan.cobakeluar.ui.activity.soal.SoalActivity
 import com.salugan.cobakeluar.utils.QUESTION
+import com.salugan.cobakeluar.utils.StringProcessing
 import io.github.kexanie.library.MathView
 
 class MultipleAnswerQuestion : Fragment() {
@@ -75,14 +76,10 @@ class MultipleAnswerQuestion : Fragment() {
         setButtonPrevious()
 
         if (question != null) {
-            val images = mutableListOf<String>()
-            mathView.text = Html.fromHtml(question.questionText, flags, { source ->
-                images.add(source.replace("""\"""", ""))
-                null
-            }, null).toString()
+            val processedLatexText = StringProcessing.processLatexText(question.questionText!!)
 
+            mathView.text = processedLatexText
 
-            setImageInQuestion(images)
 
             setAnswerList(question)
 
@@ -98,38 +95,6 @@ class MultipleAnswerQuestion : Fragment() {
     }
 
     /**
-     * this method to show ImageView to the question container.
-     * @param images variable to indicate the list of images that need to be shown.
-     * if [images] [url1.jpg, url2.jpg], it will show two ImageViewss.
-     * @author Julio Nicholas
-     * @since 12 September 2023.
-     * Updated 13 September 2023 by Julio Nicholas
-     * */
-    private fun setImageInQuestion(images: List<String>) {
-        for(element in images) {
-            val imageView = ImageView(requireActivity())
-
-            Glide.with(requireActivity())
-                .load(element)
-                .into(imageView)
-
-            val desiredWidthInPixels = 720
-            val desiredHeightInPixels = 480
-
-            val layoutParams = LinearLayout.LayoutParams(
-                desiredWidthInPixels,
-                desiredHeightInPixels
-            )
-
-            layoutParams.gravity = Gravity.CENTER_HORIZONTAL
-
-            imageView.layoutParams = layoutParams
-
-            binding.llQuestion.addView(imageView)
-        }
-    }
-
-    /**
      * this method to show the list of answer selections.
      * @param question variable is used to get the selection answer in the question.
      * @author Julio Nicholas
@@ -138,7 +103,6 @@ class MultipleAnswerQuestion : Fragment() {
      * */
     private fun setAnswerList(question: QuestionModel) {
 
-        val images = mutableListOf<String>()
         for (option in question.selections!!) {
             val linearLayout = LinearLayout(requireContext())
             val layoutParams = LinearLayout.LayoutParams(
@@ -162,27 +126,26 @@ class MultipleAnswerQuestion : Fragment() {
             mathViewLayoutParams.setMargins(8,8,8,8)
             mathViewOption.layoutParams = mathViewLayoutParams
 
-            mathViewOption.text = option.text
+            val processedLatexText = StringProcessing.processLatexText(option.text!!)
+
+            mathViewOption.text = processedLatexText
 
             linearLayout.addView(mathViewOption)
 
-            setImageInQuestion(images)
             linearLayout.setOnClickListener {
                 option.isSelected = !option.isSelected
                 for (i in 0 until binding.answerOptionsContainer.childCount) {
                     val child = binding.answerOptionsContainer.getChildAt(i)
                     if (child is LinearLayout) {
                         val optionAtIndex = question.selections.get(i)
-                        if (optionAtIndex != null) {
-                            if (optionAtIndex.isSelected) {
-                                child.setBackgroundResource(R.drawable.radio_selected)
-                                if (!selectionIndexes.contains(i)) {
-                                    selectionIndexes.add(i)
-                                }
-                            } else {
-                                child.setBackgroundResource(R.drawable.radio_not_selected)
-                                selectionIndexes.remove(i)
+                        if (optionAtIndex.isSelected) {
+                            child.setBackgroundResource(R.drawable.radio_selected)
+                            if (!selectionIndexes.contains(i)) {
+                                selectionIndexes.add(i)
                             }
+                        } else {
+                            child.setBackgroundResource(R.drawable.radio_not_selected)
+                            selectionIndexes.remove(i)
                         }
                     }
                 }
@@ -209,44 +172,46 @@ class MultipleAnswerQuestion : Fragment() {
                 if (it.isSelected) answers.add(it)
             }
 
-            val tabView =
-                LayoutInflater.from(requireContext()).inflate(R.layout.tab_title, null) as TextView
+            if (answers.isNotEmpty()) {
+                val tabView =
+                    LayoutInflater.from(requireContext()).inflate(R.layout.tab_title, null) as TextView
 
-            var isAnswerCorrect = false
+                var isAnswerCorrect = false
 
-            for (userAnswer in answers) {
-                for (systemAnswer in question.selectionAnswer!!) {
-                    if (userAnswer?.id == systemAnswer?.selectionId) {
-                        isAnswerCorrect = true
-                        setSelectionBackground(true)
-                        break
+                for (userAnswer in answers) {
+                    for (systemAnswer in question.selectionAnswer!!) {
+                        if (userAnswer?.id == systemAnswer?.selectionId) {
+                            isAnswerCorrect = true
+                            setSelectionBackground(true)
+                            break
+                        }
+                        isAnswerCorrect = false
                     }
-                    isAnswerCorrect = false
+                    if (!isAnswerCorrect) {
+                        setSelectionBackground(false)
+                    }
                 }
-                if (!isAnswerCorrect) {
-                    setSelectionBackground(false)
+
+                if (isAnswerCorrect && answers.size == question.selectionAnswer?.size) {
+                    (requireActivity() as SoalActivity).answers[viewPager.currentItem] = 1
+                    (requireActivity() as SoalActivity).score += 1
+                    tabView.setBackgroundResource(R.drawable.tab_correct_background)
+                } else if(answers.size != 0) {
+                    (requireActivity() as SoalActivity).answers[viewPager.currentItem] = 2
+                    (requireActivity() as SoalActivity).score += 0
+                    tabView.setBackgroundResource(R.drawable.tab_uncorrect_background)
                 }
+
+                question.hasSelected = true
+                binding.btnJawab.visibility = View.GONE
+                binding.btnCekPembahasan.visibility = View.VISIBLE
+                showBottomSheet(question.discussion?.get(0)?.discussionText)
+
+                val selectedTab = tab.getTabAt(viewPager.currentItem)
+
+                selectedTab?.customView = tabView
+                disableScrolling()
             }
-
-            if (isAnswerCorrect && answers.size == question.selectionAnswer?.size) {
-                (requireActivity() as SoalActivity).answers[viewPager.currentItem] = 1
-                (requireActivity() as SoalActivity).score += 1
-                tabView.setBackgroundResource(R.drawable.tab_correct_background)
-            } else if(answers.size != 0) {
-                (requireActivity() as SoalActivity).answers[viewPager.currentItem] = 2
-                (requireActivity() as SoalActivity).score += 0
-                tabView.setBackgroundResource(R.drawable.tab_uncorrect_background)
-            }
-
-            question.hasSelected = true
-            binding.btnJawab.visibility = View.GONE
-            binding.btnCekPembahasan.visibility = View.VISIBLE
-            showBottomSheet(question.discussion?.get(0)?.discussionText)
-
-            val selectedTab = tab.getTabAt(viewPager.currentItem)
-
-            selectedTab?.customView = tabView
-            disableScrolling()
         }
     }
 
@@ -333,6 +298,8 @@ class MultipleAnswerQuestion : Fragment() {
         }
     }
 
+
+
     private fun showBottomSheet(discussion: String?) {
         val bottomSheetView = layoutInflater.inflate(R.layout.bottom_sheet, null)
         bottomSheetDialog = BottomSheetDialog(requireActivity(), R.style.BottomSheetDialogTheme)
@@ -340,6 +307,9 @@ class MultipleAnswerQuestion : Fragment() {
         bottomSheetDialog.show()
 
         val mathView = bottomSheetView.findViewById<MathView>(R.id.mvDiscussion)
-        mathView.text = discussion
+
+        if (discussion != null) {
+            mathView.text = StringProcessing.processLatexText(discussion)
+        }
     }
 }
