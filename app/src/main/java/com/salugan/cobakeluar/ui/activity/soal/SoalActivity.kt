@@ -13,8 +13,10 @@ import android.view.ViewGroup
 import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.viewModels
+import androidx.core.content.ContextCompat
 import androidx.viewpager.widget.ViewPager
 import androidx.viewpager2.widget.ViewPager2
+import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
 import com.kennyc.view.MultiStateView
@@ -53,6 +55,9 @@ class SoalActivity : AppCompatActivity(), MultiStateView.StateListener {
 
         val kategori = intent.getIntExtra(KATEGORI, 0)
 
+
+        soalViewModel.setTryoutStatus(false)
+
         if (kategori == 0) {
             setDataDanKetidakPastianTryOut()
         } else {
@@ -84,6 +89,9 @@ class SoalActivity : AppCompatActivity(), MultiStateView.StateListener {
             when (it) {
                 is Result.Loading -> multiStateView.viewState = MultiStateView.ViewState.LOADING
                 is Result.Success -> {
+                    soalViewModel.getTryoutStatus().observe(this) {
+                        Log.d("itumasbrow", it.toString())
+                    }
                     multiStateView.viewState = MultiStateView.ViewState.CONTENT
                     startTimer()
                     val data: ArrayList<QuestionModel> = ArrayList(it.data)
@@ -111,7 +119,13 @@ class SoalActivity : AppCompatActivity(), MultiStateView.StateListener {
                     multiStateView.viewState = MultiStateView.ViewState.ERROR
                     val errorData = it.errorData as Error
                     tvError.text = errorData.message
-                    Toast.makeText(this, "${errorData.statusCode} - ${errorData.message}", Toast.LENGTH_SHORT).show()
+                    Snackbar.make(
+                        window.decorView.rootView,
+                        errorData.message,
+                        Snackbar.LENGTH_INDEFINITE
+                    ).setAction("RETRY") {
+                        setDataDanKetidakPastianTryOut()
+                    }.show()
                 }
             }
         }
@@ -150,11 +164,18 @@ class SoalActivity : AppCompatActivity(), MultiStateView.StateListener {
                     multiStateView.viewState = MultiStateView.ViewState.ERROR
                     val errorData = it.errorData as Error
                     tvError.text = errorData.message
-                    Toast.makeText(this, "${errorData.statusCode} - ${errorData.message}", Toast.LENGTH_SHORT).show()
+                    Snackbar.make(
+                        window.decorView.rootView,
+                        errorData.message,
+                        Snackbar.LENGTH_INDEFINITE
+                    ).setAction("RETRY") {
+                        setGeometriDanPengukuranTryOut()
+                    }.show()
                 }
             }
         }
     }
+
 
     private fun startTimer() {
         soalViewModel.setInitialTime(30)

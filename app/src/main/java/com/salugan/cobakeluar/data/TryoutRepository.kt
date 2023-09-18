@@ -9,6 +9,12 @@ import com.salugan.cobakeluar.utils.DataMapper
 
 class TryoutRepository(private val apiService: ApiService) {
 
+    /**
+     * this method to get "Data dan Ketidakpastian" tryout data from API, filter it,and map it to custom model
+     * @author Julio Nicholas
+     * @since 1 September 2023.
+     * Updated 14 September 2023 by Julio Nicholas
+     * */
     fun getDataDanKetidakPastianQuestions(): LiveData<Result<List<QuestionModel>>> = liveData {
         emit(Result.Loading)
 
@@ -39,6 +45,12 @@ class TryoutRepository(private val apiService: ApiService) {
     }
 
 
+    /**
+     * this method to get "Geometri dan Pengukuran" tryout data from API, filter it,and map it to custom model
+     * @author Julio Nicholas
+     * @since 1 September 2023.
+     * Updated 14 September 2023 by Julio Nicholas
+     * */
     fun getGeometriDanPengukuranQuestion(): LiveData<Result<List<QuestionModel>>> = liveData {
         emit(Result.Loading)
 

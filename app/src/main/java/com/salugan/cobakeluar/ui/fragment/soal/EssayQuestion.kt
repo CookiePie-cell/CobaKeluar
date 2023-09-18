@@ -77,6 +77,7 @@ class EssayQuestion : Fragment() {
                 null
             }, null).toString()
 
+            checkTryoutStatus()
 
             setBtnJawab(question)
 
@@ -106,6 +107,18 @@ class EssayQuestion : Fragment() {
             }
         }
     }
+    private fun checkTryoutStatus() {
+        (requireActivity() as SoalActivity).soalViewModel.getTryoutStatus().observe(requireActivity()) {
+            Log.d("itumasbrow", "state: $it")
+
+            if (it) {
+                binding.edtJawaban.isEnabled = false
+                binding.btnJawab.visibility = View.GONE
+                binding.btnCekPembahasanEssay.visibility = View.VISIBLE
+            }
+        }
+    }
+
 
 
     private fun setBtnJawab(question: QuestionModel) {
@@ -194,6 +207,7 @@ class EssayQuestion : Fragment() {
             viewPager.setCurrentItem(currentItem - 1, true)
         }
     }
+
 
     private fun showBottomSheet(discussion: String?) {
         val bottomSheetView = layoutInflater.inflate(R.layout.bottom_sheet, null)

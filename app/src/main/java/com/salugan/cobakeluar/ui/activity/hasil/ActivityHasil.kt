@@ -15,7 +15,6 @@ import com.salugan.cobakeluar.model.HasilModel
 import com.salugan.cobakeluar.model.UserModel
 import com.salugan.cobakeluar.ui.activity.authentication.signup.SignupViewModel
 import com.salugan.cobakeluar.ui.activity.home.HomeActivity
-import com.salugan.cobakeluar.ui.activity.materi.MateriScreenActivity
 import com.salugan.cobakeluar.utils.DateTimeUtils
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -36,6 +35,20 @@ class ActivityHasil : AppCompatActivity() {
 
     }
 
+    /**
+     * This function is used to initialize the view and display the quiz result details on the screen.
+     * It retrieves the quiz score, answers, completion time, and other details from the intent extras.
+     * It also calculates and displays the user's score, date, and completion time.
+     * Additionally, it handles user interaction with the "Home" button and records the quiz result to Firebase.
+     *
+     * @author [Faiz Ivan Tama]
+     * @since September 2023.
+     * @see [Firebase Authentication documentation](https://firebase.google.com/docs/auth)
+     * @see [Firebase Realtime Database documentation](https://firebase.google.com/docs/database)
+     * @see [Date and Time in Android](https://developer.android.com/reference/java/time/package-summary)
+     * @param answers An [ArrayList] containing user's answers to quiz questions.
+     * @param completionTime The completion time of the quiz.
+     */
     private fun initView(){
 
         val score = intent.getIntExtra(SCORE, 0)
@@ -85,7 +98,12 @@ class ActivityHasil : AppCompatActivity() {
                 kosong = jumlahKosong
             )
 
-            viewModel.addHasil(addHasil)
+            viewModel.getTryoutStatus().observe(this) {
+                if (!it) {
+                    viewModel.addHasil(addHasil)
+                    viewModel.setTryoutStatus(true)
+                }
+            }
             viewModel.resultHasilTO.observe(this) {
                 when (it) {
                     is Result.Loading -> {

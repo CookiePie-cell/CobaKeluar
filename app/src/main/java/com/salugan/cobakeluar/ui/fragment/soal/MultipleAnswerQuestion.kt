@@ -86,6 +86,8 @@ class MultipleAnswerQuestion : Fragment() {
 
             setAnswerList(question)
 
+            checkTryoutStatus()
+
             setBtnJawab(question)
             binding.btnCekPembahasan.setOnClickListener {
                 showBottomSheet(question.discussion?.get(0)?.discussionText)
@@ -95,6 +97,14 @@ class MultipleAnswerQuestion : Fragment() {
         }
     }
 
+    /**
+     * this method to show ImageView to the question container.
+     * @param images variable to indicate the list of images that need to be shown.
+     * if [images] [url1.jpg, url2.jpg], it will show two ImageViewss.
+     * @author Julio Nicholas
+     * @since 12 September 2023.
+     * Updated 13 September 2023 by Julio Nicholas
+     * */
     private fun setImageInQuestion(images: List<String>) {
         for(element in images) {
             val imageView = ImageView(requireActivity())
@@ -119,9 +129,15 @@ class MultipleAnswerQuestion : Fragment() {
         }
     }
 
+    /**
+     * this method to show the list of answer selections.
+     * @param question variable is used to get the selection answer in the question.
+     * @author Julio Nicholas
+     * @since 12 September 2023.
+     * Updated 13 September 2023 by Julio Nicholas
+     * */
     private fun setAnswerList(question: QuestionModel) {
 
-        Log.d("useranswerbrow", answers.toString())
         val images = mutableListOf<String>()
         for (option in question.selections!!) {
             val linearLayout = LinearLayout(requireContext())
@@ -178,6 +194,13 @@ class MultipleAnswerQuestion : Fragment() {
         }
     }
 
+    /**
+     * this method to show ImageView to the question container.
+     * @param question variable is used to get the selection answer in the question.
+     * @author Julio Nicholas
+     * @since 12 September 2023.
+     * Updated 13 September 2023 by Julio Nicholas
+     * */
     private fun setBtnJawab(question: QuestionModel) {
 
         binding.btnJawab.setOnClickListener {
@@ -209,7 +232,7 @@ class MultipleAnswerQuestion : Fragment() {
                 (requireActivity() as SoalActivity).answers[viewPager.currentItem] = 1
                 (requireActivity() as SoalActivity).score += 1
                 tabView.setBackgroundResource(R.drawable.tab_correct_background)
-            } else {
+            } else if(answers.size != 0) {
                 (requireActivity() as SoalActivity).answers[viewPager.currentItem] = 2
                 (requireActivity() as SoalActivity).score += 0
                 tabView.setBackgroundResource(R.drawable.tab_uncorrect_background)
@@ -262,6 +285,18 @@ class MultipleAnswerQuestion : Fragment() {
         } else {
             binding.btnJawab.visibility = View.VISIBLE
             binding.btnCekPembahasan.visibility = View.GONE
+        }
+    }
+
+    private fun checkTryoutStatus() {
+        (requireActivity() as SoalActivity).soalViewModel.getTryoutStatus().observe(requireActivity()) {
+            Log.d("itumasbrow", "state: $it")
+
+            if (it) {
+                disableScrolling()
+                binding.btnJawab.visibility = View.GONE
+                binding.btnCekPembahasan.visibility = View.VISIBLE
+            }
         }
     }
 
