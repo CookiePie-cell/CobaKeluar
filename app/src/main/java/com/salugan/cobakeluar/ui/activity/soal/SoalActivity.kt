@@ -55,6 +55,9 @@ class SoalActivity : AppCompatActivity(), MultiStateView.StateListener {
 
         val kategori = intent.getIntExtra(KATEGORI, 0)
 
+
+        soalViewModel.setTryoutStatus(false)
+
         if (kategori == 0) {
             setDataDanKetidakPastianTryOut()
         } else {
@@ -86,6 +89,9 @@ class SoalActivity : AppCompatActivity(), MultiStateView.StateListener {
             when (it) {
                 is Result.Loading -> multiStateView.viewState = MultiStateView.ViewState.LOADING
                 is Result.Success -> {
+                    soalViewModel.getTryoutStatus().observe(this) {
+                        Log.d("itumasbrow", it.toString())
+                    }
                     multiStateView.viewState = MultiStateView.ViewState.CONTENT
                     startTimer()
                     val data: ArrayList<QuestionModel> = ArrayList(it.data)

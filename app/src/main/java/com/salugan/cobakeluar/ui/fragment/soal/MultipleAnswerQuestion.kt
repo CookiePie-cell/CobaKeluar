@@ -86,6 +86,8 @@ class MultipleAnswerQuestion : Fragment() {
 
             setAnswerList(question)
 
+            checkTryoutStatus()
+
             setBtnJawab(question)
             binding.btnCekPembahasan.setOnClickListener {
                 showBottomSheet(question.discussion?.get(0)?.discussionText)
@@ -283,6 +285,18 @@ class MultipleAnswerQuestion : Fragment() {
         } else {
             binding.btnJawab.visibility = View.VISIBLE
             binding.btnCekPembahasan.visibility = View.GONE
+        }
+    }
+
+    private fun checkTryoutStatus() {
+        (requireActivity() as SoalActivity).soalViewModel.getTryoutStatus().observe(requireActivity()) {
+            Log.d("itumasbrow", "state: $it")
+
+            if (it) {
+                disableScrolling()
+                binding.btnJawab.visibility = View.GONE
+                binding.btnCekPembahasan.visibility = View.VISIBLE
+            }
         }
     }
 

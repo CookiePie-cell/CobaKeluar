@@ -93,6 +93,8 @@ class MultipleChoiceQuestion : Fragment() {
 
             setAnswerList(question)
 
+            checkTryoutStatus()
+
             setBtnJawab(question)
             binding.btnCekPembahasan.setOnClickListener {
                 showBottomSheet(question.discussion?.get(0)?.discussionText)
@@ -102,6 +104,17 @@ class MultipleChoiceQuestion : Fragment() {
         }
     }
 
+    private fun checkTryoutStatus() {
+        (requireActivity() as SoalActivity).soalViewModel.getTryoutStatus().observe(requireActivity()) {
+            Log.d("itumasbrow", "state: $it")
+
+            if (it) {
+                disableScrolling()
+                binding.btnJawab.visibility = View.GONE
+                binding.btnCekPembahasan.visibility = View.VISIBLE
+            }
+        }
+    }
     private fun setAnswerList(question: QuestionModel) {
 
 
@@ -277,7 +290,6 @@ class MultipleChoiceQuestion : Fragment() {
                 val score = (requireActivity() as SoalActivity).score
 
                 (requireActivity() as SoalActivity).soalViewModel.stopTimer()
-
                 val completionTimeMillis = (requireActivity() as SoalActivity).soalViewModel.calculateCompletionTime()
                 val completionTimeSeconds = completionTimeMillis / 1000
                 val completionTimeString = DateUtils.formatElapsedTime(completionTimeSeconds)

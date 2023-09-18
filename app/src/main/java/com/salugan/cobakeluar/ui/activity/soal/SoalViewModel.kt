@@ -5,15 +5,22 @@ import android.text.format.DateUtils
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.asLiveData
 import androidx.lifecycle.map
+import androidx.lifecycle.viewModelScope
 import com.salugan.cobakeluar.data.TryoutRepository
 import com.salugan.cobakeluar.model.QuestionModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 import com.salugan.cobakeluar.data.Result
+import com.salugan.cobakeluar.data.local.TryoutManager
+import kotlinx.coroutines.launch
 
 @HiltViewModel
-class SoalViewModel @Inject constructor(private val tryoutRepository: TryoutRepository) : ViewModel(){
+class SoalViewModel @Inject constructor(
+    private val tryoutRepository: TryoutRepository,
+    private val tryoutManager: TryoutManager
+) : ViewModel(){
 
     private var timer: CountDownTimer? = null
 
@@ -120,6 +127,14 @@ class SoalViewModel @Inject constructor(private val tryoutRepository: TryoutRepo
      * */
     fun getGeometriDanPengukuranQuestion(): LiveData<Result<List<QuestionModel>>> {
         return tryoutRepository.getGeometriDanPengukuranQuestion()
+    }
+
+    fun getTryoutStatus(): LiveData<Boolean> = tryoutManager.tryoutFinished.asLiveData()
+
+    fun setTryoutStatus(finished: Boolean) {
+        viewModelScope.launch {
+            tryoutManager.setTryoutFinished(finished)
+        }
     }
 
     /**

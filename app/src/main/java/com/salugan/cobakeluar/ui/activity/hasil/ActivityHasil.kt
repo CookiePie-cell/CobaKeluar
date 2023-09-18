@@ -98,7 +98,12 @@ class ActivityHasil : AppCompatActivity() {
                 kosong = jumlahKosong
             )
 
-            viewModel.addHasil(addHasil)
+            viewModel.getTryoutStatus().observe(this) {
+                if (!it) {
+                    viewModel.addHasil(addHasil)
+                    viewModel.setTryoutStatus(true)
+                }
+            }
             viewModel.resultHasilTO.observe(this) {
                 when (it) {
                     is Result.Loading -> {
