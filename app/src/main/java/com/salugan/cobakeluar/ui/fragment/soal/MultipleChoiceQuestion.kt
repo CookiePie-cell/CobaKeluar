@@ -31,6 +31,7 @@ import com.salugan.cobakeluar.ui.activity.hasil.ActivityHasil
 import com.salugan.cobakeluar.ui.activity.history.ketidakpastian.ActivityHistory
 import com.salugan.cobakeluar.ui.activity.soal.SoalActivity
 import com.salugan.cobakeluar.utils.QUESTION
+import com.salugan.cobakeluar.utils.StringProcessing
 import io.github.kexanie.library.MathView
 
 class MultipleChoiceQuestion : Fragment() {
@@ -82,14 +83,9 @@ class MultipleChoiceQuestion : Fragment() {
         setButtonPrevious()
 
         if (question != null) {
-            val images = mutableListOf<String>()
-            mathView.text = Html.fromHtml(question.questionText, flags, { source ->
-                images.add(source.replace("""\"""", ""))
-                null
-            }, null).toString()
+            val processedLatexText = StringProcessing.processLatexText(question.questionText!!)
+            mathView.text = processedLatexText
 
-
-            setImageInQuestion(images)
 
             setAnswerList(question)
 
@@ -309,32 +305,6 @@ class MultipleChoiceQuestion : Fragment() {
             // Navigate to the previous tab (fragment)
             val currentItem = viewPager.currentItem
             viewPager.setCurrentItem(currentItem - 1, true)
-        }
-    }
-
-    private fun setImageInQuestion(images: List<String>) {
-        for(element in images) {
-            val imageView = ImageView(requireActivity())
-
-            Glide.with(requireActivity())
-                .load(element)
-                .into(imageView)
-
-            val desiredWidthInPixels = 720
-            val desiredHeightInPixels = 480
-
-            val layoutParams = LinearLayout.LayoutParams(
-                desiredWidthInPixels,
-                desiredHeightInPixels
-            )
-
-            layoutParams.gravity = Gravity.CENTER_HORIZONTAL
-
-            imageView.layoutParams = layoutParams
-
-
-            binding.llQuestion.addView(imageView)
-
         }
     }
 
