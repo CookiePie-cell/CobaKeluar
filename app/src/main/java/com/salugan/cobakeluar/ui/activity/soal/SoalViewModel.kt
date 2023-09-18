@@ -27,6 +27,13 @@ class SoalViewModel @Inject constructor(private val tryoutRepository: TryoutRepo
     private val _eventCountDownFinish = MutableLiveData<Boolean>()
     val eventCountDownFinish: LiveData<Boolean> = _eventCountDownFinish
 
+    /**
+     * this method is to set the initial time of the tryout timer.
+     * @param minuteFocus variable to indicate how many minutes the user want to set as the initial time.
+     * if [fromResetPassword] 30, the initial time will be set to 30 minutes.
+     * @author Julio Nicholas.
+     * @since 11 September 2023.
+     * */
     fun setInitialTime(minuteFocus: Long) {
         val initialTimeMillis = minuteFocus * 60 * 1000
         initialTime.value = initialTimeMillis
@@ -45,10 +52,23 @@ class SoalViewModel @Inject constructor(private val tryoutRepository: TryoutRepo
 
     private val totalExamTimeMillis = MutableLiveData<Long>()
 
+
+    /**
+     * this method is to set the total time of the timer.
+     * @param minutes variable to indicate how many minutes the user want to set as the total time.
+     * if [fromResetPassword] 30, the total time will be set to 30 minutes.
+     * @author Julio Nicholas.
+     * @since 11 September 2023.
+     * */
     fun setTotalExamTime(minutes: Long) {
         totalExamTimeMillis.value = minutes * 60 * 1000
     }
 
+    /**
+     * this method is to calculate how long the timer have been running.
+     * @author Julio Nicholas.
+     * @since 11 September 2023.
+     * */
     fun calculateCompletionTime(): Long {
         // Check if it's the last item
         val remainingTimeMillis = currentTime.value ?: 0
@@ -56,29 +76,60 @@ class SoalViewModel @Inject constructor(private val tryoutRepository: TryoutRepo
         return totalExamTimeMillis - remainingTimeMillis
     }
 
+    /**
+     * this method is to start the timer countdown.
+     * @author Julio Nicholas.
+     * @since 11 September 2023.
+     * */
     fun startTimer() {
         timer?.start()
     }
 
+    /**
+     * this method is to stop the timer countdown.
+     * @author Julio Nicholas.
+     * @since 11 September 2023.
+     * */
     fun stopTimer() {
         timer?.cancel()
     }
 
+    /**
+     * this method is to reset the timer countdown.
+     * @author Julio Nicholas.
+     * @since 11 September 2023.
+     * */
     fun resetTimer() {
         timer?.cancel()
         _eventCountDownFinish.value = true
     }
 
+    /**
+     * this method to get the "Data dan Ketidakpastian" data from repository as a livedata.
+     * @author Julio Nicholas.
+     * @since 5 September 2023.
+     * */
     fun getDataDanKetidakPastianQuestion(): LiveData<Result<List<QuestionModel>>> {
         return tryoutRepository.getDataDanKetidakPastianQuestions()
     }
 
+    /**
+     * this method to get the "Geometri dan Pengukuran" data from repository as a livedata.
+     * @author Julio Nicholas.
+     * @since 5 September 2023.
+     * */
     fun getGeometriDanPengukuranQuestion(): LiveData<Result<List<QuestionModel>>> {
         return tryoutRepository.getGeometriDanPengukuranQuestion()
     }
 
+    /**
+     * this method will be called when this ViewModel is no longer used and will be destroyed.
+     * @author Julio Nicholas.
+     * @since 5 September 2023.
+     * */
     override fun onCleared() {
         super.onCleared()
         timer?.cancel()
     }
 }
+
