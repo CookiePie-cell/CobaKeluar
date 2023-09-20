@@ -80,8 +80,8 @@ class ActivityProfile : AppCompatActivity() {
             googleSignInClient.signOut().addOnCompleteListener(this) {
                 FirebaseAuth.getInstance().signOut()
                 val intent = Intent(this, ActivityLogin::class.java)
+                    intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
                 startActivity(intent)
-                finish()
                 loadingDialog?.dismiss()
             }
         }
