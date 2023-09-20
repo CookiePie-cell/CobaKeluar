@@ -12,7 +12,7 @@
             android:layout_height="100dp"
             android:scaleType="centerCrop"
             android:src="@drawable/logo"
-            ></ImageView>
+            />
 
         <EditText
             android:id="@+id/nama"
@@ -20,7 +20,9 @@
             android:layout_height="40dp"
             android:background="@color/lightGrey"
             android:hint="Nama"
-            android:padding="10dp"></EditText>
+            android:inputType="textPersonName"
+            android:scrollHorizontally="true"
+            android:padding="10dp"/>
 
         <EditText
             android:inputType="none"
@@ -32,7 +34,7 @@
             android:layout_height="40dp"
             android:background="@color/lightGrey"
             android:hint="Email"
-            android:padding="10dp"></EditText>
+            android:padding="10dp"/>
 
         <EditText
             android:id="@+id/noHp"
@@ -42,7 +44,8 @@
             android:background="@color/lightGrey"
             android:hint="No. HP"
             android:inputType="phone"
-            android:padding="10dp"></EditText>
+            android:scrollHorizontally="true"
+            android:padding="10dp"/>
 
         <EditText
             android:id="@+id/Password"
@@ -52,7 +55,8 @@
             android:background="@color/lightGrey"
             android:hint="Password"
             android:inputType="textPassword"
-            android:padding="10dp"></EditText>
+            android:scrollHorizontally="true"
+            android:padding="10dp"/>
 
         <EditText
             android:id="@+id/konfirmPassword"
@@ -62,7 +66,8 @@
             android:background="@color/lightGrey"
             android:inputType="textPassword"
             android:hint="Konfirmasi Password"
-            android:padding="10dp"></EditText>
+            android:scrollHorizontally="true"
+            android:padding="10dp"/>
 
         <LinearLayout
             android:layout_marginTop="10dp"
@@ -79,7 +84,7 @@
                 android:textSize="20dp"
                 android:textColor="@color/darkBlue"
                 android:background="@drawable/rounded_button_yellow"
-                ></TextView>
+                />
 
         </LinearLayout>
 

@@ -126,6 +126,12 @@ class ActivitySignUp : AppCompatActivity() {
      * @see https://stackoverflow.com/questions/6358380/phone-number-validation-android
      */
     private fun isValidPhoneNumber(noHP: String): Boolean {
+        // Mengecek apakah nomor telepon hanya terdiri dari angka yang sama
+        if (noHP.matches(Regex("^(\\d)\\1*\$"))) {
+            return false
+        }
+
+        // Mengecek apakah nomor telepon sesuai dengan pola yang Anda tentukan
         val pattern = Pattern.compile("^[0-9]{12}\$|^[0-9]{11}\$|^[0-9]{13}\$")
         val matcher = pattern.matcher(noHP)
         return matcher.matches()
